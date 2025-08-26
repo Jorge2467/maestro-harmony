@@ -22,7 +22,12 @@ import {
   Users,
   BrainCircuit,
   LogOut,
+  CheckCircle,
+  Wrench,
+  CalendarPlus,
+  UserPlus
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 import {
   Sidebar,
@@ -48,8 +53,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+import { mockActivities } from '@/lib/mock-data';
 
 const navItems = [
   {
@@ -163,6 +174,53 @@ function AppSidebar() {
   );
 }
 
+const iconMap: { [key: string]: LucideIcon } = {
+  CheckCircle,
+  Wrench,
+  CalendarPlus,
+  UserPlus,
+};
+
+function Notifications() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="ghost" size="icon" className="rounded-full relative">
+          <Bell className="h-5 w-5" />
+          <span className="absolute top-1 right-1 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
+          </span>
+          <span className="sr-only">Notificações</span>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80" align="end">
+        <div className="p-4">
+          <h4 className="font-medium text-lg mb-4">Notificações</h4>
+          <ul className="space-y-4">
+            {mockActivities.map((activity, index) => {
+              const Icon = iconMap[activity.icon];
+              return (
+                <li key={index} className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
+                    {Icon && <Icon className="h-4 w-4 text-muted-foreground" />}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">{activity.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {activity.description}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function AppHeader() {
   const router = useRouter();
 
@@ -184,14 +242,7 @@ function AppHeader() {
             <GitFork className="h-5 w-5"/>
             <span className="sr-only">Criar Ponto de Restauro</span>
         </Button>
-        <Button variant="ghost" size="icon" className="rounded-full relative">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-1 right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
-          </span>
-          <span className="sr-only">Notificações</span>
-        </Button>
+        <Notifications />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
@@ -207,13 +258,17 @@ function AppHeader() {
                 <p className="text-xs text-muted-foreground">Coordenador</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-                <Users className="mr-2 h-4 w-4" />
-                <span>Perfil</span>
+            <DropdownMenuItem asChild>
+                <Link href="/profile">
+                    <Users className="mr-2 h-4 w-4" />
+                    <span>Perfil</span>
+                </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Configurações</span>
+            <DropdownMenuItem asChild>
+                <Link href="/settings">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Configurações</span>
+                </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className='text-destructive focus:text-destructive'>

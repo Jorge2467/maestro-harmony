@@ -46,6 +46,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   if (!isAuth) {
     // Esto no debería ocurrir con la simulación actual, pero es una buena práctica mantenerlo.
+    // Si la autenticación falla, redirigimos al login
+    router.replace('/');
     return null;
   }
   
