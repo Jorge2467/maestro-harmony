@@ -22,3 +22,10 @@ export type Instrument = {
   status: 'Disponível' | 'Em Uso' | 'Em Reparo' | 'Indisponível';
   lastMaintenance: string;
 };
+
+export type User = {
+  name: string;
+  email: string;
+  role: 'admin' | 'coordinator';
+  avatarUrl?: string;
+};

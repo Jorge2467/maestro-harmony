@@ -25,7 +25,8 @@ import {
   CheckCircle,
   Wrench,
   CalendarPlus,
-  UserPlus
+  UserPlus,
+  Shield
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -61,6 +62,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
 import { mockActivities } from '@/lib/mock-data';
+import { useUser } from '@/contexts/user-context';
 
 const navItems = [
   {
@@ -94,11 +96,13 @@ const navItems = [
 const bottomNavItems = [
     { href: '/settings', icon: Settings, label: 'Configurações' },
     { href: '/help', icon: HelpCircle, label: 'Ajuda & Suporte' },
+    { href: '/admin/dashboard', icon: Shield, label: 'Admin', requiredRole: 'admin' },
 ]
 
 function AppSidebar() {
   const pathname = usePathname();
   const { state } = useSidebar();
+  const { user } = useUser();
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
@@ -148,7 +152,11 @@ function AppSidebar() {
       </SidebarContent>
       <SidebarFooter className="p-2">
         <SidebarMenu>
-            {bottomNavItems.map((item) => (
+            {bottomNavItems.map((item) => {
+              if (item.requiredRole && item.requiredRole !== user.role) {
+                return null;
+              }
+              return (
                  <SidebarMenuItem key={item.href}>
                  <SidebarMenuButton
                    asChild
@@ -164,7 +172,7 @@ function AppSidebar() {
                    </Link>
                  </SidebarMenuButton>
                </SidebarMenuItem>
-            ))}
+            )})}
         </SidebarMenu>
         <div className={cn("mt-4 p-2 text-center text-xs text-sidebar-foreground/60", state === 'collapsed' && 'hidden')}>
             <p>© 2023 Maestro Harmony</p>
@@ -198,7 +206,7 @@ function Notifications() {
         <div className="p-4">
           <h4 className="font-medium text-lg mb-4">Notificações</h4>
           <ul className="space-y-4">
-            {mockActivities.map((activity, index) => {
+            {mockActivities.slice(0, 4).map((activity, index) => {
               const Icon = iconMap[activity.icon];
               return (
                 <li key={index} className="flex items-start gap-3">
@@ -223,6 +231,7 @@ function Notifications() {
 
 function AppHeader() {
   const router = useRouter();
+  const { user } = useUser();
 
   const handleLogout = () => {
     // En una aplicación real, aquí invalidarías la sesión del usuario.
@@ -238,24 +247,20 @@ function AppHeader() {
         <Input placeholder="Pesquisar..." className="pl-9" />
       </div>
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="rounded-full">
-            <GitFork className="h-5 w-5"/>
-            <span className="sr-only">Criar Ponto de Restauro</span>
-        </Button>
         <Notifications />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
               <Avatar className="h-10 w-10">
-                <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Carlos Oliveira" />
-                <AvatarFallback>CO</AvatarFallback>
+                <AvatarImage src={user.avatarUrl} alt={user.name} />
+                <AvatarFallback>{user.name.substring(0,2).toUpperCase()}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>
-                <p className="font-medium">Carlos Oliveira</p>
-                <p className="text-xs text-muted-foreground">Coordenador</p>
+                <p className="font-medium">{user.name}</p>
+                <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>

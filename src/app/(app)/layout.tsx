@@ -3,38 +3,48 @@
 import { AppLayout } from '@/components/layout/app-layout';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import type { User } from '@/lib/types';
+import { UserProvider } from '@/contexts/user-context';
 
 // Simulando una verificación de autenticación
 function useAuth() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // En una aplicación real, aquí llamarías a tu backend o a un provider de autenticación.
-    // Para propósitos de desarrollo, ahora simularemos un usuario siempre autenticado.
+    // Para propósitos de desarrollo, simulamos un usuario administrador autenticado.
     const checkAuth = () => {
-      // Para probar el layout autenticado, puedes cambiar esto a `true`
       const userIsLoggedIn = true; 
-      setIsAuth(userIsLoggedIn);
+      if (userIsLoggedIn) {
+        setUser({
+          name: 'Carlos Oliveira',
+          email: 'carlos.oliveira@maestroharmony.com',
+          role: 'admin',
+          avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+        });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     };
 
     checkAuth();
   }, []);
 
-  return { isAuth, loading };
+  return { user, loading };
 }
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { isAuth, loading } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !isAuth) {
+    if (!loading && !user) {
       router.replace('/');
     }
-  }, [isAuth, loading, router]);
+  }, [user, loading, router]);
   
   if(loading) {
     return (
@@ -44,12 +54,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!isAuth) {
+  if (!user) {
     // Esto no debería ocurrir con la simulación actual, pero es una buena práctica mantenerlo.
     // Si la autenticación falla, redirigimos al login
-    router.replace('/');
     return null;
   }
   
-  return <AppLayout>{children}</AppLayout>;
+  return (
+    <UserProvider user={user}>
+        <AppLayout>{children}</AppLayout>
+    </UserProvider>
+  );
 }
