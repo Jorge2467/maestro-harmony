@@ -28,6 +28,7 @@ import {
   CalendarPlus,
   UserPlus,
   Shield,
+  FileText,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -82,6 +83,7 @@ const navItems = [
       { href: '/instruments', icon: Guitar, label: 'Instrumentos' },
       { href: '/curriculum', icon: BookOpen, label: 'Currículos' },
       { href: '/ai-matching', icon: BrainCircuit, label: 'Recomendação IA' },
+      { href: '/reports', icon: FileText, label: 'Relatórios IA' },
     ],
   },
   {
