@@ -19,6 +19,7 @@ export type RecommendTeacherInput = z.infer<typeof RecommendTeacherInputSchema>;
 
 const RecommendTeacherOutputSchema = z.object({
   teacherRecommendation: z.string().describe('The recommended teacher for the student.'),
+  recommendationReason: z.string().describe('The reason why this teacher is being recommended.'),
   learningPathRecommendation: z.string().describe('The recommended learning path for the student.'),
 });
 export type RecommendTeacherOutput = z.infer<typeof RecommendTeacherOutputSchema>;
@@ -34,6 +35,8 @@ const prompt = ai.definePrompt({
   prompt: `You are an AI assistant designed to recommend the best teacher and learning path for music students.
 
   Consider the student's goals, current level, and progress to provide personalized recommendations.
+  Provide a concrete teacher name and a detailed learning path.
+  You MUST provide a reason for the teacher recommendation.
 
   Student Goals: {{{studentGoals}}}
   Student Level: {{{studentLevel}}}

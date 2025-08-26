@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { BrainCircuit, Loader, ThumbsUp, UserCheck } from 'lucide-react';
+import { BrainCircuit, Loader, ThumbsUp, UserCheck, MessageSquareQuote } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const initialState = {
@@ -29,7 +29,7 @@ export function RecommendationForm() {
   const [state, formAction] = useFormState(getRecommendation, initialState);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
       <Card>
         <CardHeader>
           <CardTitle>Recomendação com IA</CardTitle>
@@ -77,8 +77,15 @@ export function RecommendationForm() {
                 <UserCheck className="h-6 w-6 text-primary" />
                 <CardTitle>Professor Recomendado</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{state.data.teacherRecommendation}</p>
+              <CardContent className='pt-4'>
+                <p className="font-semibold text-lg text-primary">{state.data.teacherRecommendation}</p>
+                <div className='mt-4 p-4 bg-muted/50 rounded-lg'>
+                    <h4 className='flex items-center gap-2 font-semibold text-sm mb-2'>
+                        <MessageSquareQuote className="h-4 w-4" />
+                        Justificativa
+                    </h4>
+                    <p className="text-sm text-muted-foreground">{state.data.recommendationReason}</p>
+                </div>
               </CardContent>
             </Card>
             <Card>
@@ -86,8 +93,8 @@ export function RecommendationForm() {
                 <BrainCircuit className="h-6 w-6 text-accent" />
                 <CardTitle>Plano de Estudos Sugerido</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">{state.data.learningPathRecommendation}</p>
+              <CardContent className='pt-4'>
+                <p className="text-muted-foreground whitespace-pre-wrap">{state.data.learningPathRecommendation}</p>
               </CardContent>
             </Card>
           </>
