@@ -1,0 +1,225 @@
+'use client';
+
+import * as React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  Bell,
+  BookOpen,
+  Calendar,
+  ChevronDown,
+  GitFork,
+  GraduationCap,
+  Guitar,
+  HelpCircle,
+  Home,
+  LineChart,
+  Mic,
+  Music,
+  Search,
+  Settings,
+  Star,
+  Users,
+  BrainCircuit
+} from 'lucide-react';
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { cn } from '@/lib/utils';
+import { Tooltip, TooltipContent, TooltipTrigger } from '../ui/tooltip';
+
+const navItems = [
+  {
+    title: 'Principal',
+    items: [
+      { href: '/dashboard', icon: Home, label: 'Dashboard' },
+      { href: '/statistics', icon: LineChart, label: 'Estatísticas' },
+      { href: '/calendar', icon: Calendar, label: 'Calendário' },
+    ],
+  },
+  {
+    title: 'Gestão',
+    items: [
+      { href: '/students', icon: GraduationCap, label: 'Alunos', badge: '8' },
+      { href: '/teachers', icon: Users, label: 'Professores' },
+      { href: '/instruments', icon: Guitar, label: 'Instrumentos' },
+      { href: '/curriculum', icon: BookOpen, label: 'Currículos' },
+      { href: '/ai-matching', icon: BrainCircuit, label: 'Recomendação IA' },
+    ],
+  },
+  {
+    title: 'Eventos',
+    items: [
+      { href: '/auditions', icon: Mic, label: 'Audições' },
+      { href: '/concerts', icon: Music, label: 'Concertos' },
+      { href: '/masterclasses', icon: Star, label: 'Masterclasses' },
+    ],
+  },
+];
+
+const bottomNavItems = [
+    { href: '/settings', icon: Settings, label: 'Configurações' },
+    { href: '/help', icon: HelpCircle, label: 'Ajuda & Suporte' },
+]
+
+function AppSidebar() {
+  const pathname = usePathname();
+  const { state } = useSidebar();
+
+  return (
+    <Sidebar collapsible="icon" className="border-r border-sidebar-border">
+      <SidebarHeader className="p-2 justify-center">
+        <Link href="/dashboard" className="flex items-center gap-2">
+            <Avatar className="size-9 bg-primary/20 text-primary rounded-lg">
+                <AvatarFallback className="bg-transparent font-bold">
+                    <Music size={20} />
+                </AvatarFallback>
+            </Avatar>
+            <span className={cn(
+                "font-bold text-lg text-sidebar-foreground",
+                state === 'collapsed' && 'hidden'
+            )}>
+                Harmony
+            </span>
+        </Link>
+      </SidebarHeader>
+      <SidebarContent className="p-2">
+        {navItems.map((section) => (
+          <div key={section.title} className="mb-4">
+             <h3 className={cn("px-2 text-xs font-semibold text-sidebar-foreground/70 uppercase tracking-wider mb-2", state === 'collapsed' && 'text-center')}>
+                {state === 'collapsed' ? section.title.substring(0,3) : section.title}
+            </h3>
+            <SidebarMenu>
+              {section.items.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={pathname.startsWith(item.href)}
+                    tooltip={{
+                        children: item.label,
+                        side: 'right',
+                    }}
+                  >
+                    <Link href={item.href}>
+                      <item.icon />
+                      <span>{item.label}</span>
+                      {item.badge && <span className="ml-auto bg-secondary text-secondary-foreground text-xs rounded-full px-2 py-0.5">{item.badge}</span>}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </div>
+        ))}
+      </SidebarContent>
+      <SidebarFooter className="p-2">
+        <SidebarMenu>
+            {bottomNavItems.map((item) => (
+                 <SidebarMenuItem key={item.href}>
+                 <SidebarMenuButton
+                   asChild
+                   isActive={pathname.startsWith(item.href)}
+                   tooltip={{
+                       children: item.label,
+                       side: 'right',
+                   }}
+                 >
+                   <Link href={item.href}>
+                     <item.icon />
+                     <span>{item.label}</span>
+                   </Link>
+                 </SidebarMenuButton>
+               </SidebarMenuItem>
+            ))}
+        </SidebarMenu>
+        <div className={cn("mt-4 p-2 text-center text-xs text-sidebar-foreground/60", state === 'collapsed' && 'hidden')}>
+            <p>© 2023 Maestro Harmony</p>
+        </div>
+      </SidebarFooter>
+    </Sidebar>
+  );
+}
+
+function AppHeader() {
+  return (
+    <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6">
+      <SidebarTrigger className="md:hidden" />
+      <div className="relative flex-1">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Input placeholder="Pesquisar..." className="pl-9" />
+      </div>
+      <div className="flex items-center gap-4">
+        <Button variant="ghost" size="icon" className="rounded-full">
+            <GitFork className="h-5 w-5"/>
+            <span className="sr-only">Criar Ponto de Restauro</span>
+        </Button>
+        <Button variant="ghost" size="icon" className="rounded-full relative">
+          <Bell className="h-5 w-5" />
+          <span className="absolute top-1 right-1 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
+          </span>
+          <span className="sr-only">Notificações</span>
+        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Avatar className="h-10 w-10">
+                <AvatarImage src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Carlos Oliveira" />
+                <AvatarFallback>CO</AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>
+                <p className="font-medium">Carlos Oliveira</p>
+                <p className="text-xs text-muted-foreground">Coordenador</p>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Perfil</DropdownMenuItem>
+            <DropdownMenuItem>Faturamento</DropdownMenuItem>
+            <DropdownMenuItem>Configurações</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Sair</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </header>
+  );
+}
+
+export function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen">
+        <AppSidebar />
+        <SidebarInset className="flex-1 flex flex-col">
+          <AppHeader />
+          <main className="flex-1 p-6 bg-background">{children}</main>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
+  );
+}
