@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Bell,
   BookOpen,
@@ -20,7 +20,8 @@ import {
   Settings,
   Star,
   Users,
-  BrainCircuit
+  BrainCircuit,
+  LogOut,
 } from 'lucide-react';
 
 import {
@@ -163,6 +164,14 @@ function AppSidebar() {
 }
 
 function AppHeader() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // En una aplicación real, aquí invalidarías la sesión del usuario.
+    // Por ahora, simplemente redirigimos a la página de login.
+    router.replace('/');
+  };
+
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6">
       <SidebarTrigger className="md:hidden" />
@@ -198,11 +207,19 @@ function AppHeader() {
                 <p className="text-xs text-muted-foreground">Coordenador</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Perfil</DropdownMenuItem>
-            <DropdownMenuItem>Faturamento</DropdownMenuItem>
-            <DropdownMenuItem>Configurações</DropdownMenuItem>
+            <DropdownMenuItem>
+                <Users className="mr-2 h-4 w-4" />
+                <span>Perfil</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Configurações</span>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Sair</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className='text-destructive focus:text-destructive'>
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Sair</span>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
