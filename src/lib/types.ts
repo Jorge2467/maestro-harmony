@@ -13,6 +13,7 @@ export type Teacher = {
   instruments: string[];
   availability: string;
   status: 'active' | 'inactive';
+  email?: string; // Optional email
 };
 
 export type Instrument = {
