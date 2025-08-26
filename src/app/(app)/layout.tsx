@@ -11,10 +11,10 @@ function useAuth() {
 
   useEffect(() => {
     // En una aplicación real, aquí llamarías a tu backend o a un provider de autenticación.
-    // Por ahora, simularemos un usuario no autenticado por defecto.
+    // Para propósitos de desarrollo, ahora simularemos un usuario siempre autenticado.
     const checkAuth = () => {
       // Para probar el layout autenticado, puedes cambiar esto a `true`
-      const userIsLoggedIn = false; 
+      const userIsLoggedIn = true; 
       setIsAuth(userIsLoggedIn);
       setLoading(false);
     };
@@ -45,6 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   if (!isAuth) {
+    // Esto no debería ocurrir con la simulación actual, pero es una buena práctica mantenerlo.
     return null;
   }
   
