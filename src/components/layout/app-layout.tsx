@@ -8,6 +8,7 @@ import {
   BookOpen,
   Calendar,
   ChevronDown,
+  FileCog,
   GitFork,
   GraduationCap,
   Guitar,
@@ -26,7 +27,7 @@ import {
   Wrench,
   CalendarPlus,
   UserPlus,
-  Shield
+  Shield,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 

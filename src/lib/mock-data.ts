@@ -20,7 +20,12 @@ export const mockTeachers: Teacher[] = [
 ];
 
 export const mockInstruments: Instrument[] = [
-    // ...
+    { id: 1, type: 'Piano de Cauda', serialNumber: 'YMH-12345', status: 'Disponível', lastMaintenance: '2023-10-15', studentId: null },
+    { id: 2, type: 'Violino Stradivarius', serialNumber: 'STR-67890', status: 'Em Uso', lastMaintenance: '2024-01-20', studentId: 2 },
+    { id: 3, type: 'Violão Clássico', serialNumber: 'GIB-11223', status: 'Em Reparo', lastMaintenance: '2023-11-05', studentId: null },
+    { id: 4, type: 'Flauta Transversal', serialNumber: 'FLT-44556', status: 'Disponível', lastMaintenance: '2024-02-10', studentId: null },
+    { id: 5, type: 'Violoncelo', serialNumber: 'VCL-77889', status: 'Em Uso', lastMaintenance: '2023-12-30', studentId: 5 },
+    { id: 6, type: 'Saxofone Alto', serialNumber: 'SAX-99001', status: 'Disponível', lastMaintenance: '2024-03-01', studentId: null },
 ];
 
 export const mockActivities = [
@@ -40,8 +45,8 @@ export const studentDistributionData = [
 ];
 
 export const instrumentStatusData = [
-  { name: 'Disponíveis', value: 65, fill: 'var(--color-chart-1)' },
-  { name: 'Em Uso', value: 45, fill: 'var(--color-chart-2)' },
+  { name: 'Disponíveis', value: 65, fill: 'var(--color-chart-2)' },
+  { name: 'Em Uso', value: 45, fill: 'var(--color-chart-1)' },
   { name: 'Em Reparo', value: 7, fill: 'var(--color-chart-3)' },
   { name: 'Indisponíveis', value: 3, fill: 'var(--color-chart-4)' },
 ];

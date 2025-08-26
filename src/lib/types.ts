@@ -20,8 +20,9 @@ export type Instrument = {
   id: number;
   type: string;
   serialNumber: string;
-  status: 'Disponível' | 'Em Uso' | 'Em Reparo' | 'Indisponível';
+  status: 'Disponível' | 'Em Uso' | 'Em Reparo';
   lastMaintenance: string;
+  studentId?: number | null;
 };
 
 export type User = {
