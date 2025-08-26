@@ -1,6 +1,6 @@
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Construction from "lucide-react";
+import { Construction } from "lucide-react";
 
 export default function SettingsPage() {
   return (
