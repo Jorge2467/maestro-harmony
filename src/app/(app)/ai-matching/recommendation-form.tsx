@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getRecommendation } from './actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,7 +27,7 @@ function SubmitButton() {
 }
 
 export function RecommendationForm() {
-  const [state, formAction] = useFormState(getRecommendation, initialState);
+  const [state, formAction] = useActionState(getRecommendation, initialState);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
