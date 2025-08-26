@@ -1,5 +1,5 @@
 
-import type { Student, Teacher, Instrument, CalendarEvent } from '@/lib/types';
+import type { Student, Teacher, Instrument, CalendarEvent, Document } from '@/lib/types';
 
 export const mockStudents: Student[] = [
   { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active" },
@@ -46,6 +46,15 @@ export const mockEvents: CalendarEvent[] = [
     { id: 7, date: new Date(new Date().setDate(new Date().getDate() + 40)), title: 'Audição de Sopros', description: 'Audição para alunos de flauta e clarinete.', type: 'Audição', time: '16:00', location: 'Auditório Principal' }
 
 ];
+
+export const mockDocuments: Document[] = [
+    { id: 1, title: "Regulamento Interno 2024", type: "Regulamento", uploadDate: "2024-01-15", fileUrl: "#" },
+    { id: 2, title: "Partitura: Sinfonia No. 5 - Beethoven", type: "Partitura", uploadDate: "2024-02-20", fileUrl: "#" },
+    { id: 3, title: "Comunicado: Feriado de Carnaval", type: "Comunicado", uploadDate: "2024-02-05", fileUrl: "#" },
+    { id: 4, title: "Partitura: Ária na corda Sol - Bach", type: "Partitura", uploadDate: "2024-03-10", fileUrl: "#" },
+    { id: 5, title: "Atestado de Matrícula - Modelo", type: "Outro", uploadDate: "2024-01-20", fileUrl: "#" },
+];
+
 
 export const studentDistributionData = [
   { name: 'Piano', value: 42, fill: 'var(--color-chart-1)' },

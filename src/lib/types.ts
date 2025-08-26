@@ -42,3 +42,11 @@ export type CalendarEvent = {
   time: string;
   location?: string;
 };
+
+export type Document = {
+  id: number;
+  title: string;
+  type: 'Partitura' | 'Regulamento' | 'Comunicado' | 'Outro';
+  uploadDate: string;
+  fileUrl: string;
+};

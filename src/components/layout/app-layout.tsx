@@ -29,6 +29,7 @@ import {
   UserPlus,
   Shield,
   FileText,
+  Folder,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -82,6 +83,7 @@ const navItems = [
       { href: '/teachers', icon: Users, label: 'Professores' },
       { href: '/instruments', icon: Guitar, label: 'Instrumentos' },
       { href: '/curriculum', icon: BookOpen, label: 'Currículos' },
+      { href: '/documents', icon: Folder, label: 'Documentos' },
       { href: '/ai-matching', icon: BrainCircuit, label: 'Recomendação IA' },
       { href: '/reports', icon: FileText, label: 'Relatórios IA' },
     ],
