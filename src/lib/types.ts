@@ -40,4 +40,5 @@ export type CalendarEvent = {
   description: string;
   type: 'Concerto' | 'Audição' | 'Masterclass' | 'Reunião';
   time: string;
+  location?: string;
 };

@@ -37,11 +37,14 @@ export const mockActivities = [
 ];
 
 export const mockEvents: CalendarEvent[] = [
-    { id: 1, date: new Date(), title: 'Audição de Piano', description: 'Audições semestrais para alunos de piano.', type: 'Audição', time: '14:00 - 17:00' },
-    { id: 2, date: new Date(), title: 'Reunião de Professores', description: 'Reunião mensal de alinhamento.', type: 'Reunião', time: '10:00 - 11:00' },
-    { id: 3, date: new Date(new Date().setDate(new Date().getDate() + 5)), title: 'Concerto de Cordas', description: 'Apresentação da orquestra de cordas.', type: 'Concerto', time: '19:00' },
-    { id: 4, date: new Date(new Date().setDate(new Date().getDate() + 12)), title: 'Masterclass de Violino', description: 'com Maestro Itzhak Perlman.', type: 'Masterclass', time: '15:00' },
-    { id: 5, date: new Date(new Date().setDate(new Date().getDate() - 3)), title: 'Concerto de Gala', description: 'Apresentação anual de gala.', type: 'Concerto', time: '20:00' }
+    { id: 1, date: new Date(), title: 'Audição de Piano', description: 'Audições semestrais para alunos de piano.', type: 'Audição', time: '14:00 - 17:00', location: 'Auditório Principal' },
+    { id: 2, date: new Date(), title: 'Reunião de Professores', description: 'Reunião mensal de alinhamento.', type: 'Reunião', time: '10:00 - 11:00', location: 'Sala de Reuniões' },
+    { id: 3, date: new Date(new Date().setDate(new Date().getDate() + 5)), title: 'Concerto de Cordas', description: 'Apresentação da orquestra de cordas.', type: 'Concerto', time: '19:00', location: 'Teatro Municipal' },
+    { id: 4, date: new Date(new Date().setDate(new Date().getDate() + 12)), title: 'Masterclass de Violino', description: 'com Maestro Itzhak Perlman.', type: 'Masterclass', time: '15:00', location: 'Sala de Concertos' },
+    { id: 5, date: new Date(new Date().setDate(new Date().getDate() - 3)), title: 'Concerto de Gala', description: 'Apresentação anual de gala.', type: 'Concerto', time: '20:00', location: 'Teatro Municipal' },
+    { id: 6, date: new Date(new Date().setDate(new Date().getDate() + 25)), title: 'Concerto de Música de Câmara', description: 'Obras de Mozart e Beethoven.', type: 'Concerto', time: '20:00', location: 'Sala de Concertos' },
+    { id: 7, date: new Date(new Date().setDate(new Date().getDate() + 40)), title: 'Audição de Sopros', description: 'Audição para alunos de flauta e clarinete.', type: 'Audição', time: '16:00', location: 'Auditório Principal' }
+
 ];
 
 export const studentDistributionData = [
