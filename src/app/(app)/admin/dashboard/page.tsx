@@ -10,13 +10,13 @@ export default function AdminDashboardPage() {
       <div className="grid gap-6">
         <Card>
             <CardHeader>
-                <CardTitle>Ponto de Restauro</CardTitle>
-                <CardDescription>Crie um ponto de restauro do estado atual da aplicação. Esta ação só deve ser executada em momentos controlados.</CardDescription>
+                <CardTitle>Gestão de Backups</CardTitle>
+                <CardDescription>Crie e gerencie cópias de segurança da base de dados da aplicação. Esta ação deve ser executada com cautela.</CardDescription>
             </CardHeader>
             <CardContent>
                 <Button variant="destructive">
                     <GitFork className="mr-2 h-4 w-4" />
-                    Criar Ponto de Restauro
+                    Criar Novo Backup
                 </Button>
             </CardContent>
         </Card>
