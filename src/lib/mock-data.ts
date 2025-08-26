@@ -50,3 +50,21 @@ export const instrumentStatusData = [
   { name: 'Em Reparo', value: 7, fill: 'var(--color-chart-3)' },
   { name: 'Indisponíveis', value: 3, fill: 'var(--color-chart-4)' },
 ];
+
+export const studentEvolutionData = [
+  { month: 'Jan', students: 85 },
+  { month: 'Fev', students: 92 },
+  { month: 'Mar', students: 105 },
+  { month: 'Abr', students: 118 },
+  { month: 'Mai', students: 125 },
+  { month: 'Jun', students: 138 },
+  { month: 'Jul', students: 142 },
+];
+
+export const levelDistributionData = [
+  { instrument: 'Piano', Iniciante: 10, Intermediário: 20, Avançado: 12 },
+  { instrument: 'Violino', Iniciante: 8, Intermediário: 12, Avançado: 8 },
+  { instrument: 'Violão', Iniciante: 15, Intermediário: 15, Avançado: 5 },
+  { instrument: 'Flauta', Iniciante: 10, Intermediário: 5, Avançado: 3 },
+  { instrument: 'Violoncelo', Iniciante: 4, Intermediário: 4, Avançado: 4 },
+];
