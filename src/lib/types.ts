@@ -1,3 +1,4 @@
+
 export type Student = {
   id: number;
   name: string;
@@ -30,4 +31,13 @@ export type User = {
   email: string;
   role: 'admin' | 'coordinator';
   avatarUrl?: string;
+};
+
+export type CalendarEvent = {
+  id: number;
+  date: Date;
+  title: string;
+  description: string;
+  type: 'Concerto' | 'Audição' | 'Masterclass' | 'Reunião';
+  time: string;
 };
