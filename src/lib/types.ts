@@ -6,6 +6,7 @@ export type Student = {
   instrument: 'Piano' | 'Violino' | 'Violão' | 'Flauta' | 'Violoncelo' | 'Saxofone';
   level: 'Iniciante' | 'Intermediário' | 'Avançado';
   status: 'active' | 'inactive' | 'pending';
+  avatarUrl?: string;
 };
 
 export type Teacher = {

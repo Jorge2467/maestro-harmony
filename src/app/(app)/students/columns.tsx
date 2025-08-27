@@ -14,6 +14,8 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { Student } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { StudentForm } from '@/components/student-form';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 export const columns: ColumnDef<Student>[] = [
   {
@@ -21,8 +23,13 @@ export const columns: ColumnDef<Student>[] = [
     header: 'Nome',
     cell: ({ row }) => {
       const student = row.original;
+      const avatarFallback = student.name.substring(0, 2).toUpperCase();
       return (
         <div className="flex items-center gap-3">
+           <Avatar className="h-8 w-8">
+              <AvatarImage src={`https://i.pravatar.cc/40?u=${student.email}`} alt={student.name} />
+              <AvatarFallback>{avatarFallback}</AvatarFallback>
+            </Avatar>
             <div className="font-medium">{student.name}</div>
         </div>
       );
@@ -80,7 +87,7 @@ export const columns: ColumnDef<Student>[] = [
               Copiar email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Editar Aluno</DropdownMenuItem>
+            <StudentForm student={student} />
             <DropdownMenuItem>Ver Detalhes</DropdownMenuItem>
             <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
               Excluir Aluno
