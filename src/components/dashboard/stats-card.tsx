@@ -19,7 +19,7 @@ export function StatsCard({ title, value, change, changeText, icon: Icon, iconBg
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-muted-foreground">{title}</CardTitle>
-        <div className={`flex h-10 w-10 items-center justify-center rounded-lg text-primary-foreground ${iconBg}`}>
+        <div className={`flex h-10 w-10 items-center justify-center rounded-lg text-white ${iconBg}`}>
           <Icon className="h-5 w-5" />
         </div>
       </CardHeader>

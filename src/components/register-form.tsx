@@ -1,8 +1,7 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
@@ -13,41 +12,42 @@ export function RegisterForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Lógica de registro aquí
-    
-    // Al registrar con éxito, redirigir al dashboard
     router.push('/dashboard');
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-lg">
+      <CardHeader>
+        <CardTitle>Criar Conta</CardTitle>
+        <CardDescription>Preencha os seus dados para criar a sua conta.</CardDescription>
+      </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-6 pt-6">
+        <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Nombre completo</Label>
-            <Input id="name" type="text" placeholder="Su nombre completo" required />
+            <Label htmlFor="name">Nome completo</Label>
+            <Input id="name" type="text" placeholder="O seu nome completo" required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="email@ejemplo.com" required />
+            <Input id="email" type="email" placeholder="email@exemplo.com" required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Contraseña</Label>
+            <Label htmlFor="password">Palavra-passe</Label>
             <Input id="password" type="password" required />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="confirm-password">Confirmar contraseña</Label>
+            <Label htmlFor="confirm-password">Confirmar palavra-passe</Label>
             <Input id="confirm-password" type="password" required />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full">
-            Crear Cuenta
+            Criar Conta
           </Button>
           <div className="text-center text-sm text-muted-foreground">
-            ¿Ya tienes una cuenta?{' '}
+            Já tem uma conta?{' '}
             <Link href="/" className="font-medium text-primary hover:underline">
-              Iniciar sesión
+              Iniciar sessão
             </Link>
           </div>
         </CardFooter>

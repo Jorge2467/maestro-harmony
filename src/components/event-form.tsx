@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -60,45 +59,47 @@ export function EventForm({ event, children, trigger = 'button' }: EventFormProp
             {isEditMode ? 'Altere as informações do evento abaixo.' : 'Preencha os detalhes do novo evento.'}
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="form-group">
-            <Label htmlFor="title">Título do Evento</Label>
-            <Input id="title" defaultValue={event?.title} />
+        <div className="grid gap-6 py-4">
+          <div className="space-y-2">
+            <Label htmlFor="title">Título do Evento *</Label>
+            <Input id="title" defaultValue={event?.title} placeholder="Ex: Concerto de Primavera"/>
           </div>
-          <div className="form-group">
-            <Label htmlFor="description">Descrição</Label>
-            <Textarea id="description" defaultValue={event?.description} />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="form-group">
-                <Label htmlFor="type">Tipo de Evento</Label>
+         
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+             <div className="space-y-2">
+                <Label htmlFor="type">Tipo de Evento *</Label>
                 <Select defaultValue={event?.type}>
-                <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="Concerto">Concerto</SelectItem>
-                    <SelectItem value="Audição">Audição</SelectItem>
-                    <SelectItem value="Masterclass">Masterclass</SelectItem>
-                    <SelectItem value="Reunião">Reunião</SelectItem>
-                </SelectContent>
+                  <SelectTrigger>
+                      <SelectValue placeholder="Selecione o tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                      <SelectItem value="Concerto">Concerto</SelectItem>
+                      <SelectItem value="Audição">Audição</SelectItem>
+                      <SelectItem value="Masterclass">Masterclass</SelectItem>
+                      <SelectItem value="Reunião">Reunião</SelectItem>
+                  </SelectContent>
                 </Select>
             </div>
-             <div className="form-group">
-              <Label htmlFor="date">Data</Label>
+             <div className="space-y-2">
+              <Label htmlFor="date">Data *</Label>
               <Input id="date" type="date" defaultValue={event ? format(event.date, 'yyyy-MM-dd') : ''} />
             </div>
-            <div className="form-group">
-              <Label htmlFor="time">Horário</Label>
+            <div className="space-y-2">
+              <Label htmlFor="time">Horário de Início *</Label>
               <Input id="time" type="time" defaultValue={event?.time} />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="location">Local *</Label>
+              <Input id="location" defaultValue={event?.location} placeholder="Ex: Auditório Principal"/>
+            </div>
           </div>
-          <div className="form-group">
-            <Label htmlFor="location">Local</Label>
-            <Input id="location" defaultValue={event?.location} />
+           <div className="space-y-2">
+            <Label htmlFor="description">Descrição</Label>
+            <Textarea id="description" defaultValue={event?.description} placeholder="Descreva brevemente o evento..."/>
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button variant="outline">Cancelar</Button>
           <Button type="submit">{isEditMode ? 'Salvar Alterações' : 'Criar Evento'}</Button>
         </DialogFooter>
       </DialogContent>

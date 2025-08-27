@@ -11,11 +11,11 @@ const chartConfig = {
   },
   disponiveis: {
     label: 'Disponíveis',
-    color: 'hsl(var(--chart-1))',
+    color: 'hsl(var(--chart-2))',
   },
   emUso: {
     label: 'Em Uso',
-    color: 'hsl(var(--chart-2))',
+    color: 'hsl(var(--chart-1))',
   },
   emReparo: {
     label: 'Em Reparo',
@@ -42,8 +42,8 @@ export function InstrumentStatusChart() {
               <PieChart>
                 <Tooltip content={<ChartTooltipContent hideLabel />} />
                 <Pie data={instrumentStatusData} dataKey="value" nameKey="name" innerRadius="60%" outerRadius="80%">
-                  {instrumentStatusData.map((entry) => (
-                    <Cell key={entry.name} fill={entry.fill} />
+                  {instrumentStatusData.map((entry, index) => (
+                     <Cell key={`cell-${index}`} fill={`var(--color-${entry.name.toLowerCase().replace('í', 'i').replace(' ', '')})`} />
                   ))}
                 </Pie>
                 <Legend content={<ChartLegendContent />} />

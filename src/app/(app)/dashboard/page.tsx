@@ -11,7 +11,7 @@ import { RecentActivities } from '@/components/dashboard/recent-activities';
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-6">
-      <Card className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg">
+      <Card className="bg-primary text-primary-foreground shadow-lg">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>

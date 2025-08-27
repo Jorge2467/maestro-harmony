@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={inter.variable}>
-      <body className="font-body antialiased">
+    <html lang="pt" className={inter.variable}>
+      <body className="font-sans antialiased">
         {children}
         <Toaster />
       </body>

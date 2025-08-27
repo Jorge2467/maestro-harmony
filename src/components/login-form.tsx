@@ -1,8 +1,7 @@
-
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
@@ -13,25 +12,26 @@ export function LoginForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Lógica de autenticación aquí
-    
-    // Al autenticar con éxito, redirigir al dashboard
     router.push('/dashboard');
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-lg">
+       <CardHeader>
+        <CardTitle>Iniciar Sessão</CardTitle>
+        <CardDescription>Insira as suas credenciais para aceder à sua conta.</CardDescription>
+      </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-6 pt-6">
+        <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="email@ejemplo.com" required />
+            <Input id="email" type="email" placeholder="email@exemplo.com" required />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password">Contraseña</Label>
+              <Label htmlFor="password">Palavra-passe</Label>
               <a href="#" className="text-sm font-medium text-primary hover:underline">
-                ¿Olvidaste tu contraseña?
+                Esqueceu-se da palavra-passe?
               </a>
             </div>
             <Input id="password" type="password" required />
@@ -39,12 +39,12 @@ export function LoginForm() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full">
-            Iniciar Sesión
+            Iniciar Sessão
           </Button>
           <div className="text-center text-sm text-muted-foreground">
-            ¿No tienes una cuenta?{' '}
+            Não tem uma conta?{' '}
             <Link href="/register" className="font-medium text-primary hover:underline">
-              Regístrate
+              Registe-se
             </Link>
           </div>
         </CardFooter>
