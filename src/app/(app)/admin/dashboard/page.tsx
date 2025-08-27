@@ -17,6 +17,7 @@ export default function AdminDashboardPage() {
     setIsLoading(true);
     setIsSuccess(false);
 
+    // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
       setIsSuccess(true);

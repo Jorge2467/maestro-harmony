@@ -5,7 +5,7 @@ import { RecommendationForm } from "./recommendation-form";
 export default function AiMatchingPage() {
   return (
     <div>
-      <PageHeader title="Recomendação com IA" />
+      <PageHeader title="Matching com IA" />
       <RecommendationForm />
     </div>
   );

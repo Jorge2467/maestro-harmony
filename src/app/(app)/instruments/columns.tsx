@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
@@ -116,6 +117,7 @@ export const columns: ColumnDef<Instrument>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
               <InstrumentForm instrument={instrument} />
+              <DropdownMenuItem>Solicitar Reparo</DropdownMenuItem>
               <DropdownMenuSeparator />
               <AlertDialogTrigger asChild>
                  <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">

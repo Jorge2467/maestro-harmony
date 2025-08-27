@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useState } from "react";
@@ -15,25 +16,70 @@ type Message = {
     text: string | React.ReactNode;
 }
 
+const initialMessage: Message = {
+    sender: 'bot',
+    text: (
+        <div>
+            <p>Olá! Sou seu assistente de IA. Posso ajudá-lo com:</p>
+            <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Análise de dados e relatórios</li>
+                <li>Recomendações pedagógicas</li>
+                <li>Planejamento de eventos</li>
+                <li>Previsões financeiras</li>
+            </ul>
+            <p className="mt-3">O que gostaria de explorar hoje?</p>
+        </div>
+    )
+};
+
+
 export default function AiAssistantPage() {
-    const [messages, setMessages] = useState<Message[]>([
-        {
-            sender: 'bot',
-            text: (
-                <div>
-                    <p>Olá! Sou seu assistente de IA. Posso ajudá-lo com:</p>
-                    <ul className="list-disc list-inside mt-2 space-y-1">
-                        <li>Análise de dados e relatórios</li>
-                        <li>Recomendações pedagógicas</li>
-                        <li>Planejamento de eventos</li>
-                        <li>Previsões financeiras</li>
-                    </ul>
-                    <p className="mt-3">O que gostaria de explorar hoje?</p>
-                </div>
-            )
-        }
-    ]);
+    const [messages, setMessages] = useState<Message[]>([initialMessage]);
     const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const getAIResponse = (query: string) => {
+        query = query.toLowerCase();
+
+        if (query.includes('aluno') || query.includes('estudante')) {
+            return `Com base na nossa base de dados, tenho informações sobre 142 alunos ativos. Posso ajudá-lo com:<br><br>
+            • Análise de desempenho individual ou por turma<br>
+            • Recomendações pedagógicas personalizadas<br>
+            • Identificação de alunos com potencial para competições<br>
+            • Alertas sobre alunos em risco de evasão<br><br>
+            Sobre qual aspecto gostaria de saber mais?`;
+        }
+        if (query.includes('financeiro') || query.includes('receita') || query.includes('orçamento')) {
+            return `Nossas análises financeiras mostram:<br><br>
+            • Receita mensal atual: R$ 42.580,00<br>
+            • Previsão de crescimento: +8% no próximo mês<br>
+            • Mensalidade média: R$ 320,00<br>
+            • Taxa de inadimplência: 3,2%<br><br>
+            Posso gerar relatórios detalhados ou simular cenários para o próximo semestre. O que precisa?`;
+        }
+        if (query.includes('evento') || query.includes('concerto') || query.includes('audição')) {
+            return `Detectamos 3 eventos programados para os próximos 60 dias:<br><br>
+            • Concerto de Outono (30/09 - Auditório Principal)<br>
+            • Recital de Piano (15/10 - Sala de Concertos)<br>
+            • Masterclass de Violino (05/11 - Sala 4)<br><br>
+            Posso ajudar no planejamento, divulgação ou análise de participação. Qual é o foco?`;
+        }
+        if (query.includes('professor') || query.includes('instrutor')) {
+            return `Nossa equipe pedagógica possui 18 professores ativos:<br><br>
+            • 10 especialistas em instrumentos específicos<br>
+            • 5 professores de teoria musical<br>
+            • 3 maestros/regentes<br><br>
+            A carga horária média é de 28h/semana com satisfação de 94% entre os alunos. Precisa de informações específicas?`;
+        }
+        return `Obrigado por sua pergunta! Com base em nossos dados, posso oferecer insights sobre:<br><br>
+            • Desempenho e progresso dos alunos<br>
+            • Análises financeiras e projeções<br>
+            • Otimização de recursos e espaços<br>
+            • Planejamento de eventos e concertos<br>
+            • Recomendações pedagógicas<br><br>
+            Poderia reformular sua pergunta ou escolher uma dessas áreas?`;
+    };
+
 
     const handleSend = () => {
         if (input.trim() === '') return;
@@ -41,14 +87,14 @@ export default function AiAssistantPage() {
         const newMessages: Message[] = [...messages, { sender: 'user', text: input }];
         setMessages(newMessages);
         setInput('');
+        setIsLoading(true);
 
         // Simulate AI response
         setTimeout(() => {
-            setMessages(prev => [...prev, { sender: 'bot', text: 'Estou processando sua solicitação...' }]);
-            setTimeout(() => {
-                 setMessages(prev => [...prev.slice(0, -1), { sender: 'bot', text: 'Com base nos nossos dados, aqui está o que encontrei...' }]);
-            }, 1500)
-        }, 500);
+            const botResponse = getAIResponse(input);
+            setMessages(prev => [...prev, { sender: 'bot', text: <div dangerouslySetInnerHTML={{ __html: botResponse }} /> }]);
+            setIsLoading(false);
+        }, 1500);
     };
 
 
@@ -82,6 +128,18 @@ export default function AiAssistantPage() {
                                             </div>
                                         </div>
                                     ))}
+                                    {isLoading && (
+                                        <div className="flex items-end gap-3">
+                                            <Avatar><AvatarFallback className="bg-primary text-primary-foreground"><Bot /></AvatarFallback></Avatar>
+                                            <div className="max-w-md p-3 rounded-lg text-sm bg-muted">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.3s]"></div>
+                                                    <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse [animation-delay:-0.15s]"></div>
+                                                    <div className="h-2 w-2 bg-muted-foreground rounded-full animate-pulse"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </ScrollArea>
                             <div className="flex items-center gap-2">
@@ -90,8 +148,9 @@ export default function AiAssistantPage() {
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                                    disabled={isLoading}
                                 />
-                                <Button size="icon" onClick={handleSend}><Send className="h-4 w-4" /></Button>
+                                <Button size="icon" onClick={handleSend} disabled={isLoading}><Send className="h-4 w-4" /></Button>
                             </div>
                         </CardContent>
                     </Card>

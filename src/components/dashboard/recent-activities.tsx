@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -9,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { mockActivities } from '@/lib/mock-data';
 import { CheckCircle, Wrench, CalendarPlus, UserPlus } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { Avatar, AvatarFallback } from '../ui/avatar';
 
 const iconMap: { [key: string]: LucideIcon } = {
   CheckCircle,
@@ -20,16 +22,12 @@ const iconMap: { [key: string]: LucideIcon } = {
 export function RecentActivities() {
   return (
     <Card className="col-span-1 lg:col-span-3">
-      <CardHeader>
-        <div className="flex justify-between items-center">
-          <div>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
             <CardTitle>Atividades Recentes</CardTitle>
-            <CardDescription>
-              Acompanhe as últimas atualizações do sistema.
-            </CardDescription>
-          </div>
-          <Button variant="outline">Ver Todas</Button>
+            <CardDescription>Acompanhe as últimas atualizações.</CardDescription>
         </div>
+        <Button variant="outline" size="sm">Ver Todas</Button>
       </CardHeader>
       <CardContent>
         <ul className="space-y-4">
@@ -37,12 +35,14 @@ export function RecentActivities() {
             const Icon = iconMap[activity.icon];
             return (
               <li key={index} className="flex items-start gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
-                  {Icon && <Icon className="h-5 w-5 text-muted-foreground" />}
-                </div>
+                <Avatar className="h-9 w-9 border">
+                    <AvatarFallback className="bg-muted">
+                        {Icon && <Icon className="h-4 w-4 text-muted-foreground" />}
+                    </AvatarFallback>
+                </Avatar>
                 <div className="flex-1">
-                  <p className="font-medium">{activity.title}</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="font-medium text-sm">{activity.title}</p>
+                  <p className="text-xs text-muted-foreground">
                     {activity.description}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">

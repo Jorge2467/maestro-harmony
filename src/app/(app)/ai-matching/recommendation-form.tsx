@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState } from 'react';
@@ -33,9 +34,9 @@ export function RecommendationForm() {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
       <Card>
         <CardHeader>
-          <CardTitle>Recomendação com IA</CardTitle>
+          <CardTitle>Matching de Aluno e Professor</CardTitle>
           <CardDescription>
-            Forneça os detalhes do aluno para receber uma recomendação de professor e plano de estudos.
+            Forneça os detalhes do aluno para que a IA recomende o professor e o plano de estudos mais adequados.
           </CardDescription>
         </CardHeader>
         <form action={formAction}>

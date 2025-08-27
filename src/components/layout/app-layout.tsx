@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import * as React from 'react';
@@ -73,8 +74,8 @@ const navItems = [
   {
     title: 'Gestão',
     items: [
-      { href: '/students', icon: GraduationCap, label: 'Alunos', badgeKey: 'students' },
-      { href: '/teachers', icon: Users, label: 'Professores', badgeKey: 'teachers' },
+      { href: '/students', icon: GraduationCap, label: 'Alunos' },
+      { href: '/teachers', icon: Users, label: 'Professores' },
       { href: '/instruments', icon: Guitar, label: 'Instrumentos' },
       { href: '/curriculum', icon: BookOpen, label: 'Currículos' },
       { href: '/documents', icon: Folder, label: 'Documentos' },
@@ -87,13 +88,14 @@ const navItems = [
         { href: '/reports', icon: FileText, label: 'Relatórios IA' },
         { href: '/ai-assistant', icon: MessageSquare, label: 'Assistente IA' },
         { href: '/ai-analytics', icon: BarChart, label: 'Análise Preditiva' },
+        { href: '/ai-matching', icon: Bot, label: 'Matching IA' },
     ]
   },
   {
     title: 'Eventos',
     items: [
       { href: '/auditions', icon: Mic, label: 'Audições' },
-      { href: '/concerts', icon: Music, label: 'Concertos', badgeKey: 'concerts' },
+      { href: '/concerts', icon: Music, label: 'Concertos' },
       { href: '/masterclasses', icon: Star, label: 'Masterclasses' },
     ],
   },
