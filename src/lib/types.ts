@@ -4,7 +4,7 @@ export type Student = {
   id: number;
   name: string;
   email: string;
-  instrument: 'Piano' | 'Violino' | 'Violão' | 'Flauta' | 'Violoncelo' | 'Saxofone';
+  instrument: string;
   level: 'Iniciante' | 'Intermediário' | 'Avançado';
   status: 'active' | 'inactive' | 'pending';
   avatarUrl?: string;

@@ -16,7 +16,9 @@ import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
@@ -75,12 +77,42 @@ export function StudentForm({ student }: StudentFormProps) {
                 <SelectValue placeholder="Selecione um instrumento" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Piano">Piano</SelectItem>
-                <SelectItem value="Violino">Violino</SelectItem>
-                <SelectItem value="Violão">Violão</SelectItem>
-                <SelectItem value="Flauta">Flauta</SelectItem>
-                <SelectItem value="Violoncelo">Violoncelo</SelectItem>
-                <SelectItem value="Saxofone">Saxofone</SelectItem>
+                <SelectGroup>
+                    <SelectLabel>Cordas</SelectLabel>
+                    <SelectItem value="Violino">Violino</SelectItem>
+                    <SelectItem value="Viola">Viola</SelectItem>
+                    <SelectItem value="Violoncelo">Violoncelo</SelectItem>
+                    <SelectItem value="Contrabaixo">Contrabaixo</SelectItem>
+                    <SelectItem value="Violão">Violão</SelectItem>
+                    <SelectItem value="Harpa">Harpa</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                    <SelectLabel>Madeiras</SelectLabel>
+                    <SelectItem value="Flauta">Flauta</SelectItem>
+                    <SelectItem value="Clarinete">Clarinete</SelectItem>
+                    <SelectItem value="Oboé">Oboé</SelectItem>
+                    <SelectItem value="Fagote">Fagote</SelectItem>
+                    <SelectItem value="Saxofone">Saxofone</SelectItem>
+                </SelectGroup>
+                 <SelectGroup>
+                    <SelectLabel>Metais</SelectLabel>
+                    <SelectItem value="Trompete">Trompete</SelectItem>
+                    <SelectItem value="Trombone">Trombone</SelectItem>
+                    <SelectItem value="Trompa">Trompa</SelectItem>
+                    <SelectItem value="Tuba">Tuba</SelectItem>
+                </SelectGroup>
+                 <SelectGroup>
+                    <SelectLabel>Teclas</SelectLabel>
+                    <SelectItem value="Piano">Piano</SelectItem>
+                    <SelectItem value="Órgão">Órgão</SelectItem>
+                    <SelectItem value="Cravo">Cravo</SelectItem>
+                    <SelectItem value="Acordeão">Acordeão</SelectItem>
+                 </SelectGroup>
+                 <SelectGroup>
+                    <SelectLabel>Percussão</SelectLabel>
+                    <SelectItem value="Bateria">Bateria</SelectItem>
+                    <SelectItem value="Percussão">Percussão</SelectItem>
+                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
