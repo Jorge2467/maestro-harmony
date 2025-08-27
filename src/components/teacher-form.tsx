@@ -93,7 +93,7 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tee">TEE (Técnicas de Expressão e Execução)</Label>
+            <Label htmlFor="tee">TEE</Label>
             <Textarea id="tee" defaultValue={teacher?.tee} placeholder="Descreva as responsabilidades TEE do professor..." />
           </div>
 
