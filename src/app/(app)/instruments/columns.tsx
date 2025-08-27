@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import type { Instrument } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { mockStudents } from '@/lib/mock-data';
+import { InstrumentForm } from '@/components/instrument-form';
 
 export const columns: ColumnDef<Instrument>[] = [
   {
@@ -77,7 +78,7 @@ export const columns: ColumnDef<Instrument>[] = [
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuItem>Ver Histórico</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Editar Instrumento</DropdownMenuItem>
+            <InstrumentForm instrument={instrument} />
             <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
               Excluir Instrumento
             </DropdownMenuItem>
