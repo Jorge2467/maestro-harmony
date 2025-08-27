@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview An AI agent that summarizes a student's performance.
@@ -31,17 +32,18 @@ const prompt = ai.definePrompt({
   name: 'summarizeStudentPerformancePrompt',
   input: {schema: SummarizeStudentPerformanceInputSchema},
   output: {schema: SummarizeStudentPerformanceOutputSchema},
-  prompt: `You are an AI assistant that helps music coordinators by summarizing student performance.
+  prompt: `Você é um assistente de IA que ajuda coordenadores de música a resumir o desempenho dos alunos.
 
-  Based on the details provided, create a concise summary of the student's performance. The summary should include key strengths,
-  areas where the student needs improvement, and suggestions for future learning paths. Be encouraging and constructive.
+  Com base nos detalhes fornecidos, crie um resumo conciso do desempenho do aluno. O resumo deve incluir os principais pontos fortes,
+  áreas onde o aluno precisa melhorar e sugestões para futuros caminhos de aprendizagem. Seja encorajador e construtivo.
+  Responda em Português.
 
-  Student Name: {{{studentName}}}
-  Student Level: {{{studentLevel}}}
-  Instrument: {{{instrument}}}
-  Performance Details: {{{performanceDetails}}}
+  Nome do Aluno: {{{studentName}}}
+  Nível do Aluno: {{{studentLevel}}}
+  Instrumento: {{{instrument}}}
+  Detalhes do Desempenho: {{{performanceDetails}}}
 
-  Summary:
+  Resumo:
   `,
 });
 
