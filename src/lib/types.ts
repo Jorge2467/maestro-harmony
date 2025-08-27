@@ -58,6 +58,8 @@ export type CalendarEvent = {
   participants?: { id: number; name: string }[];
   evaluators?: { id: number; name: string }[];
   requirements?: string[];
+  guest?: string;
+  topic?: string;
 };
 
 export type Document = {

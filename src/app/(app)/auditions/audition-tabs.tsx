@@ -1,0 +1,37 @@
+'use client';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { CalendarEvent } from "@/lib/types";
+import { AuditionList } from "./audition-list";
+import { EventForm } from "@/components/event-form";
+import { EvaluatorsForm } from "./evaluators-form";
+import { RequirementsForm } from "./requirements-form";
+
+interface AuditionTabsProps {
+    auditions: CalendarEvent[];
+}
+
+export function AuditionTabs({ auditions }: AuditionTabsProps) {
+    return (
+        <Tabs defaultValue="list" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+                <TabsTrigger value="list">Próximas Audições</TabsTrigger>
+                <TabsTrigger value="add">Agendar Audição</TabsTrigger>
+                <TabsTrigger value="evaluators">Avaliadores</TabsTrigger>
+                <TabsTrigger value="requirements">Requisitos</TabsTrigger>
+            </TabsList>
+            <TabsContent value="list">
+                <AuditionList auditions={auditions} />
+            </TabsContent>
+            <TabsContent value="add">
+                 <EventForm />
+            </TabsContent>
+            <TabsContent value="evaluators">
+                <EvaluatorsForm auditions={auditions} />
+            </TabsContent>
+            <TabsContent value="requirements">
+                <RequirementsForm auditions={auditions} />
+            </TabsContent>
+        </Tabs>
+    );
+}
