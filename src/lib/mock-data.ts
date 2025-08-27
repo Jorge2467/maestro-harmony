@@ -5,7 +5,7 @@ export const mockStudents: Student[] = [
   { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active", course: "Curso Básico (Articulado)" },
   { id: 2, name: "Carlos Oliveira", email: "carlos.o@example.com", instrument: "Violino", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)" },
   { id: 3, name: "Mariana Costa", email: "mari.costa@example.com", instrument: "Flauta", level: "Iniciante", status: "pending", course: "Iniciação (3-5 anos)" },
-  { id: 4, name: "João Pereira", email: "joao.pereira@example.com", instrument: "Violão", level: "Intermediário", status: "active", course: "Curso Livre" },
+  { id: 4, name: "João Pereira", email: "joao.pereira@example.com", instrument: "Guitarra", level: "Intermediário", status: "active", course: "Curso Livre" },
   { id: 5, name: "Beatriz Lima", email: "bia.lima@example.com", instrument: "Violoncelo", level: "Avançado", status: "active", course: "Curso Secundário (Supletivo)" },
   { id: 6, name: "Lucas Souza", email: "lucas.souza@example.com", instrument: "Saxofone", level: "Iniciante", status: "inactive", course: "Curso Básico (Supletivo)" },
   { id: 7, name: "Sofia Rodrigues", email: "sofia.r@example.com", instrument: "Piano", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)" },
@@ -13,11 +13,51 @@ export const mockStudents: Student[] = [
 ];
 
 export const mockTeachers: Teacher[] = [
-    { id: 1, name: 'Marcos Vinicius', instruments: ['Piano', 'Teclado'], availability: 'Manhãs', status: 'active', email: 'marcos.v@example.com' },
-    { id: 2, name: 'Juliana Paes', instruments: ['Violino', 'Viola'], availability: 'Tardes', status: 'active', email: 'juliana.p@example.com' },
-    { id: 3, name: 'Ricardo Gomes', instruments: ['Violão', 'Guitarra'], availability: 'Noites', status: 'inactive', email: 'ricardo.g@example.com' },
-    { id: 4, name: 'Clara Nunes', instruments: ['Flauta', 'Clarinete'], availability: 'Manhãs e Tardes', status: 'active', email: 'clara.n@example.com' },
-    { id: 5, name: 'Fábio Rocha', instruments: ['Violoncelo'], availability: 'Tardes', status: 'active', email: 'fabio.r@example.com' },
+    { 
+      id: 1, name: 'Marcos Vinicius', instruments: ['Piano', 'Teclado'], availability: 'Manhãs', status: 'active', email: 'marcos.v@example.com',
+      charge: 'Chefe de Departamento de Teclas',
+      schedule: {
+        "Segunda": "09:00 - 13:00", "Terça": "09:00 - 13:00", "Quarta": "09:00 - 13:00",
+        "Quinta": "N/A", "Sexta": "09:00 - 12:00", "Sábado": "N/A"
+      },
+      tee: "Acompanhamento de alunos de piano para recitais."
+    },
+    { 
+      id: 2, name: 'Juliana Paes', instruments: ['Violino', 'Viola'], availability: 'Tardes', status: 'active', email: 'juliana.p@example.com',
+      charge: 'Professora Titular de Cordas',
+      schedule: {
+        "Segunda": "14:00 - 18:00", "Terça": "14:00 - 18:00", "Quarta": "N/A",
+        "Quinta": "14:00 - 18:00", "Sexta": "14:00 - 17:00", "Sábado": "N/A"
+      },
+      tee: "Preparação da orquestra de cordas júnior."
+    },
+    { 
+      id: 3, name: 'Ricardo Gomes', instruments: ['Violão', 'Guitarra'], availability: 'Noites', status: 'inactive', email: 'ricardo.g@example.com',
+      charge: 'Professor Assistente',
+      schedule: {
+        "Segunda": "18:00 - 21:00", "Terça": "18:00 - 21:00", "Quarta": "18:00 - 21:00",
+        "Quinta": "18:00 - 21:00", "Sexta": "N/A", "Sábado": "N/A"
+      },
+      tee: ""
+    },
+    { 
+      id: 4, name: 'Clara Nunes', instruments: ['Flauta', 'Clarinete'], availability: 'Manhãs e Tardes', status: 'active', email: 'clara.n@example.com',
+      charge: 'Professora de Sopros',
+      schedule: {
+        "Segunda": "N/A", "Terça": "10:00 - 16:00", "Quarta": "10:00 - 16:00",
+        "Quinta": "10:00 - 16:00", "Sexta": "N/A", "Sábado": "10:00 - 13:00"
+      },
+      tee: "Coordenação do quinteto de sopros."
+    },
+    { 
+      id: 5, name: 'Fábio Rocha', instruments: ['Violoncelo'], availability: 'Tardes', status: 'active', email: 'fabio.r@example.com',
+      charge: 'Professor Substituto',
+      schedule: {
+        "Segunda": "15:00 - 19:00", "Terça": "N/A", "Quarta": "15:00 - 19:00",
+        "Quinta": "15:00 - 19:00", "Sexta": "15:00 - 19:00", "Sábado": "N/A"
+      },
+      tee: ""
+    },
 ];
 
 export const mockInstruments: Instrument[] = [

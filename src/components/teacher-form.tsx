@@ -23,6 +23,7 @@ import {
 import type { Teacher } from '@/lib/types';
 import { PlusCircle, Edit } from 'lucide-react';
 import { DropdownMenuItem } from './ui/dropdown-menu';
+import { Textarea } from './ui/textarea';
 
 interface TeacherFormProps {
   teacher?: Teacher;
@@ -46,7 +47,7 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{Trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{isEditMode ? 'Editar Professor' : 'Adicionar Novo Professor'}</DialogTitle>
           <DialogDescription>
@@ -54,36 +55,54 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Nome
-            </Label>
-            <Input id="name" defaultValue={teacher?.name} className="col-span-3" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="name">Nome</Label>
+              <Input id="name" defaultValue={teacher?.name} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input id="email" type="email" defaultValue={teacher?.email} />
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
-              Email
-            </Label>
-            <Input id="email" type="email" defaultValue={teacher?.email} className="col-span-3" />
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+                <Label htmlFor="charge">Cargo</Label>
+                <Input id="charge" defaultValue={teacher?.charge} placeholder="Ex: Chefe de Departamento" />
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="instruments">Instrumentos</Label>
+                <Input id="instruments" defaultValue={teacher?.instruments.join(', ')} />
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="instruments" className="text-right">
-              Instrumentos
-            </Label>
-            <Input id="instruments" defaultValue={teacher?.instruments.join(', ')} className="col-span-3" />
+          
+          <div>
+            <Label>Horário Semanal</Label>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 p-3 border rounded-md">
+                {Object.entries(teacher?.schedule || {
+                    "Segunda": "N/A", "Terça": "N/A", "Quarta": "N/A", 
+                    "Quinta": "N/A", "Sexta": "N/A", "Sábado": "N/A"
+                }).map(([day, time]) => (
+                    <div key={day} className="grid grid-cols-3 items-center gap-2">
+                        <Label htmlFor={`time-${day}`} className="text-right text-sm font-normal">{day}</Label>
+                        <Input id={`time-${day}`} defaultValue={time} className="col-span-2 h-8" />
+                    </div>
+                ))}
+            </div>
           </div>
-           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="availability" className="text-right">
-              Disponibilidade
-            </Label>
-            <Input id="availability" defaultValue={teacher?.availability} className="col-span-3" />
+
+          <div className="space-y-2">
+            <Label htmlFor="tee">TEE (Técnicas de Expressão e Execução)</Label>
+            <Textarea id="tee" defaultValue={teacher?.tee} placeholder="Descreva as responsabilidades TEE do professor..." />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="status" className="text-right">
+
+          <div className="space-y-2">
+            <Label htmlFor="status">
               Status
             </Label>
             <Select defaultValue={teacher?.status}>
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Selecione o status" />
               </SelectTrigger>
               <SelectContent>
