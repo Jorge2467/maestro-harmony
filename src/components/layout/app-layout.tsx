@@ -35,6 +35,7 @@ import {
   Bot,
   BarChart,
   MessageSquare,
+  Video,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -81,6 +82,13 @@ const navItems = [
       { href: '/documents', icon: Folder, label: 'Documentos' },
     ],
   },
+   {
+    title: 'Análise e Ensino',
+    items: [
+        { href: '/progress-analysis', icon: BarChart, label: 'Análise de Progresso' },
+        { href: '/video-lessons', icon: Video, label: 'Videoaulas' },
+    ],
+  },
   {
     title: 'Inteligência Artificial',
     items: [
@@ -116,15 +124,15 @@ function AppSidebar() {
     concerts: state.events,
   }));
 
-  const getBadgeCount = (badgeKey?: string) => {
-    if (!badgeKey) return null;
-    switch (badgeKey) {
-      case 'students':
-        return students?.length.toString();
-      case 'teachers':
-        return teachers?.length.toString();
-      case 'concerts':
-        return concerts ? concerts.filter(c => c.type === 'Concerto').length.toString() : '0';
+  const getBadgeCount = (href: string) => {
+    switch (href) {
+      case '/students':
+        return students.length > 0 ? students.length.toString() : null;
+      case '/teachers':
+        return teachers.length > 0 ? teachers.length.toString() : null;
+      case '/concerts':
+        const concertCount = concerts.filter(c => c.type === 'Concerto').length;
+        return concertCount > 0 ? concertCount.toString() : null;
       default:
         return null;
     }
@@ -156,7 +164,7 @@ function AppSidebar() {
                     >
                       <item.icon className="h-5 w-5" />
                       <span>{item.label}</span>
-                      {getBadgeCount(item.badgeKey) && <span className="ml-auto bg-accent text-accent-foreground text-xs rounded-full px-2 py-0.5">{getBadgeCount(item.badgeKey)}</span>}
+                      {getBadgeCount(item.href) && <span className="ml-auto bg-accent text-accent-foreground text-xs rounded-full px-2 py-0.5">{getBadgeCount(item.href)}</span>}
                     </Link>
                   </li>
                 ))}
