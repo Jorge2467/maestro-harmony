@@ -1,17 +1,19 @@
+
 'use client';
 
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode, Dispatch, SetStateAction } from 'react';
 import type { User } from '@/lib/types';
 
 type UserContextType = {
   user: User;
+  setUser?: Dispatch<SetStateAction<User | null>>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export function UserProvider({ children, user }: { children: ReactNode; user: User }) {
+export function UserProvider({ children, user, setUser }: { children: ReactNode; user: User, setUser?: Dispatch<SetStateAction<User | null>> }) {
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );

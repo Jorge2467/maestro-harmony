@@ -1,20 +1,52 @@
+
 'use client'
 
+import { useState } from 'react';
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/contexts/user-context";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 export default function ProfilePage() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   
+  // Estado local para el formulario
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+  });
+
   if (!user) {
     return null; // O un spinner de carga
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSaveChanges = () => {
+    if (setUser) {
+      setUser({ ...user, ...formData });
+    }
+    setIsDialogOpen(false); // Cierra el dialogo
+  };
+  
+  const handleDialogClose = () => {
+    // Restaura el formData al estado original del usuario cuando se cierra el dialogo
+    setFormData({
+        name: user.name,
+        email: user.email,
+        phone: user.phone || '',
+    });
+    setIsDialogOpen(false);
+  };
 
   return (
     <div>
@@ -46,11 +78,11 @@ export default function ProfilePage() {
                    <p>Aqui você poderá alterar sua senha e outras configurações.</p>
                 </div>
             </div>
-            <Dialog>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
               <DialogTrigger asChild>
-                <Button>Editar Perfil</Button>
+                <Button onClick={() => setIsDialogOpen(true)}>Editar Perfil</Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
+              <DialogContent className="sm:max-w-[425px]" onEscapeKeyDown={handleDialogClose} onPointerDownOutside={handleDialogClose}>
                 <DialogHeader>
                   <DialogTitle>Editar Perfil</DialogTitle>
                   <DialogDescription>
@@ -72,23 +104,26 @@ export default function ProfilePage() {
                     <Label htmlFor="name" className="text-right">
                       Nome
                     </Label>
-                    <Input id="name" defaultValue={user.name} className="col-span-3" />
+                    <Input id="name" value={formData.name} onChange={handleInputChange} className="col-span-3" />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="email" className="text-right">
                       Email
                     </Label>
-                    <Input id="email" type="email" defaultValue={user.email} className="col-span-3" />
+                    <Input id="email" type="email" value={formData.email} onChange={handleInputChange} className="col-span-3" />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="phone" className="text-right">
                       Telefone
                     </Label>
-                    <Input id="phone" defaultValue={user.phone || '(11) 98765-4321'} className="col-span-3" />
+                    <Input id="phone" value={formData.phone} onChange={handleInputChange} className="col-span-3" />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Salvar Alterações</Button>
+                  <DialogClose asChild>
+                    <Button variant="outline" onClick={handleDialogClose}>Cancelar</Button>
+                  </DialogClose>
+                  <Button type="button" onClick={handleSaveChanges}>Salvar Alterações</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>

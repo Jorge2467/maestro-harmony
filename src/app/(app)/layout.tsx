@@ -1,3 +1,4 @@
+
 'use client';
 
 import { AppLayout } from '@/components/layout/app-layout';
@@ -22,6 +23,7 @@ function useAuth() {
           email: 'carlos.oliveira@maestroharmony.com',
           role: 'admin',
           avatarUrl: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+          phone: '(11) 98765-4321',
         });
       } else {
         setUser(null);
@@ -32,12 +34,12 @@ function useAuth() {
     checkAuth();
   }, []);
 
-  return { user, loading };
+  return { user, setUser, loading };
 }
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, setUser, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
   
   return (
-    <UserProvider user={user}>
+    <UserProvider user={user} setUser={setUser}>
         <AppLayout>{children}</AppLayout>
     </UserProvider>
   );
