@@ -16,6 +16,7 @@ const SummarizeStudentPerformanceInputSchema = z.object({
   studentLevel: z.string().describe('The level of the student (e.g., Beginner, Intermediate, Advanced).'),
   instrument: z.string().describe('The instrument the student is learning (e.g., Piano, Violin, Guitar).'),
   performanceDetails: z.string().describe('Detailed information about the student\'s performance, progress, and areas of concern.'),
+  course: z.string().describe('The course the student is enrolled in.'),
 });
 export type SummarizeStudentPerformanceInput = z.infer<typeof SummarizeStudentPerformanceInputSchema>;
 
@@ -41,6 +42,7 @@ const prompt = ai.definePrompt({
   Nome do Aluno: {{{studentName}}}
   Nível do Aluno: {{{studentLevel}}}
   Instrumento: {{{instrument}}}
+  Curso: {{{course}}}
   Detalhes do Desempenho: {{{performanceDetails}}}
 
   Resumo:

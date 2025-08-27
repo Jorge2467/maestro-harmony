@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useActionState } from 'react';
@@ -9,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { BrainCircuit, Loader, FileText, BotMessageSquare } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { mockStudents } from '@/lib/mock-data';
 
 const initialState = {
@@ -59,23 +60,94 @@ export function SummaryForm() {
                 </Select>
                  {state?.errors?.studentName && <p className="text-sm text-destructive">{state.errors.studentName[0]}</p>}
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="instrument">Instrumento</Label>
-                 <Select name="instrument">
-                  <SelectTrigger id="instrument">
-                    <SelectValue placeholder="Selecione um instrumento" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Piano">Piano</SelectItem>
-                    <SelectItem value="Violino">Violino</SelectItem>
-                    <SelectItem value="Violão">Violão</SelectItem>
-                    <SelectItem value="Flauta">Flauta</SelectItem>
-                    <SelectItem value="Violoncelo">Violoncelo</SelectItem>
-                    <SelectItem value="Saxofone">Saxofone</SelectItem>
-                  </SelectContent>
+               <div className="space-y-2">
+                <Label htmlFor="course">Curso</Label>
+                <Select name="course">
+                <SelectTrigger>
+                    <SelectValue placeholder="Selecione um curso" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectGroup>
+                    <SelectLabel>Iniciação Musical</SelectLabel>
+                    <SelectItem value="Música para Bebés (0-36m)">Música para Bebés (0-36m)</SelectItem>
+                    <SelectItem value="Iniciação (3-5 anos)">Iniciação (3-5 anos)</SelectItem>
+                    </SelectGroup>
+                    <SelectGroup>
+                    <SelectLabel>Ensino Articulado</SelectLabel>
+                    <SelectItem value="Curso Básico (Articulado)">Curso Básico (Articulado)</SelectItem>
+                    <SelectItem value="Curso Secundário (Articulado)">Curso Secundário (Articulado)</SelectItem>
+                    </SelectGroup>
+                    <SelectGroup>
+                        <SelectLabel>Ensino Supletivo</SelectLabel>
+                        <SelectItem value="Curso Básico (Supletivo)">Curso Básico (Supletivo)</SelectItem>
+                        <SelectItem value="Curso Secundário (Supletivo)">Curso Secundário (Supletivo)</SelectItem>
+                    </SelectGroup>
+                     <SelectGroup>
+                        <SelectLabel>Ensino Profissional</SelectLabel>
+                        <SelectItem value="Curso Profissional de Instrumentista de Cordas e de Tecla">Curso Profissional de Instrumentista de Cordas e de Tecla</SelectItem>
+                        <SelectItem value="Curso Profissional de Instrumentista de Sopro e de Percussão">Curso Profissional de Instrumentista de Sopro e de Percussão</SelectItem>
+                    </SelectGroup>
+                    <SelectGroup>
+                        <SelectLabel>Curso Livre</SelectLabel>
+                        <SelectItem value="Curso Livre">Curso Livre</SelectItem>
+                    </SelectGroup>
+                </SelectContent>
                 </Select>
-                 {state?.errors?.instrument && <p className="text-sm text-destructive">{state.errors.instrument[0]}</p>}
               </div>
+            </div>
+            <div className="space-y-2">
+                <Label htmlFor="instrument">Instrumento</Label>
+                    <Select name="instrument">
+                    <SelectTrigger>
+                        <SelectValue placeholder="Selecione um instrumento" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Cordas</SelectLabel>
+                            <SelectItem value="Violino">Violino</SelectItem>
+                            <SelectItem value="Viola">Viola</SelectItem>
+                            <SelectItem value="Violoncelo">Violoncelo</SelectItem>
+                            <SelectItem value="Contrabaixo">Contrabaixo</SelectItem>
+                            <SelectItem value="Guitarra">Guitarra</SelectItem>
+                            <SelectItem value="Harpa">Harpa</SelectItem>
+                            <SelectItem value="Mandolina">Mandolina</SelectItem>
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Cordofones Madeirenses</SelectLabel>
+                            <SelectItem value="Braguinha">Braguinha</SelectItem>
+                            <SelectItem value="Rajão">Rajão</SelectItem>
+                            <SelectItem value="Viola de arame">Viola de arame</SelectItem>
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Madeiras</SelectLabel>
+                            <SelectItem value="Flauta">Flauta</SelectItem>
+                            <SelectItem value="Clarinete">Clarinete</SelectItem>
+                            <SelectItem value="Oboé">Oboé</SelectItem>
+                            <SelectItem value="Fagote">Fagote</SelectItem>
+                            <SelectItem value="Saxofone">Saxofone</SelectItem>
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Metais</SelectLabel>
+                            <SelectItem value="Trompete">Trompete</SelectItem>
+                            <SelectItem value="Trombone">Trombone</SelectItem>
+                            <SelectItem value="Trompa">Trompa</SelectItem>
+                            <SelectItem value="Tuba">Tuba</SelectItem>
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Teclas</SelectLabel>
+                            <SelectItem value="Piano">Piano</SelectItem>
+                            <SelectItem value="Órgão">Órgão</SelectItem>
+                            <SelectItem value="Cravo">Cravo</SelectItem>
+                            <SelectItem value="Acordeão">Acordeão</SelectItem>
+                        </SelectGroup>
+                        <SelectGroup>
+                            <SelectLabel>Percussão</SelectLabel>
+                            <SelectItem value="Bateria">Bateria</SelectItem>
+                            <SelectItem value="Percussão">Percussão</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+                {state?.errors?.instrument && <p className="text-sm text-destructive">{state.errors.instrument[0]}</p>}
             </div>
              <div className="space-y-2">
               <Label htmlFor="studentLevel">Nível Atual</Label>

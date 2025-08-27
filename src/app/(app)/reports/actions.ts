@@ -1,3 +1,4 @@
+
 "use server";
 
 import { summarizeStudentPerformance } from "@/ai/flows/summarize-student-performance";
@@ -8,6 +9,7 @@ const SummarySchema = z.object({
   instrument: z.string().min(1, { message: "Selecione um instrumento." }),
   performanceDetails: z.string().min(10, { message: "Por favor, descreva o desempenho com mais detalhes." }),
   studentLevel: z.string().min(1, { message: "Selecione um nível." }),
+  course: z.string().min(1, { message: "Selecione um curso." }),
 });
 
 export async function getSummary(prevState: any, formData: FormData) {
@@ -16,6 +18,7 @@ export async function getSummary(prevState: any, formData: FormData) {
     instrument: formData.get("instrument"),
     performanceDetails: formData.get("performanceDetails"),
     studentLevel: formData.get("studentLevel"),
+    course: formData.get("course"),
   });
 
   if (!validatedFields.success) {
