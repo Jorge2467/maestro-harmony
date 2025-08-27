@@ -2,22 +2,22 @@
 import type { Student, Teacher, Instrument, CalendarEvent, Document } from '@/lib/types';
 
 export const mockStudents: Student[] = [
-  { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active" },
-  { id: 2, name: "Carlos Oliveira", email: "carlos.o@example.com", instrument: "Violino", level: "Avançado", status: "active" },
-  { id: 3, name: "Mariana Costa", email: "mari.costa@example.com", instrument: "Flauta", level: "Iniciante", status: "pending" },
-  { id: 4, name: "João Pereira", email: "joao.pereira@example.com", instrument: "Violão", level: "Intermediário", status: "active" },
-  { id: 5, name: "Beatriz Lima", email: "bia.lima@example.com", instrument: "Violoncelo", level: "Avançado", status: "active" },
-  { id: 6, name: "Lucas Souza", email: "lucas.souza@example.com", instrument: "Saxofone", level: "Iniciante", status: "inactive" },
-  { id: 7, name: "Sofia Rodrigues", email: "sofia.r@example.com", instrument: "Piano", level: "Avançado", status: "active" },
-  { id: 8, name: "Gabriel Alves", email: "gabriel.alves@example.com", instrument: "Violino", level: "Iniciante", status: "pending" },
+  { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active", course: "Curso Básico (Articulado)" },
+  { id: 2, name: "Carlos Oliveira", email: "carlos.o@example.com", instrument: "Violino", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)" },
+  { id: 3, name: "Mariana Costa", email: "mari.costa@example.com", instrument: "Flauta", level: "Iniciante", status: "pending", course: "Iniciação (3-5 anos)" },
+  { id: 4, name: "João Pereira", email: "joao.pereira@example.com", instrument: "Violão", level: "Intermediário", status: "active", course: "Curso Livre" },
+  { id: 5, name: "Beatriz Lima", email: "bia.lima@example.com", instrument: "Violoncelo", level: "Avançado", status: "active", course: "Curso Secundário (Supletivo)" },
+  { id: 6, name: "Lucas Souza", email: "lucas.souza@example.com", instrument: "Saxofone", level: "Iniciante", status: "inactive", course: "Curso Básico (Supletivo)" },
+  { id: 7, name: "Sofia Rodrigues", email: "sofia.r@example.com", instrument: "Piano", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)" },
+  { id: 8, name: "Gabriel Alves", email: "gabriel.alves@example.com", instrument: "Violino", level: "Iniciante", status: "pending", course: "Música para Bebés (0-36m)" },
 ];
 
 export const mockTeachers: Teacher[] = [
-    { id: 1, name: 'Marcos Vinicius', instruments: ['Piano', 'Teclado'], availability: 'Manhãs', status: 'active' },
-    { id: 2, name: 'Juliana Paes', instruments: ['Violino', 'Viola'], availability: 'Tardes', status: 'active' },
-    { id: 3, name: 'Ricardo Gomes', instruments: ['Violão', 'Guitarra'], availability: 'Noites', status: 'inactive' },
-    { id: 4, name: 'Clara Nunes', instruments: ['Flauta', 'Clarinete'], availability: 'Manhãs e Tardes', status: 'active' },
-    { id: 5, name: 'Fábio Rocha', instruments: ['Violoncelo'], availability: 'Tardes', status: 'active' },
+    { id: 1, name: 'Marcos Vinicius', instruments: ['Piano', 'Teclado'], availability: 'Manhãs', status: 'active', email: 'marcos.v@example.com' },
+    { id: 2, name: 'Juliana Paes', instruments: ['Violino', 'Viola'], availability: 'Tardes', status: 'active', email: 'juliana.p@example.com' },
+    { id: 3, name: 'Ricardo Gomes', instruments: ['Violão', 'Guitarra'], availability: 'Noites', status: 'inactive', email: 'ricardo.g@example.com' },
+    { id: 4, name: 'Clara Nunes', instruments: ['Flauta', 'Clarinete'], availability: 'Manhãs e Tardes', status: 'active', email: 'clara.n@example.com' },
+    { id: 5, name: 'Fábio Rocha', instruments: ['Violoncelo'], availability: 'Tardes', status: 'active', email: 'fabio.r@example.com' },
 ];
 
 export const mockInstruments: Instrument[] = [
@@ -37,13 +37,13 @@ export const mockActivities = [
 ];
 
 export const mockEvents: CalendarEvent[] = [
-    { id: 1, date: new Date(), title: 'Audição de Piano', description: 'Audições semestrais para alunos de piano.', type: 'Audição', time: '14:00 - 17:00', location: 'Auditório Principal' },
-    { id: 2, date: new Date(), title: 'Reunião de Professores', description: 'Reunião mensal de alinhamento.', type: 'Reunião', time: '10:00 - 11:00', location: 'Sala de Reuniões' },
-    { id: 3, date: new Date(new Date().setDate(new Date().getDate() + 5)), title: 'Concerto de Cordas', description: 'Apresentação da orquestra de cordas.', type: 'Concerto', time: '19:00', location: 'Teatro Municipal' },
-    { id: 4, date: new Date(new Date().setDate(new Date().getDate() + 12)), title: 'Masterclass de Violino', description: 'com Maestro Itzhak Perlman.', type: 'Masterclass', time: '15:00', location: 'Sala de Concertos' },
-    { id: 5, date: new Date(new Date().setDate(new Date().getDate() - 3)), title: 'Concerto de Gala', description: 'Apresentação anual de gala.', type: 'Concerto', time: '20:00', location: 'Teatro Municipal' },
-    { id: 6, date: new Date(new Date().setDate(new Date().getDate() + 25)), title: 'Concerto de Música de Câmara', description: 'Obras de Mozart e Beethoven.', type: 'Concerto', time: '20:00', location: 'Sala de Concertos' },
-    { id: 7, date: new Date(new Date().setDate(new Date().getDate() + 40)), title: 'Audição de Sopros', description: 'Audição para alunos de flauta e clarinete.', type: 'Audição', time: '16:00', location: 'Auditório Principal' }
+    { id: 1, date: new Date(), title: 'Audição de Piano', description: 'Audições semestrais para alunos de piano.', type: 'Audição', time: '14:00 - 17:00', location: 'Auditório Principal', status: 'Próxima', participants: mockStudents.filter(s => s.instrument === 'Piano').slice(0,4) },
+    { id: 2, date: new Date(), title: 'Reunião de Professores', description: 'Reunião mensal de alinhamento.', type: 'Reunião', time: '10:00 - 11:00', location: 'Sala de Reuniões', status: 'Próxima' },
+    { id: 3, date: new Date(new Date().setDate(new Date().getDate() + 5)), title: 'Concerto de Cordas', description: 'Apresentação da orquestra de cordas.', type: 'Concerto', time: '19:00', location: 'Teatro Municipal', status: 'Próxima' },
+    { id: 4, date: new Date(new Date().setDate(new Date().getDate() + 12)), title: 'Masterclass de Violino', description: 'com Maestro Itzhak Perlman.', type: 'Masterclass', time: '15:00', location: 'Sala de Concertos', status: 'Próxima' },
+    { id: 5, date: new Date(new Date().setDate(new Date().getDate() - 3)), title: 'Concerto de Gala', description: 'Apresentação anual de gala.', type: 'Concerto', time: '20:00', location: 'Teatro Municipal', status: 'Realizada' },
+    { id: 6, date: new Date(new Date().setDate(new Date().getDate() + 25)), title: 'Concerto de Música de Câmara', description: 'Obras de Mozart e Beethoven.', type: 'Concerto', time: '20:00', location: 'Sala de Concertos', status: 'Próxima' },
+    { id: 7, date: new Date(new Date().setDate(new Date().getDate() + 40)), title: 'Audição de Sopros', description: 'Audição para alunos de flauta e clarinete.', type: 'Audição', time: '16:00', location: 'Auditório Principal', status: 'Próxima', participants: mockStudents.filter(s => s.instrument === 'Flauta') }
 
 ];
 

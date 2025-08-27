@@ -45,6 +45,10 @@ export type CalendarEvent = {
   type: 'Concerto' | 'Audição' | 'Masterclass' | 'Reunião';
   time: string;
   location?: string;
+  status?: 'Próxima' | 'Realizada' | 'Cancelada';
+  participants?: { id: number; name: string }[];
+  evaluators?: { id: number; name: string }[];
+  requirements?: string[];
 };
 
 export type Document = {
