@@ -115,9 +115,8 @@ export const columns: ColumnDef<Instrument>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuItem>Ver Histórico</DropdownMenuItem>
-              <DropdownMenuSeparator />
               <InstrumentForm instrument={instrument} />
+              <DropdownMenuSeparator />
               <AlertDialogTrigger asChild>
                  <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
                     Excluir Instrumento
