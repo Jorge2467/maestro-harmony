@@ -43,6 +43,14 @@ export const columns: ColumnDef<Student>[] = [
     accessorKey: 'level',
     header: 'Nível',
   },
+   {
+    accessorKey: 'course',
+    header: 'Curso',
+    cell: ({ row }) => {
+      const course = row.getValue('course') as string;
+      return <span className="text-muted-foreground">{course || 'N/A'}</span>;
+    }
+  },
   {
     accessorKey: 'status',
     header: 'Status',
