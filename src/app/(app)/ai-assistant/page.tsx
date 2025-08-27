@@ -77,8 +77,8 @@ export default function AiAssistantPage() {
                                     {messages.map((msg, index) => (
                                         <div key={index} className={`flex items-end gap-3 ${msg.sender === 'user' ? 'justify-end' : ''}`}>
                                             {msg.sender === 'bot' && <Avatar><AvatarFallback className="bg-primary text-primary-foreground"><Bot /></AvatarFallback></Avatar>}
-                                            <div className={`max-w-md p-3 rounded-lg ${msg.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
-                                                <p className="text-sm">{msg.text}</p>
+                                            <div className={`max-w-md p-3 rounded-lg text-sm ${msg.sender === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
+                                                {typeof msg.text === 'string' ? <p>{msg.text}</p> : msg.text}
                                             </div>
                                         </div>
                                     ))}
