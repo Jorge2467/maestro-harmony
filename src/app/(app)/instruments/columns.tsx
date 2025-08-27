@@ -1,3 +1,4 @@
+
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
@@ -36,14 +37,24 @@ export const columns: ColumnDef<Instrument>[] = [
           ? 'bg-green-500/20 text-green-700 hover:bg-green-500/30'
           : status === 'Em Uso'
           ? 'bg-blue-500/20 text-blue-700 hover:bg-blue-500/30'
-          : 'bg-yellow-500/20 text-yellow-700 hover:bg-yellow-500/30';
+          : status === 'Em Reparo'
+          ? 'bg-yellow-500/20 text-yellow-700 hover:bg-yellow-500/30'
+          : 'bg-orange-500/20 text-orange-700 hover:bg-orange-500/30';
 
       return <Badge variant="secondary" className={cn('border-none', statusClass)}>{status}</Badge>;
     },
   },
+   {
+    accessorKey: 'location',
+    header: 'Localização',
+     cell: ({ row }) => {
+        const location = row.getValue('location') as string;
+        return <span className="text-muted-foreground">{location || 'N/A'}</span>;
+    }
+  },
   {
     accessorKey: 'studentId',
-    header: 'Em posse de',
+    header: 'Associado a',
     cell: ({ row }) => {
       const studentId = row.getValue('studentId') as number | null;
       if (!studentId) {

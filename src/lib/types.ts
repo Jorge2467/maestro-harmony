@@ -1,5 +1,4 @@
 
-
 export type Student = {
   id: number;
   name: string;
@@ -33,9 +32,10 @@ export type Instrument = {
   id: number;
   type: string;
   serialNumber: string;
-  status: 'Disponível' | 'Em Uso' | 'Em Reparo';
+  status: 'Disponível' | 'Em Uso' | 'Em Reparo' | 'Avariado';
   lastMaintenance: string;
   studentId?: number | null;
+  location?: string;
 };
 
 export type User = {

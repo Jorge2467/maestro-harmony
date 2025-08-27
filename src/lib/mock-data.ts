@@ -61,12 +61,12 @@ export const mockTeachers: Teacher[] = [
 ];
 
 export const mockInstruments: Instrument[] = [
-    { id: 1, type: 'Piano de Cauda', serialNumber: 'YMH-12345', status: 'Disponível', lastMaintenance: '2023-10-15', studentId: null },
-    { id: 2, type: 'Violino Stradivarius', serialNumber: 'STR-67890', status: 'Em Uso', lastMaintenance: '2024-01-20', studentId: 2 },
-    { id: 3, type: 'Violão Clássico', serialNumber: 'GIB-11223', status: 'Em Reparo', lastMaintenance: '2023-11-05', studentId: null },
-    { id: 4, type: 'Flauta Transversal', serialNumber: 'FLT-44556', status: 'Disponível', lastMaintenance: '2024-02-10', studentId: null },
-    { id: 5, type: 'Violoncelo', serialNumber: 'VCL-77889', status: 'Em Uso', lastMaintenance: '2023-12-30', studentId: 5 },
-    { id: 6, type: 'Saxofone Alto', serialNumber: 'SAX-99001', status: 'Disponível', lastMaintenance: '2024-03-01', studentId: null },
+    { id: 1, type: 'Piano de Cauda', serialNumber: 'YMH-12345', status: 'Disponível', lastMaintenance: '2023-10-15', studentId: null, location: 'Sala de Concertos' },
+    { id: 2, type: 'Violino Stradivarius', serialNumber: 'STR-67890', status: 'Em Uso', lastMaintenance: '2024-01-20', studentId: 2, location: 'Com aluno' },
+    { id: 3, type: 'Violão Clássico', serialNumber: 'GIB-11223', status: 'Em Reparo', lastMaintenance: '2023-11-05', studentId: null, location: 'Luthieria' },
+    { id: 4, type: 'Flauta Transversal', serialNumber: 'FLT-44556', status: 'Disponível', lastMaintenance: '2024-02-10', studentId: null, location: 'Armazém 1' },
+    { id: 5, type: 'Violoncelo', serialNumber: 'VCL-77889', status: 'Em Uso', lastMaintenance: '2023-12-30', studentId: 5, location: 'Com aluno' },
+    { id: 6, type: 'Saxofone Alto', serialNumber: 'SAX-99001', status: 'Avariado', lastMaintenance: '2024-03-01', studentId: null, location: 'Armazém 1' },
 ];
 
 export const mockActivities = [
