@@ -10,40 +10,46 @@ import { useUser } from "@/contexts/user-context";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import type { User } from '@/lib/types';
 
 export default function ProfilePage() {
   const { user, setUser } = useUser();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   
-  // Estado local para el formulario
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
     phone: user?.phone || '',
+    role: user?.role || 'coordinator',
   });
 
   if (!user) {
-    return null; // O un spinner de carga
+    return null; 
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
   };
+  
+  const handleRoleChange = (value: User['role']) => {
+    setFormData(prev => ({ ...prev, role: value }));
+  };
 
   const handleSaveChanges = () => {
     if (setUser) {
       setUser({ ...user, ...formData });
     }
-    setIsDialogOpen(false); // Cierra el dialogo
+    setIsDialogOpen(false); 
   };
   
   const handleDialogClose = () => {
-    // Restaura el formData al estado original del usuario cuando se cierra el dialogo
     setFormData({
         name: user.name,
         email: user.email,
         phone: user.phone || '',
+        role: user.role,
     });
     setIsDialogOpen(false);
   };
@@ -117,6 +123,20 @@ export default function ProfilePage() {
                       Telefone
                     </Label>
                     <Input id="phone" value={formData.phone} onChange={handleInputChange} className="col-span-3" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="role" className="text-right">
+                        Cargo
+                    </Label>
+                    <Select value={formData.role} onValueChange={handleRoleChange}>
+                        <SelectTrigger className="col-span-3">
+                            <SelectValue placeholder="Selecione um cargo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="admin">Admin</SelectItem>
+                            <SelectItem value="coordinator">Coordinator</SelectItem>
+                        </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <DialogFooter>
