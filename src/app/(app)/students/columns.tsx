@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, Clock, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -16,6 +16,7 @@ import type { Student } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { StudentForm } from '@/components/student-form';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 export const columns: ColumnDef<Student>[] = [
   {
@@ -49,6 +50,37 @@ export const columns: ColumnDef<Student>[] = [
     cell: ({ row }) => {
       const course = row.getValue('course') as string;
       return <span className="text-muted-foreground">{course || 'N/A'}</span>;
+    }
+  },
+  {
+    accessorKey: 'schedule',
+    header: 'Horário',
+    cell: ({ row }) => {
+      const schedule = row.original.schedule;
+      if (!schedule?.instrumento) {
+        return <span className="text-muted-foreground">N/A</span>;
+      }
+      
+      const hasMoreSchedules = schedule.classeDeConjunto || schedule.formacaoMusical || schedule.outrasDisciplinas;
+      
+      return (
+        <div className="flex items-center gap-2">
+            <Clock className="h-4 w-4 text-muted-foreground" />
+            <span className="text-muted-foreground">{schedule.instrumento}</span>
+            {hasMoreSchedules && (
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger>
+                            <PlusCircle className="h-4 w-4 text-blue-500" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Este aluno tem horários adicionais.</p>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
+            )}
+        </div>
+      )
     }
   },
   {

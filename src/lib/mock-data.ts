@@ -2,13 +2,13 @@
 import type { Student, Teacher, Instrument, CalendarEvent, Document } from '@/lib/types';
 
 export const mockStudents: Student[] = [
-  { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active", course: "Curso Básico (Articulado)" },
-  { id: 2, name: "Carlos Oliveira", email: "carlos.o@example.com", instrument: "Violino", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)" },
-  { id: 3, name: "Mariana Costa", email: "mari.costa@example.com", instrument: "Flauta", level: "Iniciante", status: "pending", course: "Iniciação (3-5 anos)" },
-  { id: 4, name: "João Pereira", email: "joao.pereira@example.com", instrument: "Guitarra", level: "Intermediário", status: "active", course: "Curso Livre" },
-  { id: 5, name: "Beatriz Lima", email: "bia.lima@example.com", instrument: "Violoncelo", level: "Avançado", status: "active", course: "Curso Secundário (Supletivo)" },
+  { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active", course: "Curso Básico (Articulado)", schedule: { instrumento: "Seg, Qua 16:00-17:00", classeDeConjunto: "Sex 18:00-19:30", formacaoMusical: "Ter 15:00-16:00" } },
+  { id: 2, name: "Carlos Oliveira", email: "carlos.o@example.com", instrument: "Violino", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)", schedule: { instrumento: "Ter, Qui 17:00-18:30", classeDeConjunto: "Sex 18:00-19:30", formacaoMusical: "Qua 18:00-19:00" } },
+  { id: 3, name: "Mariana Costa", email: "mari.costa@example.com", instrument: "Flauta", level: "Iniciante", status: "pending", course: "Iniciação (3-5 anos)", schedule: { instrumento: "Sáb 10:00-11:00" } },
+  { id: 4, name: "João Pereira", email: "joao.pereira@example.com", instrument: "Guitarra", level: "Intermediário", status: "active", course: "Curso Livre", schedule: { instrumento: "Sex 19:00-20:30" } },
+  { id: 5, name: "Beatriz Lima", email: "bia.lima@example.com", instrument: "Violoncelo", level: "Avançado", status: "active", course: "Curso Secundário (Supletivo)", schedule: { instrumento: "Seg, Qua 18:00-19:00", classeDeConjunto: "Sex 18:00-19:30", formacaoMusical: "Qui 18:00-19:00" } },
   { id: 6, name: "Lucas Souza", email: "lucas.souza@example.com", instrument: "Saxofone", level: "Iniciante", status: "inactive", course: "Curso Básico (Supletivo)" },
-  { id: 7, name: "Sofia Rodrigues", email: "sofia.r@example.com", instrument: "Piano", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)" },
+  { id: 7, name: "Sofia Rodrigues", email: "sofia.r@example.com", instrument: "Piano", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)", schedule: { instrumento: "Ter, Qui 15:00-16:30", classeDeConjunto: "Sex 18:00-19:30", formacaoMusical: "Qua 17:00-18:00", outrasDisciplinas: "Música de Câmara: Seg 19:00-20:00" } },
   { id: 8, name: "Gabriel Alves", email: "gabriel.alves@example.com", instrument: "Violino", level: "Iniciante", status: "pending", course: "Música para Bebés (0-36m)" },
 ];
 

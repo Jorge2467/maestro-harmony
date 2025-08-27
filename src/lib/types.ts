@@ -9,6 +9,12 @@ export type Student = {
   status: 'active' | 'inactive' | 'pending';
   avatarUrl?: string;
   course?: string;
+  schedule?: {
+    instrumento?: string;
+    classeDeConjunto?: string;
+    formacaoMusical?: string;
+    outrasDisciplinas?: string;
+  }
 };
 
 export type Teacher = {
