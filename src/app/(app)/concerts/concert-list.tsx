@@ -4,7 +4,6 @@
 import { EventCard } from "@/components/event-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import type { CalendarEvent } from "@/lib/types";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,7 +19,7 @@ const eventStatusColors: { [key: string]: string } = {
   };
 
 export function ConcertList() {
-    const concerts = useMaestroStore(state => state.concerts.filter(event => event.type === 'Concerto'));
+    const concerts = useMaestroStore(state => state.events.filter(event => event.type === 'Concerto'));
 
     return (
         <div className="space-y-8 mt-4">
