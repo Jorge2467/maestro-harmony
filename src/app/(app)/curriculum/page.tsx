@@ -5,43 +5,53 @@ import { Badge } from "@/components/ui/badge";
 const curriculumData = {
   "Piano": {
     "Iniciante": {
-      objetivos: ["Postura correta", "Leitura de notas básicas", "Escalas maiores simples"],
-      repertorio: ["Minuet in G - Bach", "Ode to Joy - Beethoven"],
-      exercicios: ["Hanon #1-5", "Czerny Op. 599"],
+      objetivos: ["Postura correta e posicionamento das mãos", "Conhecimento do teclado e notas musicais", "Leitura básica de partituras", "Exercícios de digitação independente"],
+      repertorio: ["Minuet in G - Bach", "Ode to Joy - Beethoven", "Canções folclóricas simples"],
+      exercicios: ["Hanon #1-5", "Czerny Op. 599", "Escalas Maiores (C, G, F)"],
     },
     "Intermediário": {
-      objetivos: ["Escalas maiores e menores", "Inversões de acordes", "Leitura à primeira vista"],
-      repertorio: ["Für Elise - Beethoven", "Sonatina in C Major - Clementi"],
-      exercicios: ["Hanon #6-20", "Escalas de Arpejos"],
+      objetivos: ["Escalas maiores e menores com arpejos", "Inversões de acordes e progressões", "Leitura à primeira vista", "Introdução à pedalização"],
+      repertorio: ["Für Elise - Beethoven", "Sonatina in C Major - Clementi", "The Entertainer - Scott Joplin"],
+      exercicios: ["Hanon #6-20", "Escalas de Arpejos em duas oitavas", "Estudos de Burgmüller"],
     },
     "Avançado": {
-      objetivos: ["Técnica de virtuose", "Interpretação complexa", "Harmonia avançada"],
-      repertorio: ["Clair de Lune - Debussy", "Sonata ao Luar - Beethoven"],
-      exercicios: ["Estudos de Chopin", "Invenções a duas vozes de Bach"],
+      objetivos: ["Técnica de virtuose e agilidade", "Interpretação e expressão musical", "Harmonia avançada e contraponto", "Análise de repertório complexo"],
+      repertorio: ["Clair de Lune - Debussy", "Sonata ao Luar - Beethoven", "Estudos de Chopin"],
+      exercicios: ["Estudos de Chopin e Liszt", "Invenções a duas e três vozes de Bach", "Escalas em todas as tonalidades"],
     },
   },
   "Violino": {
     "Iniciante": {
-      objetivos: ["Postura do arco e violino", "Notas nas cordas soltas", "Ritmo básico"],
-      repertorio: ["Twinkle, Twinkle, Little Star", "Canções folclóricas simples"],
-      exercicios: ["Escalas de uma oitava", "Exercícios de arco"],
+      objetivos: ["Postura correta do arco e violino", "Notas nas cordas soltas e primeira posição", "Ritmo básico e afinação", "Golpes de arco básicos (détaché)"],
+      repertorio: ["Twinkle, Twinkle, Little Star (variações Suzuki)", "Canções folclóricas simples", "Peças do método Suzuki Livro 1"],
+      exercicios: ["Escalas de uma oitava (Ré Maior, Lá Maior)", "Exercícios de arco em cordas soltas", "Estudos de Schradieck"],
     },
     "Intermediário": {
-        objetivos: ["Vibrato", "Mudança de posição (3ª)", "Leitura em clave de sol"],
-        repertorio: ["Concerto em Lá Menor - Vivaldi", "Humoresque - Dvořák"],
-        exercicios: ["Escalas de duas oitavas", "Estudos de Kreutzer"],
+        objetivos: ["Desenvolvimento do vibrato", "Mudança de posição (3ª e 5ª)", "Leitura em clave de sol e fá", "Golpes de arco avançados (spiccato, martelé)"],
+        repertorio: ["Concerto em Lá Menor - Vivaldi", "Humoresque - Dvořák", "Meditação de Thaïs - Massenet"],
+        exercicios: ["Escalas e arpejos de duas oitavas", "Estudos de Kreutzer e Fiorillo", "Exercícios de duplas cordas"],
       },
     "Avançado": {
-        objetivos: ["Técnica de arco avançada", "Duplas cordas", "Interpretação de concertos"],
-        repertorio: ["Partitas de Bach", "Concertos de Mendelssohn"],
-        exercicios: ["Estudos de Paganini", "Escalas em terças e oitavas"],
+        objetivos: ["Técnica de arco virtuosa", "Duplas cordas e acordes", "Interpretação de grandes concertos", "Performance de música de câmara"],
+        repertorio: ["Partitas de Bach para violino solo", "Concertos de Mendelssohn, Bruch, Brahms", "Caprichos de Paganini"],
+        exercicios: ["Estudos e Caprichos de Paganini", "Escalas em terças, sextas e oitavas", "Sonatas de Ysaÿe"],
       },
   },
   "Violão": {
     "Iniciante": {
-        objetivos: ["Acordes básicos (maiores e menores)", "Batidas simples", "Afinação do instrumento"],
-        repertorio: ["Asa Branca", "Stand by Me"],
-        exercicios: ["Troca de acordes", "Exercícios de digitação"],
+        objetivos: ["Acordes básicos (maiores e menores)", "Batidas e ritmos simples", "Afinação do instrumento", "Leitura de cifras e tablaturas"],
+        repertorio: ["Asa Branca - Luiz Gonzaga", "Stand by Me - Ben E. King", "Wonderwall - Oasis"],
+        exercicios: ["Troca de acordes (sequências G-C-D)", "Exercícios de digitação cromática", "Padrões de dedilhado simples"],
+      },
+     "Intermediário": {
+        objetivos: ["Pestanas e acordes complexos", "Técnicas de dedilhado e fingerstyle", "Introdução a escalas e improvisação", "Leitura de partituras básicas"],
+        repertorio: ["Dust in the Wind - Kansas", "Blackbird - The Beatles", "Estudos de Leo Brouwer"],
+        exercicios: ["Escalas pentatônicas e maiores", "Padrões de arpejo complexos", "Exercícios de ligados (hammer-on/pull-off)"],
+      },
+      "Avançado": {
+        objetivos: ["Domínio do fingerstyle e tapping", "Harmonia avançada e arranjo", "Improvisação em diferentes estilos", "Composição e arranjo para violão"],
+        repertorio: ["Asturias - Isaac Albéniz", "Peças de Villa-Lobos", "Músicas de violão brasileiro (Baden Powell, Guinga)"],
+        exercicios: ["Escalas modais (dórico, mixolídio, etc.)", "Técnicas de violão percussivo", "Estudos de flamenco e jazz"],
       },
   }
 };
