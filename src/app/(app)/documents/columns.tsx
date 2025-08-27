@@ -15,6 +15,19 @@ import { Badge } from '@/components/ui/badge';
 import type { Document } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import { DocumentForm } from '@/components/document-form';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 export const columns: ColumnDef<Document>[] = [
   {
@@ -57,28 +70,45 @@ export const columns: ColumnDef<Document>[] = [
       const document = row.original;
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Abrir menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem asChild>
-                <Link href={document.fileUrl} target="_blank" download>
-                    <Download className="mr-2 h-4 w-4" />
-                    Baixar
-                </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Editar</DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
-              Excluir
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+         <AlertDialog>
+            <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Abrir menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                <DropdownMenuItem asChild>
+                    <Link href={document.fileUrl} target="_blank" download>
+                        <Download className="mr-2 h-4 w-4" />
+                        Baixar
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DocumentForm document={document} />
+                <AlertDialogTrigger asChild>
+                    <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
+                        Excluir
+                    </DropdownMenuItem>
+                </AlertDialogTrigger>
+            </DropdownMenuContent>
+            </DropdownMenu>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+                <AlertDialogDescription>
+                    Esta ação não pode ser desfeita. Isto irá excluir permanentemente o documento
+                    e remover os seus dados dos nossos servidores.
+                </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction>Excluir</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
       );
     },
   },
