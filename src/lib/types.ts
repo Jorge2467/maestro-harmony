@@ -32,6 +32,7 @@ export type User = {
   email: string;
   role: 'admin' | 'coordinator';
   avatarUrl?: string;
+  phone?: string;
 };
 
 export type CalendarEvent = {
