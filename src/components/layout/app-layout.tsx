@@ -84,7 +84,7 @@ const navItems = [
     title: 'Inteligência Artificial',
     items: [
         { href: '/ai-recommendation', icon: BrainCircuit, label: 'Recomendação IA' },
-        { href: '/ai-reports', icon: FileText, label: 'Relatórios IA' },
+        { href: '/reports', icon: FileText, label: 'Relatórios IA' },
         { href: '/ai-assistant', icon: MessageSquare, label: 'Assistente IA' },
         { href: '/ai-analytics', icon: BarChart, label: 'Análise Preditiva' },
     ]
