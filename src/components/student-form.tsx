@@ -93,6 +93,11 @@ export function StudentForm({ student }: StudentFormProps) {
                     <SelectItem value="Curso Básico (Supletivo)">Curso Básico (Supletivo)</SelectItem>
                     <SelectItem value="Curso Secundário (Supletivo)">Curso Secundário (Supletivo)</SelectItem>
                 </SelectGroup>
+                 <SelectGroup>
+                    <SelectLabel>Ensino Profissional</SelectLabel>
+                    <SelectItem value="Curso Profissional de Instrumentista de Cordas e de Tecla">Curso Profissional de Instrumentista de Cordas e de Tecla</SelectItem>
+                    <SelectItem value="Curso Profissional de Instrumentista de Sopro e de Percussão">Curso Profissional de Instrumentista de Sopro e de Percussão</SelectItem>
+                </SelectGroup>
                 <SelectGroup>
                     <SelectLabel>Curso Livre</SelectLabel>
                     <SelectItem value="Curso Livre">Curso Livre</SelectItem>
