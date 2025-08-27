@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Bot, History, Plus, Send, Music, Calendar, FileInvoiceDollar } from "lucide-react";
+import { Bot, History, Plus, Send, Music, Calendar, FileText } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Message = {
@@ -120,7 +120,7 @@ export default function AiAssistantPage() {
                             </div>
                              <div className="space-y-2">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-muted"><FileInvoiceDollar className="h-5 w-5 text-primary" /></div>
+                                    <div className="p-2 rounded-lg bg-muted"><FileText className="h-5 w-5 text-primary" /></div>
                                     <h4 className="font-semibold">Gerador de Orçamentos</h4>
                                 </div>
                                 <p className="text-sm text-muted-foreground">Crie orçamentos detalhados para projetos, aquisições ou eventos.</p>
