@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
-import { Download, Sync, Lightbulb, Check, Music, SlidersHorizontal, Star } from "lucide-react";
+import { Download, RotateCw, Lightbulb, Check, Music, SlidersHorizontal, Star } from "lucide-react";
 import { InstrumentStatusChart } from "@/components/dashboard/instrument-status-chart";
 import { StudentEvolutionChart } from "@/components/dashboard/student-evolution-chart";
 
@@ -38,7 +38,7 @@ export default function ProgressAnalysisPage() {
         <div>
             <PageHeader title="Análise de Progresso">
                 <Button variant="secondary"><Download className="mr-2" /> Exportar</Button>
-                <Button><Sync className="mr-2" /> Atualizar</Button>
+                <Button><RotateCw className="mr-2" /> Atualizar</Button>
             </PageHeader>
 
             <Tabs defaultValue="overview">
