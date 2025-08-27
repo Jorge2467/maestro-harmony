@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import type { Teacher } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { TeacherForm } from '@/components/teacher-form';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 export const columns: ColumnDef<Teacher>[] = [
   {
@@ -56,6 +57,7 @@ export const columns: ColumnDef<Teacher>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const teacher = row.original;
+      const removeTeacher = useMaestroStore(state => state.removeTeacher);
 
       return (
         <DropdownMenu>
@@ -70,7 +72,10 @@ export const columns: ColumnDef<Teacher>[] = [
             <DropdownMenuItem>Ver Calendário</DropdownMenuItem>
             <DropdownMenuSeparator />
             <TeacherForm teacher={teacher} />
-            <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
+            <DropdownMenuItem 
+                className="text-destructive focus:text-destructive focus:bg-destructive/10"
+                onClick={() => removeTeacher(teacher.id)}
+            >
               Excluir Professor
             </DropdownMenuItem>
           </DropdownMenuContent>

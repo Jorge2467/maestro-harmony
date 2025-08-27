@@ -1,14 +1,21 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+'use client';
+
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Music } from 'lucide-react';
 import { GraduationCap, Users, Wrench, PieChart } from 'lucide-react';
 import { StatsCard } from '@/components/dashboard/stats-card';
 import { StudentDistributionChart } from '@/components/dashboard/student-distribution-chart';
 import { InstrumentStatusChart } from '@/components/dashboard/instrument-status-chart';
 import { RecentActivities } from '@/components/dashboard/recent-activities';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 
 export default function DashboardPage() {
+  const getActiveStudents = useMaestroStore(state => state.getActiveStudents);
+  const getActiveTeachers = useMaestroStore(state => state.getActiveTeachers);
+  const instrumentsInRepair = useMaestroStore(state => state.instruments.filter(i => i.status === 'Em Reparo').length);
+
   return (
     <div className="flex flex-col gap-6">
       <Card className="bg-primary text-primary-foreground shadow-lg">
@@ -30,7 +37,7 @@ export default function DashboardPage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard 
           title="Alunos Ativos"
-          value="142"
+          value={getActiveStudents().length.toString()}
           change={5}
           changeText="desde a semana passada"
           icon={GraduationCap}
@@ -38,7 +45,7 @@ export default function DashboardPage() {
         />
         <StatsCard 
           title="Total de Professores"
-          value="18"
+          value={getActiveTeachers().length.toString()}
           change={0}
           changeText="Sem alterações"
           icon={Users}
@@ -46,7 +53,7 @@ export default function DashboardPage() {
         />
         <StatsCard 
           title="Instrumentos em Reparo"
-          value="7"
+          value={instrumentsInRepair.toString()}
           change={-2}
           changeText="desde ontem"
           icon={Wrench}

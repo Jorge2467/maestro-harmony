@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { BrainCircuit, Loader, FileText, BotMessageSquare } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mockStudents } from '@/lib/mock-data';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 const initialState = {
   type: null,
@@ -31,6 +31,7 @@ function SubmitButton() {
 
 export function SummaryForm() {
   const [state, formAction] = useActionState(getSummary, initialState);
+  const students = useMaestroStore(state => state.students);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
@@ -51,7 +52,7 @@ export function SummaryForm() {
                     <SelectValue placeholder="Selecione um aluno" />
                   </SelectTrigger>
                   <SelectContent>
-                    {mockStudents.map((student) => (
+                    {students.map((student) => (
                       <SelectItem key={student.id} value={student.name}>
                         {student.name}
                       </SelectItem>

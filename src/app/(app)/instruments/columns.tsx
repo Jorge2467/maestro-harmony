@@ -15,7 +15,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { Instrument } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { mockStudents } from '@/lib/mock-data';
+import { useMaestroStore } from '@/store/use-maestro-store';
 import { InstrumentForm } from '@/components/instrument-form';
 
 export const columns: ColumnDef<Instrument>[] = [
@@ -56,11 +56,12 @@ export const columns: ColumnDef<Instrument>[] = [
     accessorKey: 'studentId',
     header: 'Associado a',
     cell: ({ row }) => {
+      const students = useMaestroStore.getState().students;
       const studentId = row.getValue('studentId') as number | null;
       if (!studentId) {
         return <span className="text-muted-foreground">N/A</span>;
       }
-      const student = mockStudents.find((s) => s.id === studentId);
+      const student = students.find((s) => s.id === studentId);
       return <span>{student?.name || 'Desconhecido'}</span>;
     }
   },

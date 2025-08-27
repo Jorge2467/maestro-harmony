@@ -6,14 +6,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import type { CalendarEvent } from "@/lib/types";
 import { PlusCircle, Trash2 } from "lucide-react";
+import { useMaestroStore } from "@/store/use-maestro-store";
 
-interface RequirementsFormProps {
-    auditions: CalendarEvent[];
-}
-
-export function RequirementsForm({ auditions }: RequirementsFormProps) {
+export function RequirementsForm() {
+    const auditions = useMaestroStore(state => state.events.filter(event => event.type === 'Audição'));
     const [requirements, setRequirements] = useState<string[]>(['']);
 
     const handleAddRequirement = () => {

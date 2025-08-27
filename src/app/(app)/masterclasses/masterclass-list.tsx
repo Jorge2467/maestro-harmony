@@ -1,13 +1,14 @@
+
+'use client';
+
 import { EventCard } from "@/components/event-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star } from "lucide-react";
-import type { CalendarEvent } from "@/lib/types";
+import { useMaestroStore } from "@/store/use-maestro-store";
 
-interface MasterclassListProps {
-    masterclasses: CalendarEvent[];
-}
+export function MasterclassList() {
+    const masterclasses = useMaestroStore(state => state.events.filter(event => event.type === 'Masterclass'));
 
-export function MasterclassList({ masterclasses }: MasterclassListProps) {
     return (
         <div className="mt-4">
             {masterclasses.length > 0 ? (

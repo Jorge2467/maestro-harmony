@@ -5,13 +5,8 @@ import { ConcertList } from "./concert-list";
 import { ConcertForm } from "./concert-form";
 import { ProgramForm } from "./program-form";
 import { ParticipantsForm } from "./participants-form";
-import type { CalendarEvent } from "@/lib/types";
 
-interface ConcertTabsProps {
-    concerts: CalendarEvent[];
-}
-
-export function ConcertTabs({ concerts }: ConcertTabsProps) {
+export function ConcertTabs() {
     return (
         <Tabs defaultValue="list" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
@@ -21,16 +16,16 @@ export function ConcertTabs({ concerts }: ConcertTabsProps) {
                 <TabsTrigger value="participants">Participantes</TabsTrigger>
             </TabsList>
             <TabsContent value="list">
-                <ConcertList concerts={concerts} />
+                <ConcertList />
             </TabsContent>
             <TabsContent value="add">
                 <ConcertForm />
             </TabsContent>
             <TabsContent value="program">
-                <ProgramForm concerts={concerts} />
+                <ProgramForm />
             </TabsContent>
             <TabsContent value="participants">
-                <ParticipantsForm concerts={concerts} />
+                <ParticipantsForm />
             </TabsContent>
         </Tabs>
     );

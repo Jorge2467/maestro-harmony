@@ -6,17 +6,18 @@ import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Calendar } from '@/components/ui/calendar';
 import { Badge } from '@/components/ui/badge';
-import { mockEvents } from '@/lib/mock-data';
 import type { CalendarEvent } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { EventForm } from '@/components/event-form';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 export default function CalendarPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const events = useMaestroStore(state => state.events);
 
-  const selectedDayEvents = mockEvents.filter(event => 
+  const selectedDayEvents = events.filter(event => 
     date && format(event.date, 'yyyy-MM-dd') === format(date, 'yyyy-MM-dd')
   );
 
@@ -43,7 +44,7 @@ export default function CalendarPage() {
                 className="w-full"
                 locale={ptBR}
                 modifiers={{
-                  event: mockEvents.map(event => event.date)
+                  event: events.map(event => event.date)
                 }}
                 modifiersClassNames={{
                   event: 'bg-primary/20 rounded-full'

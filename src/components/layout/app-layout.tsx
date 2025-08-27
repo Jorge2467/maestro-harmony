@@ -54,6 +54,7 @@ import {
 } from '@/components/ui/popover';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 
 const navItems = [
@@ -68,8 +69,8 @@ const navItems = [
   {
     title: 'Gestão',
     items: [
-      { href: '/students', icon: GraduationCap, label: 'Alunos', badge: '8' },
-      { href: '/teachers', icon: Users, label: 'Professores' },
+      { href: '/students', icon: GraduationCap, label: 'Alunos', badgeKey: 'students' },
+      { href: '/teachers', icon: Users, label: 'Professores', badgeKey: 'teachers' },
       { href: '/instruments', icon: Guitar, label: 'Instrumentos' },
       { href: '/curriculum', icon: BookOpen, label: 'Currículos' },
       { href: '/documents', icon: Folder, label: 'Documentos' },
@@ -81,7 +82,7 @@ const navItems = [
     title: 'Eventos',
     items: [
       { href: '/auditions', icon: Mic, label: 'Audições' },
-      { href: '/concerts', icon: Music, label: 'Concertos' },
+      { href: '/concerts', icon: Music, label: 'Concertos', badgeKey: 'concerts' },
       { href: '/masterclasses', icon: Star, label: 'Masterclasses' },
     ],
   },
@@ -96,6 +97,25 @@ const bottomNavItems = [
 function AppSidebar() {
   const pathname = usePathname();
   const { user } = useUser();
+  const { students, teachers, concerts } = useMaestroStore(state => ({
+    students: state.students,
+    teachers: state.teachers,
+    concerts: state.concerts,
+  }));
+
+  const getBadgeCount = (badgeKey?: string) => {
+    if (!badgeKey) return null;
+    switch (badgeKey) {
+      case 'students':
+        return students.length.toString();
+      case 'teachers':
+        return teachers.length.toString();
+      case 'concerts':
+        return concerts.filter(c => c.type === 'Concerto').length.toString();
+      default:
+        return null;
+    }
+  };
 
   return (
     <aside className="w-64 flex-shrink-0 bg-primary text-primary-foreground flex-col hidden md:flex">
@@ -123,7 +143,7 @@ function AppSidebar() {
                     >
                       <item.icon className="h-5 w-5" />
                       <span>{item.label}</span>
-                      {item.badge && <span className="ml-auto bg-accent text-accent-foreground text-xs rounded-full px-2 py-0.5">{item.badge}</span>}
+                      {getBadgeCount(item.badgeKey) && <span className="ml-auto bg-accent text-accent-foreground text-xs rounded-full px-2 py-0.5">{getBadgeCount(item.badgeKey)}</span>}
                     </Link>
                   </li>
                 ))}

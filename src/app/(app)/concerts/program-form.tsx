@@ -7,11 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Trash2 } from "lucide-react";
-import type { CalendarEvent } from "@/lib/types";
-
-interface ProgramFormProps {
-    concerts: CalendarEvent[];
-}
+import { useMaestroStore } from "@/store/use-maestro-store";
 
 interface ProgramItem {
     id: number;
@@ -21,7 +17,8 @@ interface ProgramItem {
     duration: string;
 }
 
-export function ProgramForm({ concerts }: ProgramFormProps) {
+export function ProgramForm() {
+    const concerts = useMaestroStore(state => state.concerts.filter(c => c.type === 'Concerto'));
     const [programItems, setProgramItems] = useState<ProgramItem[]>([
         { id: 1, piece: '', composer: '', performer: '', duration: '' }
     ]);

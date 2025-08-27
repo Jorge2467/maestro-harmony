@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { StudentForm } from '@/components/student-form';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 export const columns: ColumnDef<Student>[] = [
   {
@@ -110,6 +111,7 @@ export const columns: ColumnDef<Student>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const student = row.original;
+      const removeStudent = useMaestroStore(state => state.removeStudent);
 
       return (
         <DropdownMenu>
@@ -129,7 +131,10 @@ export const columns: ColumnDef<Student>[] = [
             <DropdownMenuSeparator />
             <StudentForm student={student} />
             <DropdownMenuItem>Ver Detalhes</DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
+            <DropdownMenuItem 
+                className="text-destructive focus:text-destructive focus:bg-destructive/10"
+                onClick={() => removeStudent(student.id)}
+            >
               Excluir Aluno
             </DropdownMenuItem>
           </DropdownMenuContent>

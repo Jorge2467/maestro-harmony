@@ -1,15 +1,16 @@
+
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import type { CalendarEvent } from "@/lib/types";
-import { mockTeachers } from "@/lib/mock-data";
+import { useMaestroStore } from "@/store/use-maestro-store";
 
-interface EvaluatorsFormProps {
-    auditions: CalendarEvent[];
-}
-
-export function EvaluatorsForm({ auditions }: EvaluatorsFormProps) {
+export function EvaluatorsForm() {
+    const auditions = useMaestroStore(state => state.events.filter(event => event.type === 'Audição'));
+    const teachers = useMaestroStore(state => state.teachers);
+    
     return (
         <Card className="mt-4">
             <CardHeader>
@@ -40,7 +41,7 @@ export function EvaluatorsForm({ auditions }: EvaluatorsFormProps) {
                                 <SelectValue placeholder="Selecione um professor" />
                             </SelectTrigger>
                             <SelectContent>
-                                {mockTeachers.map(teacher => (
+                                {teachers.map(teacher => (
                                     <SelectItem key={teacher.id} value={teacher.id.toString()}>
                                         {teacher.name}
                                     </SelectItem>

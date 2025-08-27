@@ -1,13 +1,14 @@
+
+'use client';
+
 import { EventCard } from "@/components/event-card";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mic } from "lucide-react";
-import type { CalendarEvent } from "@/lib/types";
+import { useMaestroStore } from "@/store/use-maestro-store";
 
-interface AuditionListProps {
-    auditions: CalendarEvent[];
-}
-
-export function AuditionList({ auditions }: AuditionListProps) {
+export function AuditionList() {
+    const auditions = useMaestroStore(state => state.events.filter(event => event.type === 'Audição'));
+    
     return (
         <div className="mt-4">
             {auditions.length > 0 ? (

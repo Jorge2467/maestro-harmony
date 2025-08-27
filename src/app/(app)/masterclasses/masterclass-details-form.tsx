@@ -1,16 +1,17 @@
+
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import type { CalendarEvent } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
+import { useMaestroStore } from "@/store/use-maestro-store";
 
-interface MasterclassDetailsFormProps {
-    masterclasses: CalendarEvent[];
-}
-
-export function MasterclassDetailsForm({ masterclasses }: MasterclassDetailsFormProps) {
+export function MasterclassDetailsForm() {
+    const masterclasses = useMaestroStore(state => state.events.filter(mc => mc.type === 'Masterclass'));
+    
     return (
         <Card className="mt-4">
             <CardHeader>

@@ -1,16 +1,11 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import type { CalendarEvent } from "@/lib/types";
 import { MasterclassList } from "./masterclass-list";
 import { EventForm } from "@/components/event-form";
 import { MasterclassDetailsForm } from "./masterclass-details-form";
 
-interface MasterclassTabsProps {
-    masterclasses: CalendarEvent[];
-}
-
-export function MasterclassTabs({ masterclasses }: MasterclassTabsProps) {
+export function MasterclassTabs() {
     return (
         <Tabs defaultValue="list" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
@@ -19,13 +14,13 @@ export function MasterclassTabs({ masterclasses }: MasterclassTabsProps) {
                 <TabsTrigger value="details">Detalhes do Evento</TabsTrigger>
             </TabsList>
             <TabsContent value="list">
-                <MasterclassList masterclasses={masterclasses} />
+                <MasterclassList />
             </TabsContent>
             <TabsContent value="add">
                  <EventForm />
             </TabsContent>
             <TabsContent value="details">
-                <MasterclassDetailsForm masterclasses={masterclasses} />
+                <MasterclassDetailsForm />
             </TabsContent>
         </Tabs>
     );

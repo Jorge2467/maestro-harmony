@@ -1,15 +1,16 @@
+
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle, CardFooter, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import type { CalendarEvent } from "@/lib/types";
+import { useMaestroStore } from "@/store/use-maestro-store";
 
-interface ParticipantsFormProps {
-    concerts: CalendarEvent[];
-}
-
-export function ParticipantsForm({ concerts }: ParticipantsFormProps) {
+export function ParticipantsForm() {
+    const concerts = useMaestroStore(state => state.concerts.filter(c => c.type === 'Concerto'));
+    
     return (
         <Card className="mt-4">
             <CardHeader>

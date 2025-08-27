@@ -1,7 +1,7 @@
 
 import type { Student, Teacher, Instrument, CalendarEvent, Document } from '@/lib/types';
 
-export const mockStudents: Student[] = [
+export const initialStudents: Student[] = [
   { id: 1, name: "Ana Silva", email: "ana.silva@example.com", instrument: "Piano", level: "Intermediário", status: "active", course: "Curso Básico (Articulado)", schedule: { instrumento: "Seg, Qua 16:00-17:00", classeDeConjunto: "Sex 18:00-19:30", formacaoMusical: "Ter 15:00-16:00" } },
   { id: 2, name: "Carlos Oliveira", email: "carlos.o@example.com", instrument: "Violino", level: "Avançado", status: "active", course: "Curso Secundário (Articulado)", schedule: { instrumento: "Ter, Qui 17:00-18:30", classeDeConjunto: "Sex 18:00-19:30", formacaoMusical: "Qua 18:00-19:00" } },
   { id: 3, name: "Mariana Costa", email: "mari.costa@example.com", instrument: "Flauta", level: "Iniciante", status: "pending", course: "Iniciação (3-5 anos)", schedule: { instrumento: "Sáb 10:00-11:00" } },
@@ -12,7 +12,7 @@ export const mockStudents: Student[] = [
   { id: 8, name: "Gabriel Alves", email: "gabriel.alves@example.com", instrument: "Violino", level: "Iniciante", status: "pending", course: "Música para Bebés (0-36m)" },
 ];
 
-export const mockTeachers: Teacher[] = [
+export const initialTeachers: Teacher[] = [
     { 
       id: 1, name: 'Marcos Vinicius', instruments: ['Piano', 'Teclado'], availability: 'Manhãs', status: 'active', email: 'marcos.v@example.com',
       charge: 'Chefe de Departamento de Teclas',
@@ -60,7 +60,7 @@ export const mockTeachers: Teacher[] = [
     },
 ];
 
-export const mockInstruments: Instrument[] = [
+export const initialInstruments: Instrument[] = [
     { id: 1, type: 'Piano de Cauda', serialNumber: 'YMH-12345', status: 'Disponível', lastMaintenance: '2023-10-15', studentId: null, location: 'Sala de Concertos' },
     { id: 2, type: 'Violino Stradivarius', serialNumber: 'STR-67890', status: 'Em Uso', lastMaintenance: '2024-01-20', studentId: 2, location: 'Com aluno' },
     { id: 3, type: 'Violão Clássico', serialNumber: 'GIB-11223', status: 'Em Reparo', lastMaintenance: '2023-11-05', studentId: null, location: 'Luthieria' },
@@ -76,18 +76,18 @@ export const mockActivities = [
     { icon: "UserPlus", title: "Novo aluno", description: "Pedro Santos matriculado em violoncelo", time: "Há 2 dias" },
 ];
 
-export const mockEvents: CalendarEvent[] = [
-    { id: 1, date: new Date(), title: 'Audição de Piano', description: 'Audições semestrais para alunos de piano.', type: 'Audição', time: '14:00 - 17:00', location: 'Auditório Principal', status: 'Próxima', participants: mockStudents.filter(s => s.instrument === 'Piano').slice(0,4) },
+export const initialEvents: CalendarEvent[] = [
+    { id: 1, date: new Date(), title: 'Audição de Piano', description: 'Audições semestrais para alunos de piano.', type: 'Audição', time: '14:00 - 17:00', location: 'Auditório Principal', status: 'Próxima', participants: initialStudents.filter(s => s.instrument === 'Piano').slice(0,4) },
     { id: 2, date: new Date(), title: 'Reunião de Professores', description: 'Reunião mensal de alinhamento.', type: 'Reunião', time: '10:00 - 11:00', location: 'Sala de Reuniões', status: 'Próxima' },
     { id: 3, date: new Date(new Date().setDate(new Date().getDate() + 5)), title: 'Concerto de Cordas', description: 'Apresentação da orquestra de cordas.', type: 'Concerto', time: '19:00', location: 'Teatro Municipal', status: 'Próxima' },
     { id: 4, date: new Date(new Date().setDate(new Date().getDate() + 12)), title: 'Masterclass de Violino', description: 'com Maestro Itzhak Perlman.', type: 'Masterclass', time: '15:00', location: 'Sala de Concertos', status: 'Próxima' },
     { id: 5, date: new Date(new Date().setDate(new Date().getDate() - 3)), title: 'Concerto de Gala', description: 'Apresentação anual de gala.', type: 'Concerto', time: '20:00', location: 'Teatro Municipal', status: 'Realizada' },
     { id: 6, date: new Date(new Date().setDate(new Date().getDate() + 25)), title: 'Concerto de Música de Câmara', description: 'Obras de Mozart e Beethoven.', type: 'Concerto', time: '20:00', location: 'Sala de Concertos', status: 'Próxima' },
-    { id: 7, date: new Date(new Date().setDate(new Date().getDate() + 40)), title: 'Audição de Sopros', description: 'Audição para alunos de flauta e clarinete.', type: 'Audição', time: '16:00', location: 'Auditório Principal', status: 'Próxima', participants: mockStudents.filter(s => s.instrument === 'Flauta') }
+    { id: 7, date: new Date(new Date().setDate(new Date().getDate() + 40)), title: 'Audição de Sopros', description: 'Audição para alunos de flauta e clarinete.', type: 'Audição', time: '16:00', location: 'Auditório Principal', status: 'Próxima', participants: initialStudents.filter(s => s.instrument === 'Flauta') }
 
 ];
 
-export const mockDocuments: Document[] = [
+export const initialDocuments: Document[] = [
     { id: 1, title: "Regulamento Interno 2024", type: "Regulamento", uploadDate: "2024-01-15", fileUrl: "#" },
     { id: 2, title: "Partitura: Sinfonia No. 5 - Beethoven", type: "Partitura", uploadDate: "2024-02-20", fileUrl: "#" },
     { id: 3, title: "Comunicado: Feriado de Carnaval", type: "Comunicado", uploadDate: "2024-02-05", fileUrl: "#" },

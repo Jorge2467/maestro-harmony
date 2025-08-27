@@ -23,7 +23,7 @@ import {
 import type { Instrument } from '@/lib/types';
 import { PlusCircle, Edit } from 'lucide-react';
 import { DropdownMenuItem } from './ui/dropdown-menu';
-import { mockStudents } from '@/lib/mock-data';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 interface InstrumentFormProps {
   instrument?: Instrument;
@@ -31,6 +31,7 @@ interface InstrumentFormProps {
 
 export function InstrumentForm({ instrument }: InstrumentFormProps) {
   const isEditMode = !!instrument;
+  const students = useMaestroStore(state => state.students);
 
   const Trigger = isEditMode ? (
     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -90,7 +91,7 @@ export function InstrumentForm({ instrument }: InstrumentFormProps) {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="null">Ninguém</SelectItem>
-                    {mockStudents.map((student) => (
+                    {students.map((student) => (
                         <SelectItem key={student.id} value={student.id.toString()}>
                             {student.name}
                         </SelectItem>

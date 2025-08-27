@@ -1,4 +1,6 @@
 
+'use client';
+
 import { EventCard } from "@/components/event-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -9,10 +11,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-
-interface ConcertListProps {
-    concerts: CalendarEvent[];
-}
+import { useMaestroStore } from "@/store/use-maestro-store";
 
 const eventStatusColors: { [key: string]: string } = {
     Próxima: 'bg-blue-500/20 text-blue-700',
@@ -20,7 +19,9 @@ const eventStatusColors: { [key: string]: string } = {
     Cancelada: 'bg-red-500/20 text-red-700',
   };
 
-export function ConcertList({ concerts }: ConcertListProps) {
+export function ConcertList() {
+    const concerts = useMaestroStore(state => state.concerts.filter(event => event.type === 'Concerto'));
+
     return (
         <div className="space-y-8 mt-4">
             {concerts.filter(c => c.status === 'Próxima').slice(0, 2).map(concert => (
