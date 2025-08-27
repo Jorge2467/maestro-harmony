@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar, Clock, MapPin } from "lucide-react";
+import { EventForm } from "./event-form";
 
 type EventCardProps = {
   event: CalendarEvent;
@@ -44,10 +45,11 @@ export function EventCard({ event }: EventCardProps) {
             <span>{event.location || 'Local a definir'}</span>
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex items-center gap-2">
         <Button variant="outline" className="w-full">
             Ver Detalhes
         </Button>
+        <EventForm event={event} trigger="button" />
       </CardFooter>
     </Card>
   );

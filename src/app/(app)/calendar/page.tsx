@@ -11,6 +11,7 @@ import type { CalendarEvent } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { EventForm } from '@/components/event-form';
 
 export default function CalendarPage() {
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -28,7 +29,9 @@ export default function CalendarPage() {
 
   return (
     <div>
-      <PageHeader title="Calendário de Eventos" />
+      <PageHeader title="Calendário de Eventos">
+        <EventForm />
+      </PageHeader>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <Card>
@@ -60,16 +63,22 @@ export default function CalendarPage() {
             <CardContent className="space-y-4 min-h-[300px]">
               {selectedDayEvents.length > 0 ? (
                 selectedDayEvents.map(event => (
-                  <div key={event.id} className="p-3 rounded-lg border flex flex-col gap-2">
-                    <div className="flex justify-between items-start">
-                      <h4 className="font-semibold">{event.title}</h4>
-                       <Badge className={cn('border-none', eventTypeColors[event.type] || 'bg-muted text-muted-foreground')}>
-                        {event.type}
-                       </Badge>
+                  <EventForm 
+                    key={event.id}
+                    event={event} 
+                    trigger="card"
+                  >
+                    <div className="p-3 rounded-lg border flex flex-col gap-2 cursor-pointer hover:bg-muted/50">
+                      <div className="flex justify-between items-start">
+                        <h4 className="font-semibold">{event.title}</h4>
+                        <Badge className={cn('border-none', eventTypeColors[event.type] || 'bg-muted text-muted-foreground')}>
+                          {event.type}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{event.description}</p>
+                      <p className="text-xs text-muted-foreground font-medium">{event.time}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground">{event.description}</p>
-                    <p className="text-xs text-muted-foreground font-medium">{event.time}</p>
-                  </div>
+                  </EventForm>
                 ))
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
