@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChessKnight, Book } from "lucide-react"; // Using available icons
+import { Lightbulb, Book } from "lucide-react"; // Using available icons
 
 interface Metric {
     value: string;
@@ -17,7 +17,7 @@ interface AiRecommendationCardProps {
 }
 
 const iconMap: { [key: string]: React.ElementType } = {
-    "Otimizar Horários de Aula": ChessKnight,
+    "Otimizar Horários de Aula": Lightbulb,
     "Repositório de Partituras": Book,
 }
 
