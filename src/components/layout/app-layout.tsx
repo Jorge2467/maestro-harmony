@@ -28,8 +28,8 @@ import {
   CalendarPlus,
   UserPlus,
   Shield,
-  FileText,
   Folder,
+  FileText,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
