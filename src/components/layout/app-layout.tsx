@@ -36,6 +36,7 @@ import {
   BarChart,
   MessageSquare,
   Video,
+  ClipboardCheck,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -69,7 +70,6 @@ const navItems = [
     items: [
       { href: '/dashboard', icon: Home, label: 'Dashboard' },
       { href: '/statistics', icon: LineChart, label: 'Estatísticas' },
-      { href: '/calendar', icon: Calendar, label: 'Calendário' },
     ],
   },
   {
@@ -107,6 +107,14 @@ const navItems = [
       { href: '/masterclasses', icon: Star, label: 'Masterclasses' },
     ],
   },
+  {
+    title: 'Ferramentas',
+    items: [
+        { href: '/calendar', icon: Calendar, label: 'Calendário' },
+        { href: '/tasks', icon: ClipboardCheck, label: 'Tarefas' },
+        { href: '/messaging', icon: MessageSquare, label: 'Mensagens' },
+    ]
+  }
 ];
 
 const bottomNavItems = [
