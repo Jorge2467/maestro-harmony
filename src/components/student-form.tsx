@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -48,32 +49,63 @@ export function StudentForm({ student }: StudentFormProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{Trigger}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{isEditMode ? 'Editar Aluno' : 'Adicionar Novo Aluno'}</DialogTitle>
           <DialogDescription>
             {isEditMode ? 'Altere as informações do aluno abaixo.' : 'Preencha os detalhes do novo aluno.'}
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+        <div className="grid gap-4 py-4 md:grid-cols-2">
+          <div className="grid items-center gap-1.5">
+            <Label htmlFor="name">
               Nome
             </Label>
-            <Input id="name" defaultValue={student?.name} className="col-span-3" />
+            <Input id="name" defaultValue={student?.name} />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="email" className="text-right">
+          <div className="grid items-center gap-1.5">
+            <Label htmlFor="email">
               Email
             </Label>
-            <Input id="email" type="email" defaultValue={student?.email} className="col-span-3" />
+            <Input id="email" type="email" defaultValue={student?.email} />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="instrument" className="text-right">
+          <div className="grid items-center gap-1.5">
+            <Label htmlFor="course">
+              Curso
+            </Label>
+            <Select defaultValue={student?.course}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione um curso" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Iniciação Musical</SelectLabel>
+                  <SelectItem value="Música para Bebés (0-36m)">Música para Bebés (0-36m)</SelectItem>
+                  <SelectItem value="Iniciação (3-5 anos)">Iniciação (3-5 anos)</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                  <SelectLabel>Ensino Articulado</SelectLabel>
+                  <SelectItem value="Curso Básico (Articulado)">Curso Básico (Articulado)</SelectItem>
+                  <SelectItem value="Curso Secundário (Articulado)">Curso Secundário (Articulado)</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                    <SelectLabel>Ensino Supletivo</SelectLabel>
+                    <SelectItem value="Curso Básico (Supletivo)">Curso Básico (Supletivo)</SelectItem>
+                    <SelectItem value="Curso Secundário (Supletivo)">Curso Secundário (Supletivo)</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                    <SelectLabel>Curso Livre</SelectLabel>
+                    <SelectItem value="Curso Livre">Curso Livre</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="grid items-center gap-1.5">
+            <Label htmlFor="instrument">
               Instrumento
             </Label>
             <Select defaultValue={student?.instrument}>
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Selecione um instrumento" />
               </SelectTrigger>
               <SelectContent>
@@ -123,12 +155,12 @@ export function StudentForm({ student }: StudentFormProps) {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="level" className="text-right">
+          <div className="grid items-center gap-1.5">
+            <Label htmlFor="level">
               Nível
             </Label>
             <Select defaultValue={student?.level}>
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Selecione o nível" />
               </SelectTrigger>
               <SelectContent>
@@ -138,12 +170,12 @@ export function StudentForm({ student }: StudentFormProps) {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="status" className="text-right">
+          <div className="grid items-center gap-1.5">
+            <Label htmlFor="status">
               Status
             </Label>
             <Select defaultValue={student?.status}>
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Selecione o status" />
               </SelectTrigger>
               <SelectContent>

@@ -8,6 +8,7 @@ export type Student = {
   level: 'Iniciante' | 'Intermediário' | 'Avançado';
   status: 'active' | 'inactive' | 'pending';
   avatarUrl?: string;
+  course?: string;
 };
 
 export type Teacher = {
