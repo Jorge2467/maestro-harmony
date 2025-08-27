@@ -83,8 +83,15 @@ export function StudentForm({ student }: StudentFormProps) {
                     <SelectItem value="Viola">Viola</SelectItem>
                     <SelectItem value="Violoncelo">Violoncelo</SelectItem>
                     <SelectItem value="Contrabaixo">Contrabaixo</SelectItem>
-                    <SelectItem value="Violão">Violão</SelectItem>
+                    <SelectItem value="Guitarra">Guitarra</SelectItem>
                     <SelectItem value="Harpa">Harpa</SelectItem>
+                    <SelectItem value="Mandolina">Mandolina</SelectItem>
+                </SelectGroup>
+                <SelectGroup>
+                    <SelectLabel>Cordofones Madeirenses</SelectLabel>
+                    <SelectItem value="Braguinha">Braguinha</SelectItem>
+                    <SelectItem value="Rajão">Rajão</SelectItem>
+                    <SelectItem value="Viola de arame">Viola de arame</SelectItem>
                 </SelectGroup>
                 <SelectGroup>
                     <SelectLabel>Madeiras</SelectLabel>
