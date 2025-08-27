@@ -4,12 +4,18 @@ import { StudentDistributionChart } from "@/components/dashboard/student-distrib
 import { StudentEvolutionChart } from "@/components/dashboard/student-evolution-chart";
 import { LevelDistributionChart } from "@/components/dashboard/level-distribution-chart";
 import { StatsCard } from "@/components/dashboard/stats-card";
-import { GraduationCap, Users, Guitar, BarChart } from "lucide-react";
+import { GraduationCap, Users, Guitar, BarChart, Download } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function StatisticsPage() {
   return (
     <div>
-      <PageHeader title="Estatísticas Detalhadas" />
+      <PageHeader title="Estatísticas Detalhadas">
+        <Button>
+          <Download className="mr-2 h-4 w-4" />
+          Exportar Dados
+        </Button>
+      </PageHeader>
       <div className="grid gap-6">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <StatsCard 
