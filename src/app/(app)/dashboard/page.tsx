@@ -1,81 +1,111 @@
 
 'use client';
 
-import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Music } from 'lucide-react';
-import { GraduationCap, Users, Wrench, PieChart } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Music, GraduationCap, Users, Wrench, BarChart, Banknote, CalendarCheck, Bot } from 'lucide-react';
 import { StatsCard } from '@/components/dashboard/stats-card';
-import { StudentDistributionChart } from '@/components/dashboard/student-distribution-chart';
-import { InstrumentStatusChart } from '@/components/dashboard/instrument-status-chart';
-import { RecentActivities } from '@/components/dashboard/recent-activities';
 import { useMaestroStore } from '@/store/use-maestro-store';
-
+import { AiRecommendationCard } from '@/components/dashboard/ai-recommendation-card';
 
 export default function DashboardPage() {
   const getActiveStudents = useMaestroStore(state => state.getActiveStudents);
   const getActiveTeachers = useMaestroStore(state => state.getActiveTeachers);
   const instrumentsInRepair = useMaestroStore(state => state.instruments.filter(i => i.status === 'Em Reparo').length);
+  const upcomingEvents = useMaestroStore(state => state.events.filter(e => new Date(e.date) >= new Date()).length);
 
   return (
     <div className="flex flex-col gap-6">
-      <Card className="bg-primary text-primary-foreground shadow-lg">
-        <CardHeader>
-          <div className="flex justify-between items-center">
-            <div>
-              <CardTitle className="text-2xl font-bold">Bem-vindo, Carlos!</CardTitle>
-              <CardDescription className="text-primary-foreground/90 mt-1">
-                Você tem 3 novas avaliações para revisar e 2 solicitações de instrumentos pendentes.
-              </CardDescription>
-            </div>
-            <div className="hidden sm:block">
-              <Music size={50} className="text-primary-foreground/50"/>
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
-      
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard 
           title="Alunos Ativos"
           value={getActiveStudents().length.toString()}
           change={5}
-          changeText="desde a semana passada"
+          changeText="desde a última semana"
           icon={GraduationCap}
-          iconBg="bg-blue-500"
+          status="Ativo"
+          statusColor="blue"
         />
         <StatsCard 
           title="Total de Professores"
           value={getActiveTeachers().length.toString()}
-          change={0}
-          changeText="Sem alterações"
+          changeText="2 em formação"
           icon={Users}
-          iconBg="bg-green-500"
+          status="Ativo"
+          statusColor="green"
         />
         <StatsCard 
           title="Instrumentos em Reparo"
           value={instrumentsInRepair.toString()}
-          change={-2}
-          changeText="desde ontem"
+          changeText="3 com previsão de entrega"
           icon={Wrench}
-          iconBg="bg-orange-500"
+          status="Parcial"
+          statusColor="orange"
         />
+         <StatsCard 
+          title="Próximos Eventos"
+          value={upcomingEvents.toString()}
+          changeText="2 audições, 1 masterclass"
+          icon={CalendarCheck}
+          status="Próximos"
+          statusColor="blue"
+        />
+      </div>
+
+       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard 
           title="Taxa de Retenção"
           value="87%"
-          change={2}
-          changeText="este mês"
-          icon={PieChart}
-          iconBg="bg-purple-500"
+          changeText="Meta: 90%"
+          icon={BarChart}
+          status="Bom"
+          statusColor="green"
+        />
+         <StatsCard 
+          title="Receitas do Mês"
+          value="R$ 42.580"
+          change={8}
+          changeText="em relação ao mês anterior"
+          icon={Banknote}
+          status="Positivo"
+          statusColor="green"
+        />
+         <StatsCard 
+          title="Avaliações Pendentes"
+          value="24"
+          changeText="15 de alunos, 9 de professores"
+          icon={Wrench}
+          status="Pendente"
+          statusColor="red"
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <StudentDistributionChart />
-        <InstrumentStatusChart />
-      </div>
-
-      <div className="grid gap-6">
-        <RecentActivities />
+      <div>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 rounded-full bg-primary/10">
+            <Bot className="h-6 w-6 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold">Recomendações da IA</h3>
+        </div>
+        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
+            <AiRecommendationCard 
+              title="Otimizar Horários de Aula"
+              description="A IA detectou que 72% das aulas de piano estão concentradas nas segundas e quartas-feiras. Recomendamos redistribuir para terças e quintas para melhor aproveitamento dos professores."
+              metrics={[
+                { value: "72%", label: "Concentração" },
+                { value: "89%", label: "Eficiência" },
+                { value: "3h", label: "Economia/semana" },
+              ]}
+            />
+            <AiRecommendationCard 
+              title="Repositório de Partituras"
+              description="Sistema identificou que 65% dos alunos de violino estão estudando peças do período barroco. Sugerimos criar um repositório especializado com materiais de apoio."
+              metrics={[
+                { value: "65%", label: "Alunos" },
+                { value: "42", label: "Partituras" },
+                { value: "92%", label: "Relevância" },
+              ]}
+            />
+        </div>
       </div>
     </div>
   );

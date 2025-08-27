@@ -31,6 +31,9 @@ import {
   Folder,
   FileText,
   PanelLeft,
+  Bot,
+  BarChart,
+  MessageSquare,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -75,9 +78,16 @@ const navItems = [
       { href: '/instruments', icon: Guitar, label: 'Instrumentos' },
       { href: '/curriculum', icon: BookOpen, label: 'Currículos' },
       { href: '/documents', icon: Folder, label: 'Documentos' },
-      { href: '/ai-matching', icon: BrainCircuit, label: 'Recomendação IA' },
-      { href: '/reports', icon: FileText, label: 'Relatórios IA' },
     ],
+  },
+  {
+    title: 'Inteligência Artificial',
+    items: [
+        { href: '/ai-recommendation', icon: BrainCircuit, label: 'Recomendação IA' },
+        { href: '/ai-reports', icon: FileText, label: 'Relatórios IA' },
+        { href: '/ai-assistant', icon: MessageSquare, label: 'Assistente IA' },
+        { href: '/ai-analytics', icon: BarChart, label: 'Análise Preditiva' },
+    ]
   },
   {
     title: 'Eventos',
@@ -101,7 +111,7 @@ function AppSidebar() {
   const { students, teachers, concerts } = useMaestroStore(state => ({
     students: state.students,
     teachers: state.teachers,
-    concerts: state.events, // Correctly select 'events' as 'concerts'
+    concerts: state.events,
   }));
 
   const getBadgeCount = (badgeKey?: string) => {
@@ -112,7 +122,6 @@ function AppSidebar() {
       case 'teachers':
         return teachers?.length.toString();
       case 'concerts':
-        // Add a safeguard to ensure concerts is not undefined
         return concerts ? concerts.filter(c => c.type === 'Concerto').length.toString() : '0';
       default:
         return null;
