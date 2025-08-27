@@ -1,3 +1,4 @@
+
 'use client';
 
 import * as React from 'react';
@@ -100,18 +101,19 @@ function AppSidebar() {
   const { students, teachers, concerts } = useMaestroStore(state => ({
     students: state.students,
     teachers: state.teachers,
-    concerts: state.concerts,
+    concerts: state.events, // Correctly select 'events' as 'concerts'
   }));
 
   const getBadgeCount = (badgeKey?: string) => {
     if (!badgeKey) return null;
     switch (badgeKey) {
       case 'students':
-        return students.length.toString();
+        return students?.length.toString();
       case 'teachers':
-        return teachers.length.toString();
+        return teachers?.length.toString();
       case 'concerts':
-        return concerts.filter(c => c.type === 'Concerto').length.toString();
+        // Add a safeguard to ensure concerts is not undefined
+        return concerts ? concerts.filter(c => c.type === 'Concerto').length.toString() : '0';
       default:
         return null;
     }
