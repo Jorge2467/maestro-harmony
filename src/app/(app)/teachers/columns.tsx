@@ -14,6 +14,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { Teacher } from '@/lib/types';
 import { cn } from '@/lib/utils';
+import { TeacherForm } from '@/components/teacher-form';
 
 export const columns: ColumnDef<Teacher>[] = [
   {
@@ -68,7 +69,7 @@ export const columns: ColumnDef<Teacher>[] = [
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuItem>Ver Calendário</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Editar Professor</DropdownMenuItem>
+            <TeacherForm teacher={teacher} />
             <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
               Excluir Professor
             </DropdownMenuItem>
