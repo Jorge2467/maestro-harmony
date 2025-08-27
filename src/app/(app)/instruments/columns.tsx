@@ -17,6 +17,18 @@ import type { Instrument } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { useMaestroStore } from '@/store/use-maestro-store';
 import { InstrumentForm } from '@/components/instrument-form';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { useToast } from '@/hooks/use-toast';
 
 export const columns: ColumnDef<Instrument>[] = [
   {
@@ -69,33 +81,63 @@ export const columns: ColumnDef<Instrument>[] = [
     accessorKey: 'lastMaintenance',
     header: 'Última Manutenção',
     cell: ({ row }) => {
-        const date = new Date(row.getValue('lastMaintenance'))
-        return <span>{date.toLocaleDateString('pt-BR')}</span>
+        const dateValue = row.getValue('lastMaintenance');
+        if (!dateValue) return 'N/A';
+        const date = new Date(dateValue as string);
+        // Add timezone offset to prevent date from shifting
+        const adjustedDate = new Date(date.valueOf() + date.getTimezoneOffset() * 60 * 1000);
+        return <span>{adjustedDate.toLocaleDateString('pt-BR')}</span>
     }
   },
   {
     id: 'actions',
     cell: ({ row }) => {
       const instrument = row.original;
+      const removeInstrument = useMaestroStore(state => state.removeInstrument);
+      const { toast } = useToast();
+
+      const handleDelete = () => {
+        removeInstrument(instrument.id);
+        toast({
+          title: "Instrumento Excluído",
+          description: "O instrumento foi removido com sucesso.",
+        });
+      };
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem>Ver Histórico</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <InstrumentForm instrument={instrument} />
-            <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
-              Excluir Instrumento
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <AlertDialog>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Ações</DropdownMenuLabel>
+              <DropdownMenuItem>Ver Histórico</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <InstrumentForm instrument={instrument} />
+              <AlertDialogTrigger asChild>
+                 <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
+                    Excluir Instrumento
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <AlertDialogContent>
+              <AlertDialogHeader>
+              <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+              <AlertDialogDescription>
+                  Esta ação não pode ser desfeita. Isto irá excluir permanentemente o instrumento.
+              </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete}>Excluir</AlertDialogAction>
+              </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       );
     },
   },
