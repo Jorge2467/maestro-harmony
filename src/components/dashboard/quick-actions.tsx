@@ -3,7 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Card } from '@/components/ui/card';
-import { UserPlus, CalendarPlus, Bot } from 'lucide-react';
+import { UserPlus, CalendarPlus, Bot, CheckCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const actions = [
@@ -24,6 +24,12 @@ const actions = [
     title: 'Assistente IA',
     desc: 'Obter ajuda inteligente',
     path: '/ai-assistant',
+  },
+   {
+    icon: CheckCircle,
+    title: 'Nova Avaliação',
+    desc: 'Lançar avaliações de desempenho',
+    path: '/evaluations',
   },
 ];
 
@@ -61,20 +67,6 @@ export function QuickActions() {
           </div>
         </Card>
       ))}
-       <Card
-          className="group cursor-pointer p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-          onClick={() => handleActionClick()}
-        >
-          <div className="flex items-center gap-4">
-            <div className="rounded-lg bg-primary/10 p-3 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-              <UserPlus className="h-6 w-6" />
-            </div>
-            <div>
-              <h3 className="font-semibold">Registrar Pagamento</h3>
-              <p className="text-sm text-muted-foreground">Registrar mensalidade recebida</p>
-            </div>
-          </div>
-        </Card>
     </div>
   );
 }
