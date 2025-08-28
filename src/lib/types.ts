@@ -33,7 +33,7 @@ export type Instrument = {
   serialNumber: string;
   status: 'Disponível' | 'Em Uso' | 'Em Reparo' | 'Avariado';
   lastMaintenance: string;
-  studentId?: string | null;
+  studentId?: string | null | number;
   location?: string;
 };
 
@@ -54,8 +54,8 @@ export type CalendarEvent = {
   time: string;
   location?: string;
   status?: 'Próxima' | 'Realizada' | 'Cancelada';
-  participants?: { id: number; name: string }[];
-  evaluators?: { id: number; name: string }[];
+  participants?: { id: number | string; name: string }[];
+  evaluators?: { id: number | string; name: string }[];
   requirements?: string[];
   guest?: string;
   topic?: string;
@@ -80,3 +80,5 @@ export type Evaluation = {
     finalGrade: number;
     comments: string;
 }
+
+    

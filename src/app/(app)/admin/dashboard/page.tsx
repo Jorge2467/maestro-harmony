@@ -6,29 +6,55 @@ import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { GitFork, Loader, CheckCircle } from "lucide-react";
+import { GitFork, Loader, CheckCircle, Database } from "lucide-react";
+import { seedDatabase } from './actions';
+import { useMaestroStore } from '@/store/use-maestro-store';
 
 export default function AdminDashboardPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoadingBackup, setIsLoadingBackup] = useState(false);
+  const [isSuccessBackup, setIsSuccessBackup] = useState(false);
+  const [isLoadingSeed, setIsLoadingSeed] = useState(false);
   const { toast } = useToast();
+  const { fetchAllData } = useMaestroStore();
 
   const handleCreateBackup = () => {
-    setIsLoading(true);
-    setIsSuccess(false);
+    setIsLoadingBackup(true);
+    setIsSuccessBackup(false);
 
     // Simulate API call
     setTimeout(() => {
-      setIsLoading(false);
-      setIsSuccess(true);
+      setIsLoadingBackup(false);
+      setIsSuccessBackup(true);
       toast({
         title: "Backup Criado!",
         description: "Ponto de restauro criado com sucesso.",
         action: <CheckCircle className="text-green-500" />,
       });
-      setTimeout(() => setIsSuccess(false), 3000); // Reset button state after 3s
+      setTimeout(() => setIsSuccessBackup(false), 3000); // Reset button state after 3s
     }, 2000);
   };
+
+  const handleSeedDatabase = async () => {
+    setIsLoadingSeed(true);
+    const result = await seedDatabase();
+    
+    if (result.type === 'success') {
+      toast({
+        title: "Sucesso!",
+        description: result.message,
+        action: <CheckCircle className="text-green-500" />,
+      });
+      // Re-fetch data for the whole app
+      await fetchAllData();
+    } else {
+      toast({
+        title: "Erro",
+        description: result.message,
+        variant: 'destructive',
+      });
+    }
+    setIsLoadingSeed(false);
+  }
 
   return (
     <div>
@@ -36,22 +62,22 @@ export default function AdminDashboardPage() {
       <div className="grid gap-6">
         <Card>
             <CardHeader>
-                <CardTitle>Gestão de Backups</CardTitle>
-                <CardDescription>Crie e gerencie cópias de segurança da base de dados da aplicação. Esta ação deve ser executada com cautela.</CardDescription>
+                <CardTitle>Gestão de Backups e Dados</CardTitle>
+                <CardDescription>Crie cópias de segurança e povoe a base de dados com dados iniciais.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex items-center gap-4">
                 <Button 
-                  variant={isSuccess ? "default" : "destructive"} 
+                  variant={isSuccessBackup ? "default" : "destructive"} 
                   onClick={handleCreateBackup} 
-                  disabled={isLoading}
-                  className={isSuccess ? "bg-green-600 hover:bg-green-700" : ""}
+                  disabled={isLoadingBackup}
+                  className={isSuccessBackup ? "bg-green-600 hover:bg-green-700" : ""}
                 >
-                    {isLoading ? (
+                    {isLoadingBackup ? (
                         <>
                             <Loader className="mr-2 h-4 w-4 animate-spin" />
                             Criando backup...
                         </>
-                    ) : isSuccess ? (
+                    ) : isSuccessBackup ? (
                         <>
                             <CheckCircle className="mr-2 h-4 w-4" />
                             Backup Criado!
@@ -63,9 +89,29 @@ export default function AdminDashboardPage() {
                         </>
                     )}
                 </Button>
+
+                <Button 
+                  variant="secondary" 
+                  onClick={handleSeedDatabase} 
+                  disabled={isLoadingSeed}
+                >
+                    {isLoadingSeed ? (
+                        <>
+                            <Loader className="mr-2 h-4 w-4 animate-spin" />
+                            A popular...
+                        </>
+                    ) : (
+                        <>
+                            <Database className="mr-2 h-4 w-4" />
+                            Povoar Base de Dados
+                        </>
+                    )}
+                </Button>
             </CardContent>
         </Card>
       </div>
     </div>
   );
 }
+
+    
