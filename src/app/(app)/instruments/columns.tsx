@@ -95,7 +95,16 @@ export const columns: ColumnDef<Instrument>[] = [
     cell: ({ row }) => {
       const instrument = row.original;
       const removeInstrument = useMaestroStore(state => state.removeInstrument);
+      const updateInstrument = useMaestroStore(state => state.updateInstrument);
       const { toast } = useToast();
+
+      const handleRequestRepair = () => {
+        updateInstrument(instrument.id, { status: 'Em Reparo' });
+        toast({
+          title: "Reparo Solicitado",
+          description: "O status do instrumento foi atualizado para 'Em Reparo'.",
+        });
+      };
 
       const handleDelete = () => {
         removeInstrument(instrument.id);
@@ -117,7 +126,7 @@ export const columns: ColumnDef<Instrument>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Ações</DropdownMenuLabel>
               <InstrumentForm instrument={instrument} />
-              <DropdownMenuItem>Solicitar Reparo</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleRequestRepair}>Solicitar Reparo</DropdownMenuItem>
               <DropdownMenuSeparator />
               <AlertDialogTrigger asChild>
                  <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">

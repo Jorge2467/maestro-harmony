@@ -16,6 +16,7 @@ import type { Teacher } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { TeacherForm } from '@/components/teacher-form';
 import { useMaestroStore } from '@/store/use-maestro-store';
+import Link from 'next/link';
 
 export const columns: ColumnDef<Teacher>[] = [
   {
@@ -69,7 +70,9 @@ export const columns: ColumnDef<Teacher>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem>Ver Calendário</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/calendar">Ver Calendário</Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <TeacherForm teacher={teacher} />
             <DropdownMenuItem 

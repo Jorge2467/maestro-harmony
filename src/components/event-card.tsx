@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { EventForm } from "./event-form";
+import Link from "next/link";
 
 type EventCardProps = {
   event: CalendarEvent;
@@ -65,8 +66,8 @@ export function EventCard({ event }: EventCardProps) {
         )}
       </CardContent>
       <CardFooter className="flex items-center gap-2">
-        <Button variant="outline" className="w-full">
-            Ver Detalhes
+        <Button variant="outline" className="w-full" asChild>
+            <Link href={`/${event.type.toLowerCase()}s/${event.id}`}>Ver Detalhes</Link>
         </Button>
         <EventForm event={event} trigger="button" />
       </CardFooter>

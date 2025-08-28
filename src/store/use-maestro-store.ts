@@ -1,9 +1,9 @@
 
 import { create } from 'zustand';
-import type { Student, Teacher, Instrument, CalendarEvent, Document, Evaluation } from '@/lib/types';
+import type { Student, Teacher, Instrument, CalendarEvent, Document, Evaluation, User } from '@/lib/types';
 import { initialEvents, initialDocuments, initialStudents, initialTeachers, initialInstruments } from '@/lib/mock-data';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch, getDoc } from 'firebase/firestore';
 
 interface MaestroState {
     students: Student[];
@@ -13,7 +13,9 @@ interface MaestroState {
     documents: Document[];
     evaluations: Evaluation[];
     loading: boolean;
+    currentUser: User | null;
 
+    fetchCurrentUser: (uid: string) => Promise<void>;
     fetchAllData: () => Promise<void>;
     seedDatabase: () => Promise<void>;
 
@@ -64,6 +66,22 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
     documents: initialDocuments,
     evaluations: [],
     loading: true,
+    currentUser: null,
+
+    fetchCurrentUser: async (uid) => {
+        if (!db) return;
+        try {
+            const userDoc = await getDoc(doc(db, 'users', uid));
+            if (userDoc.exists()) {
+                set({ currentUser: { uid, ...userDoc.data() } as User });
+            } else {
+                console.warn(`User document not found for uid: ${uid}`);
+                // Maybe create a default user document here if needed
+            }
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+        }
+    },
 
     fetchAllData: async () => {
         set({ loading: true });
