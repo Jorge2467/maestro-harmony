@@ -12,21 +12,15 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
 
 // Check if all required environment variables are set
-if (firebaseConfig.apiKey) {
-    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-} else {
+if (!firebaseConfig.apiKey) {
     console.warn("Firebase config is missing or incomplete. Please create a .env.local file with your Firebase credentials. Firebase services will be disabled.");
-    // Provide mock/dummy objects to prevent crashes when services are not available
-    app = {} as FirebaseApp;
-    auth = {} as Auth;
-    db = {} as Firestore;
 }
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 
 export { app, auth, db };
