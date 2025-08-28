@@ -6,12 +6,15 @@ import { collection, writeBatch, doc } from 'firebase/firestore';
 
 export async function seedDatabase() {
   try {
+    if (!db) {
+      throw new Error("A conexão com o Firebase não está configurada.");
+    }
     const batch = writeBatch(db);
 
     // Seed students
     const studentsCollection = collection(db, 'students');
     initialStudents.forEach((student) => {
-      const { id, ...studentData } = student; // Firestore will generate its own ID
+      const { id, ...studentData } = student;
       const docRef = doc(studentsCollection);
       batch.set(docRef, studentData);
     });
@@ -40,9 +43,10 @@ export async function seedDatabase() {
     };
   } catch (error) {
     console.error('Error seeding database:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Ocorreu um erro desconhecido.';
     return {
       type: 'error' as const,
-      message: 'Ocorreu um erro ao popular a base de dados.',
+      message: `Ocorreu um erro ao popular a base de dados: ${errorMessage}`,
     };
   }
 }

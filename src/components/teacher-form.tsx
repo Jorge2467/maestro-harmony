@@ -49,7 +49,7 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
         charge: formData.get('charge') as string,
         instruments: (formData.get('instruments') as string).split(',').map(s => s.trim()),
         status: formData.get('status') as Teacher['status'],
-        availability: 'N/A', // Campo não está no form, mas é requerido
+        availability: formData.get('availability') as string,
         schedule: {
             "Segunda": formData.get('schedule.Segunda') as string,
             "Terça": formData.get('schedule.Terça') as string,
@@ -118,6 +118,10 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
                 <div className="space-y-2">
                     <Label htmlFor="instruments">Instrumentos</Label>
                     <Input id="instruments" name="instruments" defaultValue={teacher?.instruments.join(', ')} />
+                </div>
+                 <div className="space-y-2">
+                    <Label htmlFor="availability">Disponibilidade</Label>
+                    <Input id="availability" name="availability" defaultValue={teacher?.availability} />
                 </div>
             </div>
             
