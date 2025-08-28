@@ -2,7 +2,7 @@
 'use client';
 
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
-import { auth } from '@/lib/firebase';
+import { auth, firebaseEnabled } from '@/lib/firebase';
 import { onAuthStateChanged, User as FirebaseUser, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 
 interface AuthContextType {
@@ -11,6 +11,7 @@ interface AuthContextType {
   login: (email: string, pass: string) => Promise<any>;
   signup: (email: string, pass: string) => Promise<any>;
   logout: () => Promise<any>;
+  firebaseEnabled: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,6 +21,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!firebaseEnabled) {
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
@@ -29,14 +35,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = (email: string, pass: string) => {
+    if (!firebaseEnabled) return Promise.resolve();
     return signInWithEmailAndPassword(auth, email, pass);
   };
   
   const signup = (email: string, pass: string) => {
+    if (!firebaseEnabled) return Promise.resolve();
     return createUserWithEmailAndPassword(auth, email, pass);
   };
 
   const logout = () => {
+    if (!firebaseEnabled) return Promise.resolve();
     return signOut(auth);
   };
 
@@ -46,6 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     login,
     signup,
     logout,
+    firebaseEnabled,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
