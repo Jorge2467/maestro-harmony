@@ -184,7 +184,7 @@ function AppSidebar() {
         <div className="p-4 border-t border-primary-foreground/10">
           <ul>
             {bottomNavItems.map((item) => {
-              if (item.requiredRole && item.requiredRole !== user.role) {
+              if (item.requiredRole && user && item.requiredRole !== user.role) {
                 return null;
               }
               return (
@@ -265,6 +265,8 @@ function AppHeader() {
   const handleLogout = () => {
     router.replace('/');
   };
+  
+  if (!user) return null;
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6 shrink-0">
@@ -299,7 +301,7 @@ function AppHeader() {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>
                 <p className="font-medium">{user.name}</p>
-                <p className="text-xs text-muted-foreground capitalize">{user.role}</p>
+                <p className="text-xs text-muted-foreground">{user.email}</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
@@ -337,5 +339,3 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       </div>
   );
 }
-
-    

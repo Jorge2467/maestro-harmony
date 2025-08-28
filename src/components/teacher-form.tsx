@@ -78,12 +78,12 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
   };
 
   const Trigger = isEditMode ? (
-    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+    <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setOpen(true); }}>
       <Edit className="mr-2 h-4 w-4" />
       Editar Professor
     </DropdownMenuItem>
   ) : (
-    <Button>
+    <Button onClick={() => setOpen(true)}>
       <PlusCircle className="mr-2 h-4 w-4" />
       Adicionar Professor
     </Button>
@@ -159,6 +159,7 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
             </div>
             </div>
             <DialogFooter>
+                <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
                 <Button type="submit">{isEditMode ? 'Salvar Alterações' : 'Adicionar Professor'}</Button>
             </DialogFooter>
         </form>

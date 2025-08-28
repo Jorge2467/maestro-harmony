@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -6,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { Checkbox } from './ui/checkbox';
 
 export function LoginForm() {
   const router = useRouter();
@@ -28,13 +30,22 @@ export function LoginForm() {
             <Input id="email" type="email" placeholder="email@exemplo.com" required />
           </div>
           <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Palavra-passe</Label>
-              <a href="#" className="text-sm font-medium text-primary hover:underline">
-                Esqueceu-se da palavra-passe?
-              </a>
-            </div>
+            <Label htmlFor="password">Palavra-passe</Label>
             <Input id="password" type="password" required />
+          </div>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Checkbox id="remember-me" />
+              <label
+                htmlFor="remember-me"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Lembrar-me
+              </label>
+            </div>
+            <a href="#" className="text-sm font-medium text-primary hover:underline">
+              Esqueceu-se da palavra-passe?
+            </a>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
