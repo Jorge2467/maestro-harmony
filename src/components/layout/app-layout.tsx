@@ -4,12 +4,11 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import {
   Bell,
   BookOpen,
   Calendar,
-  ChevronDown,
   FileCog,
   GraduationCap,
   Guitar,
@@ -40,7 +39,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useUser } from '@/contexts/user-context';
+import { useAuth } from '@/contexts/auth-context';
 import { mockActivities } from '@/lib/mock-data';
 
 import { Button } from '@/components/ui/button';
@@ -126,7 +125,7 @@ const bottomNavItems = [
 
 function AppSidebar() {
   const pathname = usePathname();
-  const { user } = useUser();
+  const { user } = useAuth();
   const { students, teachers, concerts } = useMaestroStore(state => ({
     students: state.students,
     teachers: state.teachers,
@@ -258,14 +257,9 @@ function Notifications() {
 }
 
 function AppHeader() {
-  const router = useRouter();
-  const { user } = useUser();
+  const { user, logout } = useAuth();
   const isMobile = useIsMobile();
 
-  const handleLogout = () => {
-    router.replace('/');
-  };
-  
   if (!user) return null;
 
   return (
@@ -293,14 +287,14 @@ function AppHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={user.avatarUrl} alt={user.name} />
-                <AvatarFallback>{user.name.substring(0,2).toUpperCase()}</AvatarFallback>
+                <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
+                <AvatarFallback>{(user.displayName || user.email || 'U').substring(0,2).toUpperCase()}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>
-                <p className="font-medium">{user.name}</p>
+                <p className="font-medium">{user.displayName || 'Usuário'}</p>
                 <p className="text-xs text-muted-foreground">{user.email}</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -317,7 +311,7 @@ function AppHeader() {
                 </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout} className='text-destructive focus:text-destructive'>
+            <DropdownMenuItem onClick={logout} className='text-destructive focus:text-destructive'>
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Sair</span>
             </DropdownMenuItem>
@@ -329,6 +323,12 @@ function AppHeader() {
 }
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
+  const { fetchAllData } = useMaestroStore();
+
+  React.useEffect(() => {
+    fetchAllData();
+  }, [fetchAllData]);
+  
   return (
       <div className="flex min-h-screen">
         <AppSidebar />

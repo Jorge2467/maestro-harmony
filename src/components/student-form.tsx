@@ -41,17 +41,30 @@ export function StudentForm({ student }: StudentFormProps) {
   const { addStudent, updateStudent } = useMaestroStore();
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const newStudentData = Object.fromEntries(formData.entries()) as Omit<Student, 'id'>;
+    const newStudentData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      course: formData.get('course') as string,
+      instrument: formData.get('instrument') as string,
+      level: formData.get('level') as Student['level'],
+      status: formData.get('status') as Student['status'],
+      schedule: {
+        instrumento: formData.get('schedule.instrumento') as string,
+        classeDeConjunto: formData.get('schedule.classeDeConjunto') as string,
+        formacaoMusical: formData.get('schedule.formacaoMusical') as string,
+        outrasDisciplinas: formData.get('schedule.outrasDisciplinas') as string,
+      }
+    };
 
     try {
-        if (isEditMode) {
-            updateStudent(student.id, newStudentData);
+        if (isEditMode && student.id) {
+            await updateStudent(student.id, newStudentData);
             toast({ title: 'Sucesso', description: 'Aluno atualizado com sucesso!' });
         } else {
-            addStudent(newStudentData);
+            await addStudent(newStudentData);
             toast({ title: 'Sucesso', description: 'Aluno adicionado com sucesso!' });
         }
         setOpen(false); // Close the dialog on success
@@ -62,12 +75,12 @@ export function StudentForm({ student }: StudentFormProps) {
 
 
   const Trigger = isEditMode ? (
-    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+    <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setOpen(true); }}>
       <Edit className="mr-2 h-4 w-4" />
       Editar Aluno
     </DropdownMenuItem>
   ) : (
-    <Button>
+    <Button onClick={() => setOpen(true)}>
       <PlusCircle className="mr-2 h-4 w-4" />
       Adicionar Aluno
     </Button>
@@ -235,6 +248,7 @@ export function StudentForm({ student }: StudentFormProps) {
 
             </div>
             <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
                 <Button type="submit">{isEditMode ? 'Salvar Alterações' : 'Adicionar Aluno'}</Button>
             </DialogFooter>
         </form>

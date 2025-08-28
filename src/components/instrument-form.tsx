@@ -38,7 +38,7 @@ export function InstrumentForm({ instrument }: InstrumentFormProps) {
   const { addInstrument, updateInstrument } = useMaestroStore();
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     
@@ -49,16 +49,16 @@ export function InstrumentForm({ instrument }: InstrumentFormProps) {
         serialNumber: formData.get('serialNumber') as string,
         status: formData.get('status') as Instrument['status'],
         location: formData.get('location') as string,
-        studentId: studentIdValue && studentIdValue !== 'null' ? Number(studentIdValue) : null,
+        studentId: studentIdValue && studentIdValue !== 'null' ? studentIdValue : null,
         lastMaintenance: formData.get('lastMaintenance') as string,
     };
 
     try {
-        if (isEditMode) {
-            updateInstrument(instrument.id, newInstrumentData);
+        if (isEditMode && instrument.id) {
+            await updateInstrument(instrument.id, newInstrumentData);
             toast({ title: 'Sucesso', description: 'Instrumento atualizado com sucesso!' });
         } else {
-            addInstrument(newInstrumentData);
+            await addInstrument(newInstrumentData);
             toast({ title: 'Sucesso', description: 'Instrumento adicionado com sucesso!' });
         }
         setOpen(false); // Close the dialog on success
@@ -128,7 +128,7 @@ export function InstrumentForm({ instrument }: InstrumentFormProps) {
                     <SelectContent>
                       <SelectItem value="null">Ninguém</SelectItem>
                       {students.map((student) => (
-                          <SelectItem key={student.id} value={student.id.toString()}>
+                          <SelectItem key={student.id} value={student.id!}>
                               {student.name}
                           </SelectItem>
                       ))}

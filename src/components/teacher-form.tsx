@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -38,37 +39,34 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
   const { addTeacher, updateTeacher } = useMaestroStore();
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     
-    const schedule: Teacher['schedule'] = {};
-    const instruments: string[] = [];
-    let tee = '';
-    const otherData: { [key: string]: any } = {};
-
-    for (const [key, value] of formData.entries()) {
-      if (key.startsWith('schedule.')) {
-        const day = key.split('.')[1];
-        schedule[day] = value as string;
-      } else if (key === 'instruments') {
-        instruments.push(...(value as string).split(',').map(s => s.trim()));
-      } else if(key === 'tee') {
-        tee = value as string;
-      }
-      else {
-        otherData[key] = value;
-      }
-    }
-
-    const newTeacherData = { ...otherData, schedule, instruments, tee } as Omit<Teacher, 'id'>;
+    const newTeacherData: Omit<Teacher, 'id'> = {
+        name: formData.get('name') as string,
+        email: formData.get('email') as string,
+        charge: formData.get('charge') as string,
+        instruments: (formData.get('instruments') as string).split(',').map(s => s.trim()),
+        status: formData.get('status') as Teacher['status'],
+        availability: 'N/A', // Campo não está no form, mas é requerido
+        schedule: {
+            "Segunda": formData.get('schedule.Segunda') as string,
+            "Terça": formData.get('schedule.Terça') as string,
+            "Quarta": formData.get('schedule.Quarta') as string,
+            "Quinta": formData.get('schedule.Quinta') as string,
+            "Sexta": formData.get('schedule.Sexta') as string,
+            "Sábado": formData.get('schedule.Sábado') as string,
+        },
+        tee: formData.get('tee') as string,
+    };
 
     try {
-        if (isEditMode) {
-            updateTeacher(teacher.id, newTeacherData);
+        if (isEditMode && teacher.id) {
+            await updateTeacher(teacher.id, newTeacherData);
             toast({ title: 'Sucesso', description: 'Professor atualizado com sucesso!' });
         } else {
-            addTeacher(newTeacherData);
+            await addTeacher(newTeacherData);
             toast({ title: 'Sucesso', description: 'Professor adicionado com sucesso!' });
         }
         setOpen(false); // Close the dialog on success
@@ -126,10 +124,10 @@ export function TeacherForm({ teacher }: TeacherFormProps) {
             <div>
                 <Label>Horário Semanal</Label>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2 p-3 border rounded-md">
-                    {Object.entries(teacher?.schedule || {
-                        "Segunda": "N/A", "Terça": "N/A", "Quarta": "N/A", 
-                        "Quinta": "N/A", "Sexta": "N/A", "Sábado": "N/A"
-                    }).map(([day, time]) => (
+                    {(Object.entries(teacher?.schedule || {
+                        "Segunda": "", "Terça": "", "Quarta": "", 
+                        "Quinta": "", "Sexta": "", "Sábado": ""
+                    })).map(([day, time]) => (
                         <div key={day} className="grid grid-cols-3 items-center gap-2">
                             <Label htmlFor={`time-${day}`} className="text-right text-sm font-normal">{day}</Label>
                             <Input id={`time-${day}`} name={`schedule.${day}`} defaultValue={time} className="col-span-2 h-8" />

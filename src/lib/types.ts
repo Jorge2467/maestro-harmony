@@ -1,5 +1,5 @@
 export type Student = {
-  id: number;
+  id?: string;
   name: string;
   email: string;
   instrument: string;
@@ -16,7 +16,7 @@ export type Student = {
 };
 
 export type Teacher = {
-  id: number;
+  id?: string;
   name: string;
   instruments: string[];
   availability: string;
@@ -28,12 +28,12 @@ export type Teacher = {
 };
 
 export type Instrument = {
-  id: number;
+  id?: string;
   type: string;
   serialNumber: string;
   status: 'Disponível' | 'Em Uso' | 'Em Reparo' | 'Avariado';
   lastMaintenance: string;
-  studentId?: number | null;
+  studentId?: string | null;
   location?: string;
 };
 
@@ -80,4 +80,3 @@ export type Evaluation = {
     finalGrade: number;
     comments: string;
 }
-
