@@ -1,9 +1,9 @@
 
 import { create } from 'zustand';
 import type { Student, Teacher, Instrument, CalendarEvent, Document, Evaluation } from '@/lib/types';
-import { initialEvents, initialDocuments } from '@/lib/mock-data';
+import { initialEvents, initialDocuments, initialStudents, initialTeachers, initialInstruments } from '@/lib/mock-data';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, writeBatch } from 'firebase/firestore';
 
 interface MaestroState {
     students: Student[];
@@ -15,6 +15,7 @@ interface MaestroState {
     loading: boolean;
 
     fetchAllData: () => Promise<void>;
+    seedDatabase: () => Promise<void>;
 
     // Student Actions
     addStudent: (student: Omit<Student, 'id'>) => Promise<void>;
@@ -49,6 +50,7 @@ interface MaestroState {
 }
 
 const fetchCollection = async <T>(collectionName: string): Promise<T[]> => {
+    if (!db) return [];
     const querySnapshot = await getDocs(collection(db, collectionName));
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as T));
 };
@@ -66,6 +68,11 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
     fetchAllData: async () => {
         set({ loading: true });
         try {
+            if (!db) {
+                console.warn("Firebase not configured, skipping fetch.");
+                set({ loading: false });
+                return;
+            }
             const [students, teachers, instruments] = await Promise.all([
                 fetchCollection<Student>('students'),
                 fetchCollection<Teacher>('teachers'),
@@ -77,13 +84,47 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
             set({ loading: false });
         }
     },
+    
+    seedDatabase: async () => {
+        if (!db) throw new Error("A conexão com o Firebase não está configurada.");
+
+        const batch = writeBatch(db);
+
+        const studentsCollection = collection(db, 'students');
+        initialStudents.forEach((student) => {
+          const { id, ...studentData } = student;
+          const docRef = doc(studentsCollection);
+          batch.set(docRef, studentData);
+        });
+    
+        const teachersCollection = collection(db, 'teachers');
+        initialTeachers.forEach((teacher) => {
+          const { id, ...teacherData } = teacher;
+          const docRef = doc(teachersCollection);
+          batch.set(docRef, teacherData);
+        });
+
+        const instrumentsCollection = collection(db, 'instruments');
+        initialInstruments.forEach((instrument) => {
+          const { id, ...instrumentData } = instrument;
+          const docRef = doc(instrumentsCollection);
+          batch.set(docRef, instrumentData);
+        });
+    
+        await batch.commit();
+        // After seeding, fetch all data again to update the state
+        await get().fetchAllData();
+    },
+
 
     // Student Actions
     addStudent: async (student) => {
+        if (!db) return;
         const docRef = await addDoc(collection(db, 'students'), student);
         set(state => ({ students: [...state.students, { id: docRef.id, ...student }] }));
     },
     updateStudent: async (id, updatedStudent) => {
+        if (!db) return;
         const studentDoc = doc(db, 'students', id);
         await updateDoc(studentDoc, updatedStudent);
         set(state => ({
@@ -91,6 +132,7 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
         }));
     },
     removeStudent: async (id) => {
+        if (!db) return;
         await deleteDoc(doc(db, 'students', id));
         set(state => ({ students: state.students.filter(s => s.id !== id) }));
     },
@@ -98,10 +140,12 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
 
     // Teacher Actions
     addTeacher: async (teacher) => {
+        if (!db) return;
         const docRef = await addDoc(collection(db, 'teachers'), teacher);
         set(state => ({ teachers: [...state.teachers, { id: docRef.id, ...teacher }] }));
     },
     updateTeacher: async (id, updatedTeacher) => {
+        if (!db) return;
         const teacherDoc = doc(db, 'teachers', id);
         await updateDoc(teacherDoc, updatedTeacher);
         set(state => ({
@@ -109,6 +153,7 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
         }));
     },
     removeTeacher: async (id) => {
+        if (!db) return;
         await deleteDoc(doc(db, 'teachers', id));
         set(state => ({ teachers: state.teachers.filter(t => t.id !== id) }));
     },
@@ -116,10 +161,12 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
 
     // Instrument Actions
     addInstrument: async (instrument) => {
+        if (!db) return;
         const docRef = await addDoc(collection(db, 'instruments'), instrument);
         set(state => ({ instruments: [...state.instruments, { id: docRef.id, ...instrument }] }));
     },
     updateInstrument: async (id, updatedInstrument) => {
+        if (!db) return;
         const instrumentDoc = doc(db, 'instruments', id);
         await updateDoc(instrumentDoc, updatedInstrument);
         set(state => ({
@@ -127,6 +174,7 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
         }));
     },
     removeInstrument: async (id) => {
+        if (!db) return;
         await deleteDoc(doc(db, 'instruments', id));
         set(state => ({ instruments: state.instruments.filter(i => i.id !== id) }));
     },

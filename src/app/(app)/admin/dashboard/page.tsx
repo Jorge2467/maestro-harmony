@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { GitFork, Loader, CheckCircle, Database } from "lucide-react";
-import { seedDatabase } from './actions';
 import { useMaestroStore } from '@/store/use-maestro-store';
 
 export default function AdminDashboardPage() {
@@ -15,7 +14,7 @@ export default function AdminDashboardPage() {
   const [isSuccessBackup, setIsSuccessBackup] = useState(false);
   const [isLoadingSeed, setIsLoadingSeed] = useState(false);
   const { toast } = useToast();
-  const { fetchAllData } = useMaestroStore();
+  const { fetchAllData, seedDatabase } = useMaestroStore();
 
   const handleCreateBackup = () => {
     setIsLoadingBackup(true);
@@ -36,20 +35,21 @@ export default function AdminDashboardPage() {
 
   const handleSeedDatabase = async () => {
     setIsLoadingSeed(true);
-    const result = await seedDatabase();
-    
-    if (result.type === 'success') {
+    try {
+      await seedDatabase();
       toast({
         title: "Sucesso!",
-        description: result.message,
+        description: "Base de dados populada com sucesso!",
         action: <CheckCircle className="text-green-500" />,
       });
       // Re-fetch data for the whole app
       await fetchAllData();
-    } else {
+    } catch (error) {
+      console.error('Error seeding database:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Ocorreu um erro desconhecido.';
       toast({
         title: "Erro",
-        description: result.message,
+        description: `Ocorreu um erro ao popular a base de dados: ${errorMessage}`,
         variant: 'destructive',
       });
     }
@@ -113,5 +113,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-
-    
