@@ -68,3 +68,16 @@ export type Document = {
   uploadDate: string;
   fileUrl: string;
 };
+
+export type Evaluation = {
+    id: number;
+    studentId: number;
+    teacherId: number;
+    date: string;
+    criteria: {
+        [key: string]: number;
+    };
+    finalGrade: number;
+    comments: string;
+}
+

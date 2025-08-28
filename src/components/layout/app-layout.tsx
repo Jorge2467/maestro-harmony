@@ -87,6 +87,7 @@ const navItems = [
     items: [
         { href: '/progress-analysis', icon: BarChart, label: 'Análise de Progresso' },
         { href: '/video-lessons', icon: Video, label: 'Videoaulas' },
+        { href: '/evaluations', icon: CheckCircle, label: 'Avaliações' },
     ],
   },
   {
@@ -94,7 +95,7 @@ const navItems = [
     items: [
         { href: '/ai-recommendation', icon: BrainCircuit, label: 'Recomendação IA' },
         { href: '/reports', icon: FileText, label: 'Relatórios IA' },
-        { href: '/ai-assistant', icon: MessageSquare, label: 'Assistente IA' },
+        { href: '/ai-assistant', icon: Bot, label: 'Assistente IA' },
         { href: '/ai-analytics', icon: BarChart, label: 'Análise Preditiva' },
         { href: '/ai-matching', icon: Bot, label: 'Matching IA' },
     ]

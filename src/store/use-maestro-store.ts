@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Student, Teacher, Instrument, CalendarEvent, Document } from '@/lib/types';
+import type { Student, Teacher, Instrument, CalendarEvent, Document, Evaluation } from '@/lib/types';
 import { initialStudents, initialTeachers, initialInstruments, initialEvents, initialDocuments } from '@/lib/mock-data';
 
 interface MaestroState {
@@ -8,6 +8,7 @@ interface MaestroState {
     instruments: Instrument[];
     events: CalendarEvent[];
     documents: Document[];
+    evaluations: Evaluation[];
 
     // Student Actions
     addStudent: (student: Omit<Student, 'id'>) => void;
@@ -36,6 +37,9 @@ interface MaestroState {
     addDocument: (document: Omit<Document, 'id'>) => void;
     updateDocument: (id: number, updatedDocument: Partial<Omit<Document, 'id'>>) => void;
     removeDocument: (id: number) => void;
+
+    // Evaluation Actions
+    addEvaluation: (evaluation: Omit<Evaluation, 'id'>) => void;
 }
 
 export const useMaestroStore = create<MaestroState>((set, get) => ({
@@ -45,6 +49,7 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
     instruments: initialInstruments,
     events: initialEvents,
     documents: initialDocuments,
+    evaluations: [],
 
     // Student Actions
     addStudent: (student) => set(state => ({
@@ -112,5 +117,10 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
     })),
     removeDocument: (id) => set(state => ({
         documents: state.documents.filter(doc => doc.id !== id)
-    }))
+    })),
+
+    // Evaluation Actions
+    addEvaluation: (evaluation) => set(state => ({
+        evaluations: [...state.evaluations, { ...evaluation, id: Math.max(0, ...state.evaluations.map(e => e.id)) + 1 }]
+    })),
 }));
