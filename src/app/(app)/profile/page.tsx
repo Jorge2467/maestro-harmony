@@ -1,4 +1,5 @@
 
+
 'use client'
 
 import { useState } from 'react';
@@ -11,16 +12,16 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { User } from '@/lib/types';
+import type { User } from '@/contexts/user-context';
 
 export default function ProfilePage() {
   const { user, setUser } = useUser();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   
+  // Initialize form data with user data, ensuring it's not null.
   const [formData, setFormData] = useState({
-    name: user?.name || '',
+    displayName: user?.displayName || '',
     email: user?.email || '',
-    phone: user?.phone || '',
     role: user?.role || 'coordinator',
   });
 
@@ -38,17 +39,17 @@ export default function ProfilePage() {
   };
 
   const handleSaveChanges = () => {
-    if (setUser) {
+    if (setUser && user) {
       setUser({ ...user, ...formData });
     }
     setIsDialogOpen(false); 
   };
   
   const handleDialogClose = () => {
+    // Reset form data to current user state when closing without saving
     setFormData({
-        name: user.name,
-        email: user.email,
-        phone: user.phone || '',
+        displayName: user.displayName || '',
+        email: user.email || '',
         role: user.role,
     });
     setIsDialogOpen(false);
@@ -61,11 +62,11 @@ export default function ProfilePage() {
         <CardHeader>
           <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={user.avatarUrl} alt={user.name} />
-              <AvatarFallback>{user.name.substring(0,2).toUpperCase()}</AvatarFallback>
+              <AvatarImage src={user.photoURL || undefined} alt={user.displayName || ''} />
+              <AvatarFallback>{user.displayName?.substring(0,2).toUpperCase() || user.email?.substring(0,2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-3xl">{user.name}</CardTitle>
+              <CardTitle className="text-3xl">{user.displayName}</CardTitle>
               <CardDescription className="text-lg capitalize">{user.role}</CardDescription>
             </div>
           </div>
@@ -75,7 +76,6 @@ export default function ProfilePage() {
                 <h3 className="font-semibold text-lg">Informações de Contato</h3>
                 <div className="text-muted-foreground space-y-1">
                     <p><strong>Email:</strong> {user.email}</p>
-                    <p><strong>Telefone:</strong> {user.phone || '(11) 98765-4321'}</p>
                 </div>
             </div>
              <div className="space-y-2">
@@ -100,29 +100,23 @@ export default function ProfilePage() {
                     <Label className="text-right">Foto</Label>
                     <div className="col-span-3 flex items-center gap-4">
                        <Avatar>
-                          <AvatarImage src={user.avatarUrl} alt={user.name} />
-                          <AvatarFallback>{user.name.substring(0,2).toUpperCase()}</AvatarFallback>
+                          <AvatarImage src={user.photoURL || undefined} alt={user.displayName || ''} />
+                          <AvatarFallback>{user.displayName?.substring(0,2).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <Input id="picture" type="file" className="col-span-2" />
                     </div>
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
+                    <Label htmlFor="displayName" className="text-right">
                       Nome
                     </Label>
-                    <Input id="name" value={formData.name} onChange={handleInputChange} className="col-span-3" />
+                    <Input id="displayName" value={formData.displayName} onChange={handleInputChange} className="col-span-3" />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="email" className="text-right">
                       Email
                     </Label>
                     <Input id="email" type="email" value={formData.email} onChange={handleInputChange} className="col-span-3" />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="phone" className="text-right">
-                      Telefone
-                    </Label>
-                    <Input id="phone" value={formData.phone} onChange={handleInputChange} className="col-span-3" />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="role" className="text-right">
@@ -152,3 +146,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+

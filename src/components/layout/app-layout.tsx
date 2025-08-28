@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Bell,
   BookOpen,
@@ -61,7 +61,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useMaestroStore } from '@/store/use-maestro-store';
-import { useUser } from '@/contexts/user-context';
+import { useUser, User, UserProvider } from '@/contexts/user-context';
 
 
 const navItems = [
@@ -324,20 +324,56 @@ function AppHeader() {
   );
 }
 
+function InnerAppLayout({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="flex min-h-screen">
+            <AppSidebar />
+            <div className="flex-1 flex flex-col">
+                <AppHeader />
+                <main className="flex-1 p-6 bg-background overflow-y-auto">{children}</main>
+            </div>
+        </div>
+    );
+}
+
+
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { fetchAllData } = useMaestroStore();
+  const { user: firebaseUser, loading } = useAuth();
+  const router = useRouter();
+  const [user, setUser] = React.useState<User | null>(null);
 
   React.useEffect(() => {
     fetchAllData();
   }, [fetchAllData]);
+
+  React.useEffect(() => {
+    if (!loading && !firebaseUser) {
+      router.replace('/');
+    } else if (firebaseUser) {
+        setUser({
+            uid: firebaseUser.uid,
+            email: firebaseUser.email,
+            displayName: firebaseUser.displayName,
+            photoURL: firebaseUser.photoURL,
+            role: 'admin', // Hard-coded for now
+        });
+    }
+  }, [firebaseUser, loading, router]);
+
+  if (loading || !user) {
+    return (
+        <div className="flex h-screen items-center justify-center">
+            <div className="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+        </div>
+    );
+  }
   
   return (
-      <div className="flex min-h-screen">
-        <AppSidebar />
-        <div className="flex-1 flex flex-col">
-          <AppHeader />
-          <main className="flex-1 p-6 bg-background overflow-y-auto">{children}</main>
-        </div>
-      </div>
+    <UserProvider user={user} setUser={setUser}>
+      <InnerAppLayout>
+        {children}
+      </InnerAppLayout>
+    </UserProvider>
   );
 }
