@@ -3,12 +3,13 @@
 
 import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { auth } from '@/lib/firebase';
-import { onAuthStateChanged, User as FirebaseUser, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { onAuthStateChanged, User as FirebaseUser, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } from 'firebase/auth';
 
 interface AuthContextType {
   user: FirebaseUser | null;
   loading: boolean;
   login: (email: string, pass: string) => Promise<any>;
+  signup: (email: string, pass: string) => Promise<any>;
   logout: () => Promise<any>;
 }
 
@@ -30,6 +31,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = (email: string, pass: string) => {
     return signInWithEmailAndPassword(auth, email, pass);
   };
+  
+  const signup = (email: string, pass: string) => {
+    return createUserWithEmailAndPassword(auth, email, pass);
+  };
 
   const logout = () => {
     return signOut(auth);
@@ -39,6 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     loading,
     login,
+    signup,
     logout,
   };
 
