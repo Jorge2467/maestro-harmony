@@ -12,8 +12,15 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Inicializar Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+// Check if all required environment variables are set
+const requiredConfig = Object.entries(firebaseConfig).find(([key, value]) => !value);
+if (requiredConfig) {
+    console.error(`Firebase config is missing ${requiredConfig[0]}. Make sure you have a .env.local file with all the required Firebase credentials.`);
+}
+
+
+// Initialize Firebase
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
