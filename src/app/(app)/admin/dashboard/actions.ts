@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/firebase';
 import { initialStudents, initialTeachers, initialInstruments } from '@/lib/mock-data';
-import { collection, writeBatch } from 'firebase/firestore';
+import { collection, writeBatch, doc } from 'firebase/firestore';
 
 export async function seedDatabase() {
   try {
@@ -46,5 +46,3 @@ export async function seedDatabase() {
     };
   }
 }
-
-    

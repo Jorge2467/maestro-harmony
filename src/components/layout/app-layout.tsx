@@ -61,6 +61,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useMaestroStore } from '@/store/use-maestro-store';
+import { useUser } from '@/contexts/user-context';
 
 
 const navItems = [
@@ -125,7 +126,7 @@ const bottomNavItems = [
 
 function AppSidebar() {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user } = useUser();
   const { students, teachers, concerts } = useMaestroStore(state => ({
     students: state.students,
     teachers: state.teachers,
@@ -257,7 +258,8 @@ function Notifications() {
 }
 
 function AppHeader() {
-  const { user, logout } = useAuth();
+  const { user } = useUser();
+  const { logout } = useAuth();
   const isMobile = useIsMobile();
 
   if (!user) return null;
