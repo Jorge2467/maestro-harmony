@@ -338,7 +338,7 @@ function InnerAppLayout({ children }: { children: React.ReactNode }) {
 
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
-  const { fetchAllData } = useMaestroStore();
+  const { fetchAllData, fetchCurrentUser, currentUser } = useMaestroStore();
   const { user: firebaseUser, loading } = useAuth();
   const router = useRouter();
   const [user, setUser] = React.useState<User | null>(null);
@@ -350,16 +350,22 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   React.useEffect(() => {
     if (!loading && !firebaseUser) {
       router.replace('/');
-    } else if (firebaseUser) {
-        setUser({
-            uid: firebaseUser.uid,
-            email: firebaseUser.email,
-            displayName: firebaseUser.displayName,
-            photoURL: firebaseUser.photoURL,
-            role: 'admin', // Hard-coded for now
-        });
+    } else if (firebaseUser && !currentUser) {
+        fetchCurrentUser(firebaseUser.uid);
     }
-  }, [firebaseUser, loading, router]);
+  }, [firebaseUser, loading, router, fetchCurrentUser, currentUser]);
+
+  React.useEffect(() => {
+    if (currentUser) {
+      setUser({
+        uid: currentUser.uid,
+        email: currentUser.email,
+        displayName: currentUser.displayName,
+        photoURL: currentUser.photoURL,
+        role: currentUser.role || 'student', // Default to 'student' if no role
+      });
+    }
+  }, [currentUser]);
 
   if (loading || !user) {
     return (

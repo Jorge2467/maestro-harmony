@@ -16,6 +16,7 @@ import type { Student } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import { StudentForm } from '@/components/student-form';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useMaestroStore } from '@/store/use-maestro-store';
 
@@ -130,7 +131,9 @@ export const columns: ColumnDef<Student>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <StudentForm student={student} />
-            <DropdownMenuItem>Ver Detalhes</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/students/${student.id}`}>Ver Detalhes</Link>
+            </DropdownMenuItem>
             <DropdownMenuItem 
                 className="text-destructive focus:text-destructive focus:bg-destructive/10"
                 onClick={() => removeStudent(student.id)}
