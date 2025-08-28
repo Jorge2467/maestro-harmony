@@ -1,7 +1,7 @@
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
+import { getAuth, type Auth } from 'firebase/auth';
+import { getFirestore, type Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,16 +12,21 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
+let app: FirebaseApp;
+let auth: Auth;
+let db: Firestore;
+
 // Check if all required environment variables are set
-const requiredConfig = Object.entries(firebaseConfig).find(([key, value]) => !value);
-if (requiredConfig) {
-    console.error(`Firebase config is missing ${requiredConfig[0]}. Make sure you have a .env.local file with all the required Firebase credentials.`);
+if (firebaseConfig.apiKey) {
+    app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+} else {
+    console.warn("Firebase config is missing or incomplete. Please create a .env.local file with your Firebase credentials. Firebase services will be disabled.");
+    // Provide mock/dummy objects to prevent crashes when services are not available
+    app = {} as FirebaseApp;
+    auth = {} as Auth;
+    db = {} as Firestore;
 }
-
-
-// Initialize Firebase
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
 export { app, auth, db };

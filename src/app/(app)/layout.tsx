@@ -4,7 +4,7 @@
 import { AppLayout } from '@/components/layout/app-layout';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { AuthProvider, useAuth } from '@/contexts/auth-context';
+import { useAuth } from '@/contexts/auth-context';
 
 function ProtectedLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -33,8 +33,6 @@ function ProtectedLayout({ children }: { children: React.ReactNode }) {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
       <ProtectedLayout>{children}</ProtectedLayout>
-    </AuthProvider>
   );
 }
