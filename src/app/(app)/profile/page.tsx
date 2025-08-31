@@ -20,7 +20,7 @@ export default function ProfilePage() {
   
   // Initialize form data with user data, ensuring it's not null.
   const [formData, setFormData] = useState({
-    displayName: user?.displayName || '',
+    name: user?.name || '',
     email: user?.email || '',
     role: user?.role || 'coordinator',
   });
@@ -48,7 +48,7 @@ export default function ProfilePage() {
   const handleDialogClose = () => {
     // Reset form data to current user state when closing without saving
     setFormData({
-        displayName: user.displayName || '',
+        name: user.name || '',
         email: user.email || '',
         role: user.role,
     });
@@ -62,11 +62,11 @@ export default function ProfilePage() {
         <CardHeader>
           <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={user.photoURL || undefined} alt={user.displayName || ''} />
-              <AvatarFallback>{user.displayName?.substring(0,2).toUpperCase() || user.email?.substring(0,2).toUpperCase()}</AvatarFallback>
+              <AvatarImage src={user.photoURL || undefined} alt={user.name || ''} />
+              <AvatarFallback>{user.name?.substring(0,2).toUpperCase() || user.email?.substring(0,2).toUpperCase()}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-3xl">{user.displayName}</CardTitle>
+              <CardTitle className="text-3xl">{user.name}</CardTitle>
               <CardDescription className="text-lg capitalize">{user.role}</CardDescription>
             </div>
           </div>
@@ -100,17 +100,17 @@ export default function ProfilePage() {
                     <Label className="text-right">Foto</Label>
                     <div className="col-span-3 flex items-center gap-4">
                        <Avatar>
-                          <AvatarImage src={user.photoURL || undefined} alt={user.displayName || ''} />
-                          <AvatarFallback>{user.displayName?.substring(0,2).toUpperCase()}</AvatarFallback>
+                          <AvatarImage src={user.photoURL || undefined} alt={user.name || ''} />
+                          <AvatarFallback>{user.name?.substring(0,2).toUpperCase()}</AvatarFallback>
                         </Avatar>
                         <Input id="picture" type="file" className="col-span-2" />
                     </div>
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="displayName" className="text-right">
+                    <Label htmlFor="name" className="text-right">
                       Nome
                     </Label>
-                    <Input id="displayName" value={formData.displayName} onChange={handleInputChange} className="col-span-3" />
+                    <Input id="name" value={formData.name} onChange={handleInputChange} className="col-span-3" />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="email" className="text-right">

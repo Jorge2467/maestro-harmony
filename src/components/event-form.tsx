@@ -32,7 +32,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 const eventSchema = z.object({
     title: z.string().min(1, "O título é obrigatório."),
-    type: z.string().min(1, "O tipo é obrigatório."),
+    type: z.enum(['Concerto', 'Audição', 'Masterclass', 'Reunião']),
     date: z.string().min(1, "A data é obrigatória."),
     time: z.string().min(1, "A hora é obrigatória."),
     location: z.string().min(1, "O local é obrigatório."),
@@ -55,7 +55,7 @@ export function EventForm({ event, children, trigger = 'button' }: EventFormProp
     resolver: zodResolver(eventSchema),
     defaultValues: {
         title: event?.title || '',
-        type: event?.type || '',
+        type: event?.type || undefined,
         date: event ? format(event.date, 'yyyy-MM-dd') : '',
         time: event?.time || '',
         location: event?.location || '',
@@ -84,13 +84,12 @@ export function EventForm({ event, children, trigger = 'button' }: EventFormProp
         updateEvent(event.id, updatedEvent);
         toast({ title: 'Sucesso!', description: 'Evento atualizado com sucesso.' });
     } else {
-        const newEvent = {
+        const newEventData = {
             ...values,
-            id: Date.now(),
             date: combinedDate,
-            status: 'Próxima',
+            status: 'Próxima' as const,
         };
-        addEvent(newEvent);
+        addEvent(newEventData);
         toast({ title: 'Sucesso!', description: 'Evento criado com sucesso.' });
     }
     setOpen(false);

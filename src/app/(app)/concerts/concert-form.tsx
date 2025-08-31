@@ -17,7 +17,6 @@ import { format } from "date-fns";
 
 const concertSchema = z.object({
     title: z.string().min(1, "O título é obrigatório."),
-    type: z.string().min(1, "O tipo de evento é obrigatório."),
     date: z.string().min(1, "A data é obrigatória."),
     startTime: z.string().min(1, "A hora de início é obrigatória."),
     endTime: z.string().min(1, "A hora de término é obrigatória."),
@@ -40,7 +39,6 @@ export function ConcertForm({ concert, onFinished }: ConcertFormProps) {
         resolver: zodResolver(concertSchema),
         defaultValues: {
             title: concert?.title || '',
-            type: concert?.type || '',
             date: concert ? format(new Date(concert.date), 'yyyy-MM-dd') : '',
             startTime: concert ? format(new Date(concert.date), 'HH:mm') : '',
             endTime: concert?.endTime ? format(new Date(concert.endTime), 'HH:mm') : '',
@@ -51,21 +49,21 @@ export function ConcertForm({ concert, onFinished }: ConcertFormProps) {
     });
 
     const onSubmit = (values: z.infer<typeof concertSchema>) => {
+        const { startTime, ...restValues } = values;
+        const eventData = {
+            ...restValues,
+            time: startTime,
+            type: 'Concerto' as const,
+            date: new Date(`${values.date}T${values.startTime}`),
+        };
+
         if (isEditMode && concert.id) {
-            const updatedEvent = {
-                ...concert,
-                ...values,
-                date: new Date(`${values.date}T${values.startTime}`),
-            };
-            updateEvent(concert.id, updatedEvent);
+            updateEvent(concert.id, eventData);
             toast({ title: 'Sucesso!', description: 'Concerto atualizado com sucesso.' });
         } else {
             const newEvent = {
-                ...values,
-                id: Date.now(),
-                type: 'Concerto',
-                status: 'Próxima',
-                date: new Date(`${values.date}T${values.startTime}`),
+                ...eventData,
+                status: 'Próxima' as const,
                 participants: [],
             };
             addEvent(newEvent);
@@ -96,31 +94,6 @@ export function ConcertForm({ concert, onFinished }: ConcertFormProps) {
                                         <FormControl>
                                             <Input placeholder="Ex: Concerto de Outono" {...field} />
                                         </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                             <FormField
-                                control={form.control}
-                                name="type"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Tipo de Evento *</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                            <FormControl>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Selecione o tipo" />
-                                                </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                <SelectItem value="recital">Recital</SelectItem>
-                                                <SelectItem value="orchestra">Orquestra</SelectItem>
-                                                <SelectItem value="chamber">Música de Câmara</SelectItem>
-                                                <SelectItem value="choir">Coral</SelectItem>
-                                                <SelectItem value="festival">Festival</SelectItem>
-                                                <SelectItem value="other">Outro</SelectItem>
-                                            </SelectContent>
-                                        </Select>
                                         <FormMessage />
                                     </FormItem>
                                 )}

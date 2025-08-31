@@ -289,14 +289,14 @@ function AppHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
               <Avatar className="h-10 w-10">
-                <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
-                <AvatarFallback>{(user.displayName || user.email || 'U').substring(0,2).toUpperCase()}</AvatarFallback>
+                <AvatarImage src={user.photoURL || undefined} alt={user.name || 'User'} />
+                <AvatarFallback>{(user.name || user.email || 'U').substring(0,2).toUpperCase()}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>
-                <p className="font-medium">{user.displayName || 'Usuário'}</p>
+                <p className="font-medium">{user.name || 'Usuário'}</p>
                 <p className="text-xs text-muted-foreground">{user.email}</p>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
@@ -357,13 +357,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   React.useEffect(() => {
     if (currentUser) {
-      setUser({
-        uid: currentUser.uid,
-        email: currentUser.email,
-        displayName: currentUser.displayName,
-        photoURL: currentUser.photoURL,
-        role: currentUser.role || 'student', // Default to 'student' if no role
-      });
+      setUser(currentUser);
     }
   }, [currentUser]);
 

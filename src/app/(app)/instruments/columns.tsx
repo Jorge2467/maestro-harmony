@@ -68,15 +68,7 @@ export const columns: ColumnDef<Instrument>[] = [
   {
     accessorKey: 'studentId',
     header: 'Associado a',
-    cell: ({ row }) => {
-      const students = useMaestroStore.getState().students;
-      const studentId = row.getValue('studentId') as number | null;
-      if (!studentId) {
-        return <span className="text-muted-foreground">N/A</span>;
-      }
-      const student = students.find((s) => s.id === studentId);
-      return <span>{student?.name || 'Desconhecido'}</span>;
-    }
+    cell: ({ row }) => <StudentCell studentId={row.getValue('studentId')} />,
   },
   {
     accessorKey: 'lastMaintenance',
@@ -92,63 +84,75 @@ export const columns: ColumnDef<Instrument>[] = [
   },
   {
     id: 'actions',
-    cell: ({ row }) => {
-      const instrument = row.original;
-      const removeInstrument = useMaestroStore(state => state.removeInstrument);
-      const updateInstrument = useMaestroStore(state => state.updateInstrument);
-      const { toast } = useToast();
-
-      const handleRequestRepair = () => {
-        updateInstrument(instrument.id, { status: 'Em Reparo' });
-        toast({
-          title: "Reparo Solicitado",
-          description: "O status do instrumento foi atualizado para 'Em Reparo'.",
-        });
-      };
-
-      const handleDelete = () => {
-        removeInstrument(instrument.id);
-        toast({
-          title: "Instrumento Excluído",
-          description: "O instrumento foi removido com sucesso.",
-        });
-      };
-
-      return (
-        <AlertDialog>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <InstrumentForm instrument={instrument} />
-              <DropdownMenuItem onClick={handleRequestRepair}>Solicitar Reparo</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <AlertDialogTrigger asChild>
-                 <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
-                    Excluir Instrumento
-                </DropdownMenuItem>
-              </AlertDialogTrigger>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <AlertDialogContent>
-              <AlertDialogHeader>
-              <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
-              <AlertDialogDescription>
-                  Esta ação não pode ser desfeita. Isto irá excluir permanentemente o instrumento.
-              </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete}>Excluir</AlertDialogAction>
-              </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      );
-    },
+    cell: ({ row }) => <ActionsCell instrument={row.original} />,
   },
 ];
+
+const StudentCell = ({ studentId }: { studentId: unknown }) => {
+  const students = useMaestroStore(state => state.students);
+  if (!studentId) {
+    return <span className="text-muted-foreground">N/A</span>;
+  }
+  const student = students.find((s) => String(s.id) === String(studentId));
+  return <span>{student?.name || 'Desconhecido'}</span>;
+}
+
+const ActionsCell = ({ instrument }: { instrument: Instrument }) => {
+  const removeInstrument = useMaestroStore(state => state.removeInstrument);
+  const updateInstrument = useMaestroStore(state => state.updateInstrument);
+  const { toast } = useToast();
+
+  if (!instrument.id) return null;
+
+  const handleRequestRepair = () => {
+    updateInstrument(instrument.id!, { status: 'Em Reparo' });
+    toast({
+      title: "Reparo Solicitado",
+      description: "O status do instrumento foi atualizado para 'Em Reparo'.",
+    });
+  };
+
+  const handleDelete = () => {
+    removeInstrument(instrument.id!);
+    toast({
+      title: "Instrumento Excluído",
+      description: "O instrumento foi removido com sucesso.",
+    });
+  };
+
+  return (
+    <AlertDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Ações</DropdownMenuLabel>
+          <InstrumentForm instrument={instrument} />
+          <DropdownMenuItem onClick={handleRequestRepair}>Solicitar Reparo</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <AlertDialogTrigger asChild>
+              <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
+                Excluir Instrumento
+            </DropdownMenuItem>
+          </AlertDialogTrigger>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <AlertDialogContent>
+          <AlertDialogHeader>
+          <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+          <AlertDialogDescription>
+              Esta ação não pode ser desfeita. Isto irá excluir permanentemente o instrumento.
+          </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete}>Excluir</AlertDialogAction>
+          </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}

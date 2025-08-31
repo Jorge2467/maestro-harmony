@@ -3,7 +3,7 @@
 
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { getRecommendation } from './actions';
+import { getRecommendation, type State } from './actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { BrainCircuit, Loader, ThumbsUp, UserCheck, MessageSquareQuote } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-const initialState = {
+const initialState: State = {
   type: null,
   data: null,
   errors: null,

@@ -33,7 +33,7 @@ export default function StatisticsPage() {
               change={5}
               changeText="no último mês"
               icon={GraduationCap}
-              iconBg="bg-chart-1"
+              statusColor="blue"
             />
             <StatsCard 
               title="Professores Ativos"
@@ -41,7 +41,7 @@ export default function StatisticsPage() {
               change={1}
               changeText="no último trimestre"
               icon={Users}
-              iconBg="bg-chart-2"
+              statusColor="green"
             />
             <StatsCard 
               title="Instrumentos Totais"
@@ -49,7 +49,7 @@ export default function StatisticsPage() {
               change={15}
               changeText="adicionados este ano"
               icon={Guitar}
-              iconBg="bg-chart-3"
+              statusColor="orange"
             />
             <StatsCard 
               title="Média de Aprovação"
@@ -57,7 +57,7 @@ export default function StatisticsPage() {
               change={-1}
               changeText="em relação ao ano passado"
               icon={BarChart}
-              iconBg="bg-chart-4"
+              statusColor="red"
             />
         </div>
 

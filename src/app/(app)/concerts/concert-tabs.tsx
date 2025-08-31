@@ -9,9 +9,9 @@ import { ParticipantsForm } from "./participants-form";
 
 export function ConcertTabs() {
     const [activeTab, setActiveTab] = useState("list");
-    const [selectedConcertId, setSelectedConcertId] = useState<number | null>(null);
+    const [selectedConcertId, setSelectedConcertId] = useState<string | number | null>(null);
 
-    const handleSelectProgram = (concertId: number) => {
+    const handleSelectProgram = (concertId: string | number) => {
         setSelectedConcertId(concertId);
         setActiveTab("program");
     }

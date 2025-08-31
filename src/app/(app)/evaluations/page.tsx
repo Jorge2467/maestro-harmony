@@ -188,10 +188,10 @@ export default function EvaluationsPage() {
                 <TabsContent value="dashboard" className="mt-6">
                     <div className="space-y-6">
                          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                            <StatsCard title="Aproveitamento Geral" value="87%" icon={GraduationCap} />
-                            <StatsCard title="Avaliação Média Professores" value="8.8/10" icon={Users} />
-                            <StatsCard title="Participação em Recitais" value="92%" icon={Music} />
-                            <StatsCard title="Prémios e Distinções" value="24" icon={Trophy} />
+                            <StatsCard title="Aproveitamento Geral" value="87%" icon={GraduationCap} changeText="desde o último semestre" change={2.5}/>
+                            <StatsCard title="Avaliação Média Professores" value="8.8/10" icon={Users} changeText="desde o último semestre" change={-0.2}/>
+                            <StatsCard title="Participação em Recitais" value="92%" icon={Music} changeText="desde o último semestre" change={5}/>
+                            <StatsCard title="Prémios e Distinções" value="24" icon={Trophy} changeText="desde o último semestre" change={3}/>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <StudentEvolutionChart />

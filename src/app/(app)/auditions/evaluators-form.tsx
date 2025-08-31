@@ -41,8 +41,8 @@ export function EvaluatorsForm() {
                                 <SelectValue placeholder="Selecione um professor" />
                             </SelectTrigger>
                             <SelectContent>
-                                {teachers.map(teacher => (
-                                    <SelectItem key={teacher.id} value={teacher.id.toString()}>
+                                {teachers.filter(t => t.id).map(teacher => (
+                                    <SelectItem key={teacher.id} value={teacher.id!.toString()}>
                                         {teacher.name}
                                     </SelectItem>
                                 ))}

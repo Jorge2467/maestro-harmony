@@ -3,7 +3,7 @@
 
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { getSummary } from './actions';
+import { getSummary, type State } from './actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -13,7 +13,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useMaestroStore } from '@/store/use-maestro-store';
 
-const initialState = {
+const initialState: State = {
   type: null,
   data: null,
   errors: null,

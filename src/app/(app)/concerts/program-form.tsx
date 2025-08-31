@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 
 interface ProgramFormProps {
-    concertId: number | null;
+    concertId: string | number | null;
 }
 
 const programItemSchema = z.object({
@@ -27,7 +27,7 @@ const programItemSchema = z.object({
 export function ProgramForm({ concertId }: ProgramFormProps) {
     const { events, updateEvent } = useMaestroStore();
     const { toast } = useToast();
-    const concert = events.find(e => e.id === concertId);
+    const concert = events.find(e => String(e.id) === String(concertId));
 
     const form = useForm<z.infer<typeof programItemSchema>>({
         resolver: zodResolver(programItemSchema),
@@ -37,17 +37,17 @@ export function ProgramForm({ concertId }: ProgramFormProps) {
     const onSubmit = (values: z.infer<typeof programItemSchema>) => {
         if (!concert) return;
 
-        const newItem = { ...values, id: Date.now() };
+        const newItem = { ...values, id: Date.now().toString() };
         const updatedProgram = [...(concert.program || []), newItem];
-        updateEvent(concert.id, { ...concert, program: updatedProgram });
+        updateEvent(concert.id, { program: updatedProgram });
         toast({ title: "Sucesso", description: "Item adicionado ao programa." });
         form.reset();
     };
 
-    const handleRemoveItem = (itemId: number) => {
+    const handleRemoveItem = (itemId: string | number) => {
         if (!concert) return;
-        const updatedProgram = concert.program?.filter(item => item.id !== itemId);
-        updateEvent(concert.id, { ...concert, program: updatedProgram });
+        const updatedProgram = concert.program?.filter(item => String(item.id) !== String(itemId));
+        updateEvent(concert.id, { program: updatedProgram });
         toast({ variant: "destructive", title: "Item removido", description: "O item foi removido do programa." });
     };
 

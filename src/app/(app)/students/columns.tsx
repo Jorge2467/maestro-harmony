@@ -112,37 +112,43 @@ export const columns: ColumnDef<Student>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const student = row.original;
-      const removeStudent = useMaestroStore(state => state.removeStudent);
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(student.email)}
-            >
-              Copiar email
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <StudentForm student={student} />
-            <DropdownMenuItem asChild>
-              <Link href={`/students/${student.id}`}>Ver Detalhes</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-                className="text-destructive focus:text-destructive focus:bg-destructive/10"
-                onClick={() => removeStudent(student.id)}
-            >
-              Excluir Aluno
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ActionsCell student={student} />;
     },
   },
 ];
+
+const ActionsCell = ({ student }: { student: Student }) => {
+  const removeStudent = useMaestroStore(state => state.removeStudent);
+
+  if (!student.id) return null;
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Ações</DropdownMenuLabel>
+        <DropdownMenuItem
+          onClick={() => navigator.clipboard.writeText(student.email)}
+        >
+          Copiar email
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <StudentForm student={student} />
+        <DropdownMenuItem asChild>
+          <Link href={`/students/${student.id}`}>Ver Detalhes</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="text-destructive focus:text-destructive focus:bg-destructive/10"
+          onClick={() => removeStudent(student.id!)}
+        >
+          Excluir Aluno
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

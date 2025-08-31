@@ -38,27 +38,31 @@ export type Instrument = {
 };
 
 export type User = {
-  name: string;
-  email: string;
+  uid: string;
+  name: string | null;
+  email: string | null;
+  photoURL?: string;
   role: 'admin' | 'coordinator';
-  avatarUrl?: string;
   phone?: string;
 };
 
 export type CalendarEvent = {
-  id: number;
+  id: number | string;
   date: Date;
   title: string;
-  description: string;
+  description?: string;
   type: 'Concerto' | 'Audição' | 'Masterclass' | 'Reunião';
   time: string;
+  endTime?: string;
   location?: string;
+  capacity?: number;
   status?: 'Próxima' | 'Realizada' | 'Cancelada';
-  participants?: { id: number | string; name: string }[];
+  participants?: { id: number | string; name: string; type?: string; instrument?: string; piece?: string; }[];
   evaluators?: { id: number | string; name: string }[];
   requirements?: string[];
   guest?: string;
   topic?: string;
+  program?: { id: string | number; piece: string; composer: string; performer?: string; duration?: number; }[];
 };
 
 export type Document = {

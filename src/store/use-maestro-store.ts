@@ -38,8 +38,8 @@ interface MaestroState {
 
     // Event Actions (mantendo como mock por enquanto)
     addEvent: (event: Omit<CalendarEvent, 'id'>) => void;
-    updateEvent: (id: number, updatedEvent: Partial<Omit<CalendarEvent, 'id'>>) => void;
-    removeEvent: (id: number) => void;
+    updateEvent: (id: string | number, updatedEvent: Partial<Omit<CalendarEvent, 'id'>>) => void;
+    removeEvent: (id: string | number) => void;
     getUpcomingConcerts: () => CalendarEvent[];
 
     // Document Actions (mantendo como mock por enquanto)
@@ -59,24 +59,39 @@ const fetchCollection = async <T>(collectionName: string): Promise<T[]> => {
 
 export const useMaestroStore = create<MaestroState>((set, get) => ({
     // Initial State
-    students: [],
-    teachers: [],
-    instruments: [],
+    students: initialStudents,
+    teachers: initialTeachers,
+    instruments: initialInstruments,
     events: initialEvents,
     documents: initialDocuments,
     evaluations: [],
-    loading: true,
+    loading: false,
     currentUser: null,
 
     fetchCurrentUser: async (uid) => {
-        if (!db) return;
+        if (!db) {
+            console.log("DEMO MODE: Setting mock user");
+            set({ currentUser: { uid: 'mock-user-id', name: 'Coordenador Demo', email: 'coordenador@demo.com', role: 'coordinator', photoURL: `https://i.pravatar.cc/40?u=coord` } });
+            return;
+        };
         try {
             const userDoc = await getDoc(doc(db, 'users', uid));
             if (userDoc.exists()) {
-                set({ currentUser: { uid, ...userDoc.data() } as User });
+                const data = userDoc.data();
+                const currentUser: User = {
+                    uid: uid,
+                    name: data.name || null,
+                    email: data.email || null,
+                    photoURL: data.photoURL,
+                    role: data.role || 'coordinator',
+                    phone: data.phone,
+                };
+                set({ currentUser });
             } else {
                 console.warn(`User document not found for uid: ${uid}`);
-                // Maybe create a default user document here if needed
+                // In a real app, you might want to create a default user document here
+                // For now, we can set a basic user object for the session
+                set({ currentUser: { uid, name: 'New User', email: null, role: 'coordinator' } });
             }
         } catch (error) {
             console.error("Error fetching user data:", error);
@@ -137,70 +152,103 @@ export const useMaestroStore = create<MaestroState>((set, get) => ({
 
     // Student Actions
     addStudent: async (student) => {
-        if (!db) return;
-        const docRef = await addDoc(collection(db, 'students'), student);
-        set(state => ({ students: [...state.students, { id: docRef.id, ...student }] }));
+        if (db) {
+            const docRef = await addDoc(collection(db, 'students'), student);
+            set(state => ({ students: [...state.students, { id: docRef.id, ...student }] }));
+        } else {
+            console.log("DEMO MODE: Adding student locally");
+            const newStudent = { ...student, id: Date.now().toString() };
+            set(state => ({ students: [...state.students, newStudent] }));
+        }
     },
     updateStudent: async (id, updatedStudent) => {
-        if (!db) return;
-        const studentDoc = doc(db, 'students', id);
-        await updateDoc(studentDoc, updatedStudent);
+        if (db) {
+            const studentDoc = doc(db, 'students', id);
+            await updateDoc(studentDoc, updatedStudent);
+        } else {
+            console.log(`DEMO MODE: Updating student ${id} locally`);
+        }
         set(state => ({
-            students: state.students.map(s => s.id === id ? { ...s, ...updatedStudent } : s)
+            students: state.students.map(s => String(s.id) === String(id) ? { ...s, ...updatedStudent } : s)
         }));
     },
     removeStudent: async (id) => {
-        if (!db) return;
-        await deleteDoc(doc(db, 'students', id));
-        set(state => ({ students: state.students.filter(s => s.id !== id) }));
+        if (db) {
+            await deleteDoc(doc(db, 'students', id));
+        } else {
+            console.log(`DEMO MODE: Removing student ${id} locally`);
+        }
+        set(state => ({ students: state.students.filter(s => String(s.id) !== String(id)) }));
     },
     getActiveStudents: () => get().students.filter(student => student.status === 'active'),
 
     // Teacher Actions
     addTeacher: async (teacher) => {
-        if (!db) return;
-        const docRef = await addDoc(collection(db, 'teachers'), teacher);
-        set(state => ({ teachers: [...state.teachers, { id: docRef.id, ...teacher }] }));
+        if (db) {
+            const docRef = await addDoc(collection(db, 'teachers'), teacher);
+            set(state => ({ teachers: [...state.teachers, { id: docRef.id, ...teacher }] }));
+        } else {
+            console.log("DEMO MODE: Adding teacher locally");
+            const newTeacher = { ...teacher, id: Date.now().toString() };
+            set(state => ({ teachers: [...state.teachers, newTeacher] }));
+        }
     },
     updateTeacher: async (id, updatedTeacher) => {
-        if (!db) return;
-        const teacherDoc = doc(db, 'teachers', id);
-        await updateDoc(teacherDoc, updatedTeacher);
+        if (db) {
+            const teacherDoc = doc(db, 'teachers', id);
+            await updateDoc(teacherDoc, updatedTeacher);
+        } else {
+            console.log(`DEMO MODE: Updating teacher ${id} locally`);
+        }
         set(state => ({
-            teachers: state.teachers.map(t => t.id === id ? { ...t, ...updatedTeacher } : t)
+            teachers: state.teachers.map(t => String(t.id) === String(id) ? { ...t, ...updatedTeacher } : t)
         }));
     },
     removeTeacher: async (id) => {
-        if (!db) return;
-        await deleteDoc(doc(db, 'teachers', id));
-        set(state => ({ teachers: state.teachers.filter(t => t.id !== id) }));
+        if (db) {
+            await deleteDoc(doc(db, 'teachers', id));
+        } else {
+            console.log(`DEMO MODE: Removing teacher ${id} locally`);
+        }
+        set(state => ({ teachers: state.teachers.filter(t => String(t.id) !== String(id)) }));
     },
     getActiveTeachers: () => get().teachers.filter(teacher => teacher.status === 'active'),
 
     // Instrument Actions
     addInstrument: async (instrument) => {
-        if (!db) return;
-        const docRef = await addDoc(collection(db, 'instruments'), instrument);
-        set(state => ({ instruments: [...state.instruments, { id: docRef.id, ...instrument }] }));
+        if (db) {
+            const docRef = await addDoc(collection(db, 'instruments'), instrument);
+            set(state => ({ instruments: [...state.instruments, { id: docRef.id, ...instrument }] }));
+        } else {
+            console.log("DEMO MODE: Adding instrument locally");
+            const newInstrument = { ...instrument, id: Date.now().toString() };
+            set(state => ({ instruments: [...state.instruments, newInstrument] }));
+        }
     },
     updateInstrument: async (id, updatedInstrument) => {
-        if (!db) return;
-        const instrumentDoc = doc(db, 'instruments', id);
-        await updateDoc(instrumentDoc, updatedInstrument);
+        if (db) {
+            const instrumentDoc = doc(db, 'instruments', id);
+            await updateDoc(instrumentDoc, updatedInstrument);
+        } else {
+            console.log(`DEMO MODE: Updating instrument ${id} locally`);
+        }
         set(state => ({
-            instruments: state.instruments.map(i => i.id === id ? { ...i, ...updatedInstrument } : i)
+            instruments: state.instruments.map(i => String(i.id) === String(id) ? { ...i, ...updatedInstrument } : i)
         }));
     },
     removeInstrument: async (id) => {
-        if (!db) return;
-        await deleteDoc(doc(db, 'instruments', id));
-        set(state => ({ instruments: state.instruments.filter(i => i.id !== id) }));
+        if (db) {
+            await deleteDoc(doc(db, 'instruments', id));
+        } else {
+            console.log(`DEMO MODE: Removing instrument ${id} locally`);
+        }
+        set(state => ({ instruments: state.instruments.filter(i => String(i.id) !== String(id)) }));
     },
     
     // Mock Actions (mantidos para não quebrar a UI existente)
-    addEvent: (event) => set(state => ({ events: [...state.events, { ...event, date: new Date(event.date), id: Math.max(0, ...state.events.map(e => e.id)) + 1 }] })),
-    updateEvent: (id, updatedEvent) => set(state => ({ events: state.events.map(event => event.id === id ? { ...event, ...updatedEvent, date: updatedEvent.date ? new Date(updatedEvent.date) : event.date } : event) })),
-    removeEvent: (id) => set(state => ({ events: state.events.filter(event => event.id !== id) })),
+    addEvent: (event) => set(state => ({ events: [...state.events, { ...event, date: new Date(event.date), id: Date.now().toString() }] })),
+    updateEvent: (id, updatedEvent) => set(state => ({ events: state.events.map(event => String(event.id) === String(id) ? { ...event, ...updatedEvent, date: updatedEvent.date ? new Date(updatedEvent.date) : event.date } : event) })),
+    removeEvent: (id) => set(state => ({ events: state.events.filter(event => String(event.id) !== String(id)) })),
     getUpcomingConcerts: () => get().events.filter(event => event.type === 'Concerto' && event.status === 'Próxima'),
     addDocument: (document) => set(state => ({ documents: [...state.documents, { ...document, id: Math.max(0, ...state.documents.map(d => d.id)) + 1 }] })),
     updateDocument: (id, updatedDocument) => set(state => ({ documents: state.documents.map(doc => doc.id === id ? { ...doc, ...updatedDocument } : doc) })),

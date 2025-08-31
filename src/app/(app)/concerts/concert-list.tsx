@@ -24,7 +24,7 @@ const eventStatusColors: { [key: string]: string } = {
   };
 
 interface ConcertListProps {
-    onSelectProgram: (concertId: number) => void;
+    onSelectProgram: (concertId: string | number) => void;
 }
 
 export function ConcertList({ onSelectProgram }: ConcertListProps) {

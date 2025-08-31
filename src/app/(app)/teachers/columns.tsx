@@ -58,32 +58,39 @@ export const columns: ColumnDef<Teacher>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const teacher = row.original;
-      const removeTeacher = useMaestroStore(state => state.removeTeacher);
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Ações</DropdownMenuLabel>
-            <DropdownMenuItem asChild>
-              <Link href="/calendar">Ver Calendário</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <TeacherForm teacher={teacher} />
-            <DropdownMenuItem 
-                className="text-destructive focus:text-destructive focus:bg-destructive/10"
-                onClick={() => removeTeacher(teacher.id)}
-            >
-              Excluir Professor
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ActionsCell teacher={teacher} />;
     },
   },
 ];
+
+
+const ActionsCell = ({ teacher }: { teacher: Teacher }) => {
+    const removeTeacher = useMaestroStore(state => state.removeTeacher);
+
+    if (!teacher.id) return null;
+
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Ações</DropdownMenuLabel>
+          <DropdownMenuItem asChild>
+            <Link href="/calendar">Ver Calendário</Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <TeacherForm teacher={teacher} />
+          <DropdownMenuItem
+              className="text-destructive focus:text-destructive focus:bg-destructive/10"
+              onClick={() => removeTeacher(teacher.id!)}
+          >
+            Excluir Professor
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+}

@@ -16,7 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface ParticipantsFormProps {
-    concertId: number | null;
+    concertId: string | number | null;
 }
 
 const participantSchema = z.object({
@@ -29,7 +29,7 @@ const participantSchema = z.object({
 export function ParticipantsForm({ concertId }: ParticipantsFormProps) {
     const { events, updateEvent } = useMaestroStore();
     const { toast } = useToast();
-    const concert = events.find(e => e.id === concertId);
+    const concert = events.find(e => String(e.id) === String(concertId));
 
     const form = useForm<z.infer<typeof participantSchema>>({
         resolver: zodResolver(participantSchema),
@@ -39,17 +39,17 @@ export function ParticipantsForm({ concertId }: ParticipantsFormProps) {
     const onSubmit = (values: z.infer<typeof participantSchema>) => {
         if (!concert) return;
 
-        const newParticipant = { ...values, id: Date.now() };
+        const newParticipant = { ...values, id: Date.now().toString() };
         const updatedParticipants = [...(concert.participants || []), newParticipant];
-        updateEvent(concert.id, { ...concert, participants: updatedParticipants });
+        updateEvent(concert.id, { participants: updatedParticipants });
         toast({ title: "Sucesso", description: "Participante adicionado ao concerto." });
         form.reset();
     };
 
-    const handleRemoveParticipant = (participantId: number) => {
+    const handleRemoveParticipant = (participantId: string | number) => {
         if (!concert) return;
-        const updatedParticipants = concert.participants?.filter(p => p.id !== participantId);
-        updateEvent(concert.id, { ...concert, participants: updatedParticipants });
+        const updatedParticipants = concert.participants?.filter(p => String(p.id) !== String(participantId));
+        updateEvent(concert.id, { participants: updatedParticipants });
         toast({ variant: "destructive", title: "Participante removido", description: "O participante foi removido do concerto." });
     };
 

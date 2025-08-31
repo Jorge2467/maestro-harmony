@@ -1,8 +1,21 @@
 
 "use server";
 
-import { summarizeStudentPerformance } from "@/ai/flows/summarize-student-performance";
+import { summarizeStudentPerformance, type SummarizeStudentPerformanceOutput } from "@/ai/flows/summarize-student-performance";
 import { z } from "zod";
+
+export type State = {
+    type: 'success' | 'error' | null;
+    data: SummarizeStudentPerformanceOutput | null;
+    errors: {
+        studentName?: string[];
+        instrument?: string[];
+        performanceDetails?: string[];
+        studentLevel?: string[];
+        course?: string[];
+        _form?: string[];
+    } | null;
+};
 
 const SummarySchema = z.object({
   studentName: z.string().min(1, { message: "Selecione um aluno." }),
@@ -12,7 +25,7 @@ const SummarySchema = z.object({
   course: z.string().min(1, { message: "Selecione um curso." }),
 });
 
-export async function getSummary(prevState: any, formData: FormData) {
+export async function getSummary(prevState: State, formData: FormData): Promise<State> {
   const validatedFields = SummarySchema.safeParse({
     studentName: formData.get("studentName"),
     instrument: formData.get("instrument"),
@@ -25,6 +38,7 @@ export async function getSummary(prevState: any, formData: FormData) {
     return {
       type: "error" as const,
       errors: validatedFields.error.flatten().fieldErrors,
+      data: null,
     };
   }
 
@@ -33,12 +47,14 @@ export async function getSummary(prevState: any, formData: FormData) {
     return {
       type: "success" as const,
       data: result,
+      errors: null,
     };
   } catch (error) {
     console.error(error);
     return {
       type: "error" as const,
       errors: { _form: ["Ocorreu um erro ao gerar o relatório. Tente novamente."] },
+      data: null,
     };
   }
 }

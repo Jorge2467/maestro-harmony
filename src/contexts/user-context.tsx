@@ -3,14 +3,9 @@
 
 import { createContext, useContext, ReactNode, Dispatch, SetStateAction } from 'react';
 import type { User as FirebaseUser } from 'firebase/auth';
+import type { User } from '@/lib/types';
 
-export type User = {
-  uid: string;
-  email: string | null;
-  displayName: string | null;
-  photoURL: string | null;
-  role: 'admin' | 'coordinator';
-};
+export type { User };
 
 type UserContextType = {
   user: User | null;

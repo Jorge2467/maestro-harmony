@@ -10,9 +10,9 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { BotMessageSquare, BrainCircuit, FileUp, Loader, Trash2, Save } from 'lucide-react';
-import { getCurriculumAnalysis } from './actions';
+import { getCurriculumAnalysis, type State, type CurriculumAnalysisResult } from './actions';
 
-const initialState = {
+const initialState: State = {
     type: null,
     data: null,
     errors: null,
